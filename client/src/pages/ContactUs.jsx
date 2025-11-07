@@ -1,0 +1,337 @@
+import { useState, useCallback, useMemo } from 'react';
+import Footer from '../Components/Footer';
+import Navbar from '../Components/Navbar';
+
+// --- Dummy Options for Select Field ---
+const businessOptions = [
+  'Choose an option',
+  'Distributor',
+  'End Customer',
+  'Reseller',
+  'System Integrator',
+  'Consultant',
+];
+
+// --- Main Contact Form Component (Renamed to App) ---
+export default function App() {
+  const [formData, setFormData] = useState({
+    firstName: '',
+    lastName: '',
+    email: '',
+    subject: '',
+    phone: '',
+    natureOfBusiness: businessOptions[0], // Initialize with 'Choose an option'
+    message: '',
+  });
+
+  const [errors, setErrors] = useState({});
+  const [submitted, setSubmitted] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
+  // Validation logic
+  const validate = useCallback(() => {
+    const newErrors = {};
+    if (!formData.firstName.trim()) newErrors.firstName = 'First Name is required';
+    if (!formData.lastName.trim()) newErrors.lastName = 'Last Name is required';
+    if (!formData.phone.trim()) newErrors.phone = 'Phone number is required';
+    
+    if (!formData.email.trim()) {
+      newErrors.email = 'Email is required';
+    } else if (!/\S+@\S+\.\S+/.test(formData.email)) {
+      newErrors.email = 'Invalid email format';
+    }
+    
+    if (!formData.subject.trim()) newErrors.subject = 'Subject is required';
+    if (formData.natureOfBusiness === businessOptions[0]) newErrors.natureOfBusiness = 'Please select a business nature';
+    if (!formData.message.trim()) newErrors.message = 'Message is required';
+    
+    return newErrors;
+  }, [formData]);
+
+  const handleChange = (e) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+    setErrors({ ...errors, [e.target.name]: '' });
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (isSubmitting) return;
+
+    const validationErrors = validate();
+
+    if (Object.keys(validationErrors).length > 0) {
+      setErrors(validationErrors);
+      return;
+    }
+
+    // --- Submission Simulation ---
+    setIsSubmitting(true);
+
+    // Simulate an API call with a 2-second delay
+    setTimeout(() => {
+      console.log('Form submission successful:', formData);
+      setIsSubmitting(false);
+      setSubmitted(true);
+      // Optional: reset form data after success
+      // setFormData({ ...initial state... }); 
+    }, 2000); 
+  };
+
+  // Common input classes for consistency and styling (Memoized for performance)
+  const inputBaseClasses = useMemo(() => `
+    mt-1 block w-full px-4 py-3 border rounded-lg shadow-sm text-green-800 bg-green-50/50 
+    focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-green-500 appearance-none 
+    transition duration-150 ease-in-out border-green-200
+  `, []);
+  
+  // Custom Spinner SVG for loading state
+  const Spinner = () => (
+    <svg className="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+      <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+      <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+    </svg>
+  );
+
+
+  // --- Contact Details Sidebar Component ---
+  const ContactDetails = () => (
+    <div className="md:pl-10 pt-10 md:pt-0">
+      <h3 className="text-xl font-bold text-green-700 mb-4 border-b pb-2 border-green-100">
+        Toll Free Number
+      </h3>
+      <p className="text-sm text-gray-600 mb-2">
+        For any kind of enquiry call our toll free number (from 10:30 to 18:30)
+      </p>
+      <p className="text-2xl font-extrabold text-green-700 mb-8">
+        Call At : 1800-202-6599
+      </p>
+
+      <h3 className="text-xl font-bold text-green-700 mb-4 border-b pb-2 border-green-100">
+        Other Contacts
+      </h3>
+      <p className="text-sm text-gray-600 mb-2">
+        Alternatively speak to a member of our team during business hours (back office, from 10:30 to 18:30)
+      </p>
+      <p className="text-xl font-extrabold text-green-700">
+        Alternative Number: +91-77149-20035
+      </p>
+    </div>
+  );
+
+
+  return (
+    <>
+    <Navbar/>
+    {/* NEW PAGE HEADING: "Contact Us" */}
+    {/* pt-12 is now the main top padding */}
+    <div className="bg-green-400/10 pt-12 pb-12 shadow-inner mt-20">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <h1 className="text-5xl font-extrabold tracking-tight text-green-900 sm:text-6xl">
+                Contact Us
+            </h1>
+            <p className="mt-4 text-xl text-green-600">
+                We're here to help! Get in touch with our team.
+            </p>
+        </div>
+    </div>
+    
+    {/* Main Form Content Container */}
+    <div className="min-h-screen bg-white font-sans mb-30">
+      
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-12 pt-8">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
+          
+          {/* --- COLUMN 1: FORM (Takes 2/3 width on desktop) --- */}
+          <div className="md:col-span-2 p-8 bg-white border rounded-2xl shadow-xl">
+            <h2 className="text-3xl font-bold mb-1 text-green-700">
+                Send us a message
+            </h2>
+            <p className="mb-8 text-gray-600 text-lg border-b pb-4 border-green-50">
+                and we'll get back to you shortly.
+            </p>
+
+            {submitted ? (
+              // Success Message (Custom Alert UI)
+              <div className="p-8 my-8 bg-green-50 border-l-4 border-green-600 rounded-xl shadow-md">
+                <h3 className="text-xl font-bold text-green-700 flex items-center">
+                    <svg className="w-6 h-6 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                    Submission Successful!
+                </h3>
+                <p className="text-green-600 mt-2">
+                    Thank you for reaching out. Your message has been securely submitted, and we will get back to you within 24-48 hours.
+                </p>
+              </div>
+            ) : (
+              <form onSubmit={handleSubmit} noValidate>
+                {/* Email and Subject (First Row) */}
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+                  {/* Email Field */}
+                  <div className="space-y-1">
+                    <label htmlFor="email" className="block text-sm font-semibold text-gray-700">
+                      Email *
+                    </label>
+                    <input
+                      type="email"
+                      name="email"
+                      id="email"
+                      placeholder="e.g., email@example.com"
+                      disabled={isSubmitting}
+                      className={`${inputBaseClasses} ${errors.email ? 'border-red-500' : ''}`}
+                      value={formData.email}
+                      onChange={handleChange}
+                    />
+                    {errors.email && <p className="text-red-500 text-xs mt-1 italic">{errors.email}</p>}
+                  </div>
+
+                  {/* Subject Field */}
+                  <div className="space-y-1">
+                    <label htmlFor="subject" className="block text-sm font-semibold text-gray-700">
+                      Subject *
+                    </label>
+                    <input
+                      type="text"
+                      name="subject"
+                      id="subject"
+                      placeholder="e.g., Support"
+                      disabled={isSubmitting}
+                      className={`${inputBaseClasses} ${errors.subject ? 'border-red-500' : ''}`}
+                      value={formData.subject}
+                      onChange={handleChange}
+                    />
+                    {errors.subject && <p className="text-red-500 text-xs mt-1 italic">{errors.subject}</p>}
+                  </div>
+                </div>
+
+                {/* First Name and Last Name (Second Row) */}
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+                  {/* First Name Field */}
+                  <div className="space-y-1">
+                    <label htmlFor="firstName" className="block text-sm font-semibold text-gray-700">
+                      First name *
+                    </label>
+                    <input
+                      type="text"
+                      name="firstName"
+                      id="firstName"
+                      placeholder="First name"
+                      disabled={isSubmitting}
+                      className={`${inputBaseClasses} ${errors.firstName ? 'border-red-500' : ''}`}
+                      value={formData.firstName}
+                      onChange={handleChange}
+                    />
+                    {errors.firstName && <p className="text-red-500 text-xs mt-1 italic">{errors.firstName}</p>}
+                  </div>
+
+                  {/* Last Name Field */}
+                  <div className="space-y-1">
+                    <label htmlFor="lastName" className="block text-sm font-semibold text-gray-700">
+                      Last name *
+                    </label>
+                    <input
+                      type="text"
+                      name="lastName"
+                      id="lastName"
+                      placeholder="Last name"
+                      disabled={isSubmitting}
+                      className={`${inputBaseClasses} ${errors.lastName ? 'border-red-500' : ''}`}
+                      value={formData.lastName}
+                      onChange={handleChange}
+                    />
+                    {errors.lastName && <p className="text-red-500 text-xs mt-1 italic">{errors.lastName}</p>}
+                  </div>
+                </div>
+
+                {/* Phone and Nature of Business (Third Row) */}
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+                  {/* Phone Field */}
+                  <div className="space-y-1">
+                    <label htmlFor="phone" className="block text-sm font-semibold text-gray-700">
+                      Phone *
+                    </label>
+                    <input
+                      type="tel"
+                      name="phone"
+                      id="phone"
+                      placeholder="Phone"
+                      disabled={isSubmitting}
+                      className={`${inputBaseClasses} ${errors.phone ? 'border-red-500' : ''}`}
+                      value={formData.phone}
+                      onChange={handleChange}
+                    />
+                    {errors.phone && <p className="text-red-500 text-xs mt-1 italic">{errors.phone}</p>}
+                  </div>
+
+                  {/* Nature of Business Dropdown */}
+                  <div className="space-y-1">
+                    <label htmlFor="natureOfBusiness" className="block text-sm font-semibold text-gray-700">
+                      Nature of Business *
+                    </label>
+                    <div className="relative">
+                      <select
+                      name="natureOfBusiness"
+                      id="natureOfBusiness"
+                      disabled={isSubmitting}
+                      className={`${inputBaseClasses} ${errors.natureOfBusiness ? 'border-red-500' : ''}`}
+                      value={formData.natureOfBusiness}
+                      onChange={handleChange}
+                      >
+                      {businessOptions.map(option => (
+                          <option key={option} value={option} disabled={option === businessOptions[0]}>
+                          {option}
+                          </option>
+                      ))}
+                      </select>
+                      {/* Dropdown Icon color adjusted to green */}
+                      <svg className="absolute right-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-green-600 pointer-events-none" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7"></path></svg>
+                    </div>
+                    {errors.natureOfBusiness && <p className="text-red-500 text-xs mt-1 italic">{errors.natureOfBusiness}</p>}
+                  </div>
+                </div>
+
+                {/* Message Field (Final Row) */}
+                <div className="mb-8 space-y-1">
+                  <label htmlFor="message" className="block text-sm font-semibold text-gray-700">
+                    Your message *
+                  </label>
+                  <textarea
+                    name="message"
+                    id="message"
+                    rows="6"
+                    placeholder="Enter text here"
+                    disabled={isSubmitting}
+                    className={`${inputBaseClasses} resize-none h-40 ${errors.message ? 'border-red-500' : ''}`}
+                    value={formData.message}
+                    onChange={handleChange}
+                  ></textarea>
+                  {errors.message && <p className="text-red-500 text-xs mt-1 italic">{errors.message}</p>}
+                </div>
+
+                {/* Submit Button with Loading/Hover Effects */}
+                <button
+                  type="submit"
+                  disabled={isSubmitting}
+                  className={`w-1/2 bg-green-600 text-white font-bold py-3 px-6 rounded-lg 
+                            shadow-md transition duration-300 ease-in-out flex items-center justify-center
+                            ${isSubmitting 
+                              ? 'bg-green-400 cursor-not-allowed' 
+                              : 'hover:bg-green-700 hover:shadow-lg focus:ring-4 focus:ring-green-300 transform hover:-translate-y-0.5'
+                            }`}
+                >
+                  {isSubmitting && <Spinner />}
+                  {isSubmitting ? 'Sending...' : 'Send'}
+                </button>
+              </form>
+            )}
+          </div>
+          
+          {/* --- COLUMN 2: CONTACT DETAILS --- */}
+          <div className="md:col-span-1 border-green-100/50 pt-12 md:pt-0 md:border-l-4">
+            <ContactDetails />
+          </div>
+        </div>
+      </div>
+    </div>
+    <Footer/>
+    </>
+  );
+}
