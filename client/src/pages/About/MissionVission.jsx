@@ -1,6 +1,8 @@
 import React from 'react';
 import Navbar from '../../Components/Navbar';
 import Footer from '../../Components/Footer';
+import bg from '../../assets/bg.jpg'
+
 
 // Importing images for values
 import customerCommitment from '../../assets/CustomerCoomitment.png';
@@ -80,8 +82,11 @@ const MissionVision = () => {
   return (
     <>
       <Navbar />
-      <div className="min-h-screen bg-gray-50">
-        {/* Hero Section */}
+      <div
+        className="min-h-screen bg-cover bg-center "
+        style={{ backgroundImage: `url(${bg})` }}
+      >   
+          {/* Hero Section */}
         <div className="bg-gradient-to-r from-green-700 to-green-900 pt-32 pb-16">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
             <h1 className="text-4xl font-bold text-white sm:text-5xl md:text-6xl">

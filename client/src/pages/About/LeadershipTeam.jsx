@@ -6,6 +6,7 @@ import Pinakii from "../../assets/Pinaki_Chatterjee.avif";
 import Senthil from "../../assets/Senthil_VP_Kumar.avif";
 import Govind from "../../assets/Govind_Madhav.avif";
 import Chandan from "../../assets/Chandan_Sharma.avif";
+import bg from '../../assets/bg.jpg'
 
 const leaders = [
   {
@@ -42,7 +43,10 @@ const LeadershipTeam = () => {
   return (
     <>
       <Navbar />
-      <div className="min-h-screen bg-gray-50">
+      <div
+        className="min-h-screen bg-cover bg-center "
+        style={{ backgroundImage: `url(${bg})` }}
+      >         
         {/* Hero Section */}
         <div className="bg-gradient-to-r from-green-700 to-green-900 pt-32 pb-16">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">

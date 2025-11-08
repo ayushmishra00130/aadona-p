@@ -1,7 +1,8 @@
 import React from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom"; // ✅ Added Link import
 import Navbar from "../../Components/Navbar";
 import Footer from "../../Components/Footer";
+import bg from '../../assets/bg.jpg';
 
 const CareerCard = ({ title, description }) => (
   <div className="bg-white rounded-lg shadow-lg p-8 transition-all hover:shadow-xl">
@@ -17,7 +18,15 @@ const Careers = () => {
     <>
       <Navbar />
 
-      <div className="min-h-screen bg-gray-50">
+      <div
+        className="min-h-screen bg-cover bg-center"
+        style={{
+          backgroundImage: `url(${bg})`,
+          backgroundSize: 'cover',
+          backgroundRepeat: 'no-repeat',
+          backgroundPosition: 'center',
+        }}
+      >
         {/* Hero Section */}
         <div className="bg-gradient-to-r from-green-700 to-green-900 pt-32 pb-16">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
@@ -53,12 +62,13 @@ const Careers = () => {
 
           {/* Apply Now Button */}
           <div className="text-center mt-16">
-            <button
-              onClick={() => navigate("/applyNow")}
-              className="inline-flex items-center px-8 py-4 border border-transparent text-lg font-medium rounded-md text-white bg-green-700 hover:bg-green-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500 transition-all"
-            >
-              Apply Now
-            </button>
+            <Link to="/applyNow">
+              <button
+                className="inline-flex items-center px-8 py-4 border border-transparent text-lg font-medium rounded-md text-white bg-green-700 hover:bg-green-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500 transition-all"
+              >
+                Apply Now
+              </button>
+            </Link>
           </div>
         </div>
       </div>

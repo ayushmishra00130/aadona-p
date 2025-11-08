@@ -24,6 +24,14 @@ import ProductSupport from './pages/support/Product-support'
 import SupportTools from './pages/support/Support-tools'
 import CustomersPage from './Components/CustomersPage'
 import Chatbot from './Components/Chatbot'
+import TechSquad from './pages/support/Tech_Squad'
+import Warranty from './pages/support/Warranty'
+import NetworkStorageCalculator from './pages/support/NetworkStorageCalculator'
+import RequestDda from './pages/support/Request_DOA'
+import WarrantyCheck from './pages/support/WarrantyCheckButton'
+import WhistleBlowerButton from './pages/About/WhistleBlowerButton'
+import ApplyNow from './pages/About/ApplyNow'
+
 
 const App = () => {
   return (
@@ -47,6 +55,8 @@ const App = () => {
           <Route  path='/missionVision' element={<MissionVission/>}/>
           <Route  path='/ourCustomers' element={<OurCustomer/>}/>
           <Route  path='/whistleBlower' element={<WhistleBlower/>}/>
+          <Route  path='/whistleButton' element={<WhistleBlowerButton/>}/>
+          <Route  path='/applyNow' element={<ApplyNow/>}/>
 
 
           <Route path='/contactus' element={<ContactUs/>}/>
@@ -60,6 +70,11 @@ const App = () => {
           <Route path='/productSupport' element={<ProductSupport/>}/>
           <Route path='/supportTools' element={<SupportTools/>}/>
           <Route path='/productRegistration' element={<ProductRegistration/>}/>
+          <Route path='/networkstorageCalculator' element={<NetworkStorageCalculator/>}/>
+          <Route path='/requestDda' element={<RequestDda/>}/>
+          <Route path='/techSquad' element={<TechSquad/>}/>
+          <Route path='/warranty' element={<Warranty/>}/>
+          <Route path='/warrantyCheck' element={<WarrantyCheck/>}/>
 
 
           {/* Customers */}

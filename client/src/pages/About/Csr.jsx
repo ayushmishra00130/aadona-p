@@ -2,13 +2,17 @@ import React from 'react';
 import Navbar from '../../Components/Navbar';
 import Footer from '../../Components/Footer';
 import { Link } from 'react-router-dom';
+import bg from '../../assets/bg.jpg'
 
 const Csr = () => {
   return (
     <>
       <Navbar />
-      <div className="min-h-screen bg-gray-50">
-        {/* Hero Section */}
+      <div
+        className="min-h-screen bg-cover bg-center "
+        style={{ backgroundImage: `url(${bg})` }}
+      >    
+          {/* Hero Section */}
         <div className="bg-gradient-to-r from-green-700 to-green-900 pt-32 pb-16">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center">
@@ -81,7 +85,7 @@ const Csr = () => {
                     <p className="text-3xl font-bold text-green-700">100%</p>
                     <p className="text-sm text-gray-600">Commitment to Supporting Veterans</p>
                   </div>
-                  <div className="border-b pb-4">
+                  <div className=" pb-4">
                     <p className="text-sm text-gray-600">Join AADONA in making a difference</p>
                     <Link
                       to="/contactus"

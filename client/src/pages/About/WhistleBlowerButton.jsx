@@ -2,6 +2,9 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 import Navbar from "../../Components/Navbar";
 import Footer from "../../Components/Footer";
+import bg from '../../assets/bg.jpg'
+
+
 
 const WhistleBlowerButton = () => {
   const navigate = useNavigate();
