@@ -1,150 +1,212 @@
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
 import Navbar from '../../Components/Navbar';
 import Footer from '../../Components/Footer';
 import bg from '../../assets/bg.jpg';
 
-// Dynamically import all images from Media-Center and subfolders
-const imageModules = import.meta.glob('../../assets/Media-Center/**/*.{png,jpg,jpeg,gif}', { eager: true });
+// Import images
+const imageModules = import.meta.glob(
+  '../../assets/Media-Center/Media-Center/**/*.{png,jpg,jpeg}',
+  { eager: true }
+);
 
-// --- Asset Mapping Logic ---
+// Build categories from folder structure
 const buildCategoryData = (modules) => {
-  const categoryMap = new Map();
+  const map = new Map();
 
   for (const path in modules) {
-    const imageUrl = modules[path].default || modules[path];
-    const pathParts = path.split('/');
-    const mediaCenterIndex = pathParts.findIndex(part => part === 'Media-Center');
-    if (mediaCenterIndex === -1 || pathParts.length <= mediaCenterIndex + 1) continue;
+    const img = modules[path].default;
+    const parts = path.split('/');
+    const idx = parts.lastIndexOf('Media-Center');
+    const category = parts[idx + 1];
+    if (!category) continue;
 
-    const categoryTitle = pathParts[mediaCenterIndex + 1];
-    if (!categoryMap.has(categoryTitle)) {
-      categoryMap.set(categoryTitle, []);
-    }
-    categoryMap.get(categoryTitle).push(imageUrl);
+    if (!map.has(category)) map.set(category, []);
+    map.get(category).push(img);
   }
 
-  return Array.from(categoryMap.entries()).map(([title, images]) => ({
+  return Array.from(map.entries()).map(([title, images]) => ({
     title,
-    images,
+    images
   }));
 };
 
-const initialCategories = buildCategoryData(imageModules);
+const categories = buildCategoryData(imageModules);
 
-// --- React Component ---
-const MediaCenter = () => {
+export default function MediaCenter() {
   const [selectedImage, setSelectedImage] = useState(null);
-  const [categories] = useState(initialCategories);
 
-  const downloadImage = (imageUrl) => {
-    fetch(imageUrl)
-      .then((response) => response.blob())
+  // safe hook: single ref storage for all scroll containers
+  const scrollRefs = useRef({});
+
+  const downloadImage = (url) => {
+    fetch(url)
+      .then((r) => r.blob())
       .then((blob) => {
-        const blobUrl = window.URL.createObjectURL(blob);
-        const link = document.createElement('a');
-        link.href = blobUrl;
-        link.download = imageUrl.split('/').pop().split('?')[0];
-        document.body.appendChild(link);
-        link.click();
-        document.body.removeChild(link);
-        window.URL.revokeObjectURL(blobUrl);
-      })
-      .catch((error) => console.error('Error downloading image:', error));
+        const a = document.createElement('a');
+        a.href = URL.createObjectURL(blob);
+        a.download = url.split('/').pop();
+        a.click();
+      });
   };
 
   return (
     <>
       <Navbar />
+
+      {/* Banner */}
+      <div className="bg-green-400/10 pt-12 pb-12 shadow-inner mt-20">
+        <h1 className="text-5xl font-bold text-green-900 text-center">Media Center</h1>
+      </div>
+
+      {/* Background */}
       <div
-        className="min-h-screen bg-cover bg-center"
+        className="min-h-screen w-full py-16"
         style={{
           backgroundImage: `url(${bg})`,
           backgroundSize: 'cover',
-          backgroundRepeat: 'no-repeat',
-          backgroundPosition: 'center',
+          backgroundPosition: 'center'
         }}
       >
-        {/* Hero Section */}
-        <div className="bg-green-400/10 pt-12 pb-12 shadow-inner mt-20">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-            <h1 className="text-5xl font-bold tracking-tight text-green-900 sm:text-6xl">
-              Media Center
-            </h1>
-          </div>
-        </div>
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 backdrop-blur-sm bg-white/40 py-10 rounded-2xl shadow-lg space-y-24">
 
-        {/* Categories */}
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-10 space-y-16">
-          {categories.map((category, idx) => (
-            <div key={idx}>
-              <h2 className="text-3xl font-semibold text-green-800 mb-6 border-b-2 border-green-300 pb-2">
-                {category.title}
-              </h2>
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-                {category.images.map((img, i) => (
-                  <div
-                    key={i}
-                    className="relative aspect-video rounded-lg overflow-hidden shadow-xl group cursor-pointer"
-                    onClick={() => setSelectedImage(img)}
+          {categories.map((cat, i) => {
+            // create scroll ref for this category if not exists
+            if (!scrollRefs.current[cat.title]) {
+              scrollRefs.current[cat.title] = React.createRef();
+            }
+
+            return (
+              <section key={i}>
+                <h2 className="text-4xl font-bold text-green-800 text-center mb-10">
+                  {cat.title}
+                </h2>
+
+                {/* Horizontal scroll with transparent arrows */}
+                <div className="relative group">
+
+                  {/* LEFT ARROW */}
+                  <button
+                    onClick={() =>
+                      scrollRefs.current[cat.title].current.scrollBy({
+                        left: -350,
+                        behavior: "smooth"
+                      })
+                    }
+                    className="
+                      hidden md:flex absolute left-0 top-1/2 -translate-y-1/2 
+                      text-white text-6xl font-bold
+                      px-2 py-6
+                      opacity-0 group-hover:opacity-100 
+                      hover:text-green-200 
+                      transition-all z-20
+                    "
                   >
-                    <img
-                      src={img}
-                      alt={`${category.title} ${i + 1}`}
-                      loading="lazy"
-                      className="object-cover w-full h-full transition-transform duration-300 group-hover:scale-105"
-                    />
-                    <button
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        downloadImage(img);
-                      }}
-                      className="absolute bottom-3 right-3 bg-green-700 text-white text-sm px-3 py-1 rounded hover:bg-green-800 opacity-80 hover:opacity-100 transition-opacity"
-                    >
-                      Download
-                    </button>
+                    ‹
+                  </button>
+
+                  {/* Scroll container */}
+                  <div
+                    ref={scrollRefs.current[cat.title]}
+                    className="overflow-x-auto hide-scrollbar scroll-smooth snap-x snap-mandatory px-2 pb-4"
+                  >
+                    <div className="flex gap-8">
+
+                      {cat.images.map((img, idx) => (
+                        <div
+                          key={idx}
+                          className="
+                            min-w-[250px] bg-white/80 backdrop-blur rounded-xl shadow-md
+                            transition-all duration-300 cursor-pointer p-4 snap-start
+                            hover:scale-110 hover:z-20 hover:shadow-2xl hover:brightness-110
+                          "
+                          onClick={() => setSelectedImage(img)}
+                        >
+                          <img
+                            src={img}
+                            className="w-full h-48 object-cover rounded-lg"
+                          />
+
+                          <button
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              downloadImage(img);
+                            }}
+                            className="mt-3 w-full bg-green-600 text-white py-2 rounded-lg hover:bg-green-700"
+                          >
+                            Download
+                          </button>
+                        </div>
+                      ))}
+
+                    </div>
                   </div>
-                ))}
-              </div>
-            </div>
-          ))}
+
+                  {/* RIGHT ARROW */}
+                  <button
+                    onClick={() =>
+                      scrollRefs.current[cat.title].current.scrollBy({
+                        left: 350,
+                        behavior: "smooth"
+                      })
+                    }
+                    className="
+                      hidden md:flex absolute right-0 top-1/2 -translate-y-1/2 
+                      text-white text-6xl font-bold
+                      px-2 py-6
+                      opacity-0 group-hover:opacity-100 
+                      hover:text-green-200 
+                      transition-all z-20
+                    "
+                  >
+                    ›
+                  </button>
+
+                </div>
+              </section>
+            );
+          })}
+
         </div>
 
-        {/* Fullscreen Modal */}
+        {/* Fullscreen preview modal */}
         {selectedImage && (
           <div
-            className="fixed inset-0 bg-black/90 flex items-center justify-center z-50 p-4"
-            role="dialog"
-            aria-modal="true"
+            className="fixed inset-0 bg-black/90 flex items-center justify-center z-50"
             onClick={() => setSelectedImage(null)}
           >
             <img
-              onClick={(e) => e.stopPropagation()}
               src={selectedImage}
-              alt="Full view"
-              className="max-h-[90vh] max-w-[90vw] rounded-lg object-contain"
+              className="max-w-[90vw] max-h-[90vh] rounded-lg"
+              onClick={(e) => e.stopPropagation()}
             />
             <button
-              onClick={(e) => {
-                e.stopPropagation();
-                downloadImage(selectedImage);
-              }}
-              className="absolute bottom-10 bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700"
-            >
-              Download Image
-            </button>
-            <button
+              className="absolute top-6 right-6 text-white text-3xl"
               onClick={() => setSelectedImage(null)}
-              className="absolute top-6 right-6 text-white text-3xl font-bold hover:text-green-400"
-              aria-label="Close modal"
             >
               ✕
             </button>
           </div>
         )}
+
       </div>
+
       <Footer />
+
+      <style>{`
+        .hide-scrollbar::-webkit-scrollbar { display: none; }
+        .hide-scrollbar { scrollbar-width: none; }
+      `}</style>
     </>
   );
-};
+}
 
-export default MediaCenter;
+
+
+
+
+
+
+
+
+
+

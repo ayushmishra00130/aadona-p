@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import Footer from "../../Components/Footer";
 import Navbar from "../../Components/Navbar";
+import bg from "../../assets/bg.jpg";
+
 
 const COUNTRIES = [
   "Afghanistan","Aland Islands","Albania","Algeria","American Samoa","Andorra","Angola","Anguilla",
@@ -124,8 +126,19 @@ export default function BecomePartner() {
 
   return (
     <>
-    <Navbar/>
-    <div className="min-h-screen bg-white text-gray-800 pb-16 mt-20 mb-20">
+ <Navbar/>
+<div
+  className="min-h-screen bg-cover bg-center bg-fixed text-gray-800 pb-16 mt-20 mb-20"
+  style={{
+    backgroundImage: `url(${bg})`,
+    backgroundSize: "cover",
+    backgroundRepeat: "no-repeat",
+  }}
+>
+
+
+
+
       {/* Hero Section */}
     
        <div className="bg-green-400/10 pt-12 pb-12 shadow-inner mt-20">
@@ -386,6 +399,5 @@ export default function BecomePartner() {
     </>
   );
 }
-
 
 
