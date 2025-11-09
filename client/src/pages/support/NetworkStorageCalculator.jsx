@@ -16,6 +16,7 @@ import {
   RefreshCw,
   Check,
 } from "lucide-react";
+import bg from '../../assets/bg.jpg'; // CSR-style background
 
 /* ---------- simple reveal animation ---------- */
 const Reveal = ({ children, className = "" }) => {
@@ -82,12 +83,12 @@ function zfsCalc({
   vdevWidth,
   useOpenZFSSlop,
   manualSlopPct,
-  reservePct,
   recordSizeKiB,
   ashift,
   diskSwapGiB,
   fastDraid,
   decimalPlaces,
+  reservePct,
 }) {
   const usableDisks = Math.max(0, totalDisks - minSpares);
   const diskBytes = toBytes(diskSize, unit);
@@ -182,14 +183,12 @@ const SHELF_SIZES = [
 ];
 
 function shelfPlanCells(totalDisks) {
-  // returns { rows: [{name,bays}], cols: head sizes, matrix: cell[] }
   const rows = SHELF_SIZES.map((s) => ({ name: s.label, bays: s.bays }));
   const cols = HEAD_SIZES;
   const matrix = rows.map((row) =>
     cols.map((head) => {
       const base = head;
       if (totalDisks <= base) {
-        // fits in head only
         const free = base - totalDisks;
         return { shelves: 0, free, cap: base };
       }
@@ -347,11 +346,10 @@ const NetworkStorageCalculator = () => {
       const row = { sizeTB: sz, cells: [] };
       QUICK_COLS.forEach((col) => {
         if (col.type === "raw") {
-          // Raw usable == disksUsed * diskSize after spares & vdev packing. For a simple glance, show "raw before overhead".
           const tmp = zfsCalc({
             ...pending,
             diskSize: sz,
-            vdevType: "mirror", // doesn’t matter; we'll compute vdevs with width=1 to reflect disksUsed
+            vdevType: "mirror",
             vdevWidth: 1,
           });
           row.cells.push({ key: col.key, text: fromBytes(tmp.details.pool_usable_before_overhead_b, pending.unit) });
@@ -375,850 +373,867 @@ const NetworkStorageCalculator = () => {
       <Navbar />
 
       {/* Banner */}
-      <section className="mt-16 bg-green-50 shadow-inner">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 text-center">
-          <h1 className="text-5xl md:text-6xl font-bold text-green-800">
-            Network Storage Calculator
-          </h1>
-          <p className="mt-3 text-green-700 text-lg md:text-xl">
-            Configure disks, vdevs and overhead to see your pool’s usable
-            capacity and efficiency.
-          </p>
-        </div>
-      </section>
-
-      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 space-y-10">
-        {/* Quick Guide */}
-        <Reveal>
-          <section className={liftCard}>
-            <h2 className="text-2xl font-bold text-slate-900 mb-4">
-              Quick Configuration Guide
-            </h2>
-            <ul className="space-y-2 text-slate-700">
-              <li>
-                <strong>Mirror:</strong> best performance & resiliency, lowest
-                capacity efficiency.
-              </li>
-              <li>
-                <strong>RAIDZ2:</strong> popular balance of efficiency vs
-                rebuild risk.
-              </li>
-              <li>
-                <strong>RAIDZ3:</strong> better multi-disk failure tolerance
-                with moderate efficiency.
-              </li>
-              <li>
-                <strong>OpenZFS slop:</strong> keep some space free for stable
-                operations; reservation further ensures performance margins.
-              </li>
-            </ul>
-          </section>
-        </Reveal>
-
-        {/* ---------- NEW: Shelf Planner (like the screenshot’s top table) ---------- */}
-        <Reveal>
-          <section className={liftCard}>
-            <div className="flex items-center gap-3 mb-4">
-              <HardDrive className="w-6 h-6 text-green-700" />
-              <h2 className="text-2xl font-bold text-slate-900">
-                TrueNAS Hardware: Shelf Planner
-              </h2>
+      <div
+        className="min-h-screen bg-cover bg-center"
+        style={{
+          backgroundImage: `url(${bg})`,
+          backgroundSize: 'cover',
+          backgroundRepeat: 'no-repeat',
+          backgroundPosition: 'center',
+        }}
+      >
+        {/* CSR-style Hero Section */}
+         <div className="bg-gradient-to-r from-green-700 to-green-900 pt-32 pb-16">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="text-center">
+              <h1 className="text-4xl font-bold text-white sm:text-5xl md:text-6xl">
+                Network Storage Calculator
+              </h1>
+              <p className="mt-6 text-xl text-green-100 max-w-3xl mx-auto">
+                Configure disks, vdevs and overhead to see your pool’s usable capacity and efficiency.
+              </p>
             </div>
-            <p className="text-slate-600 text-sm mb-4">
-              Shows expansion shelf requirements for different head chassis. Click a
-              cell to set pool capacity to that total.
-            </p>
+          </div>
+        </div>
 
-            {(() => {
-              const { rows, cols, matrix } = shelfPlanCells(pending.totalDisks);
-              return (
+        {/* IMPORTANT: removed the large opaque wrapper here so background stays visible.
+            We now render sections directly and each section is a readable `liftCard`. */}
+
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 -mt-8">
+          {/* original main content (sections kept as cards) */}
+          <main className="py-6 space-y-10">
+            {/* Quick Guide */}
+            <Reveal>
+              <section className={liftCard}>
+                <h2 className="text-2xl font-bold text-slate-900 mb-4">
+                  Quick Configuration Guide
+                </h2>
+                <ul className="space-y-2 text-slate-700">
+                  <li>
+                    <strong>Mirror:</strong> best performance & resiliency, lowest
+                    capacity efficiency.
+                  </li>
+                  <li>
+                    <strong>RAIDZ2:</strong> popular balance of efficiency vs
+                    rebuild risk.
+                  </li>
+                  <li>
+                    <strong>RAIDZ3:</strong> better multi-disk failure tolerance
+                    with moderate efficiency.
+                  </li>
+                  <li>
+                    <strong>OpenZFS slop:</strong> keep some space free for stable
+                    operations; reservation further ensures performance margins.
+                  </li>
+                </ul>
+              </section>
+            </Reveal>
+
+            {/* Shelf Planner */}
+            <Reveal>
+              <section className={liftCard}>
+                <div className="flex items-center gap-3 mb-4">
+                  <HardDrive className="w-6 h-6 text-green-700" />
+                  <h2 className="text-2xl font-bold text-slate-900">
+                    TrueNAS Hardware: Shelf Planner
+                  </h2>
+                </div>
+                <p className="text-slate-600 text-sm mb-4">
+                  Shows expansion shelf requirements for different head chassis. Click a
+                  cell to set pool capacity to that total.
+                </p>
+
+                {(() => {
+                  const { rows, cols, matrix } = shelfPlanCells(pending.totalDisks);
+                  return (
+                    <div className="overflow-x-auto">
+                      <table className="w-full text-left text-sm">
+                        <thead>
+                          <tr className="border-b border-slate-200 text-slate-600">
+                            <th className="py-2 pr-4">Shelf Count</th>
+                            {cols.map((c) => (
+                              <th key={c} className="py-2 pr-4">{c}-Bay Head</th>
+                            ))}
+                          </tr>
+                        </thead>
+                        <tbody>
+                          {rows.map((row, rIdx) => (
+                            <tr key={row.name} className="border-b last:border-0 border-slate-100">
+                              <td className="py-2 pr-4 font-medium">{row.name}</td>
+                              {cols.map((c, cIdx) => {
+                                const cell = matrix[rIdx][cIdx];
+                                const label = `${cell.shelves} (${cell.free} free)`;
+                                return (
+                                  <td
+                                    key={`${rIdx}-${cIdx}`}
+                                    className="py-2 pr-4 hover:bg-green-50 cursor-pointer rounded"
+                                    onClick={() =>
+                                      setPending((s) => ({ ...s, totalDisks: cell.cap }))
+                                    }
+                                  >
+                                    {label}
+                                  </td>
+                                );
+                              })}
+                            </tr>
+                          ))}
+                        </tbody>
+                      </table>
+                    </div>
+                  );
+                })()}
+              </section>
+            </Reveal>
+
+            {/* Main Controls */}
+            <Reveal>
+              <section className={liftCard}>
+                <div className="flex items-center gap-3 mb-4">
+                  <Settings2 className="w-6 h-6 text-green-700" />
+                  <h2 className="text-2xl font-bold text-slate-900">
+                    Configuration
+                  </h2>
+                </div>
+
+                {warn && (
+                  <div className="mb-4 rounded-xl border border-amber-200 bg-amber-50 p-4 text-amber-800 flex items-start gap-2">
+                    <AlertTriangle className="w-5 h-5 mt-0.5" />
+                    <p className="text-sm">{warn}</p>
+                  </div>
+                )}
+
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
+                  {/* Disks */}
+                  <div>
+                    <label className="block text-slate-700 font-medium mb-1">
+                      Total Disks in Pool
+                    </label>
+                    <div className="flex gap-2">
+                      <button
+                        type="button"
+                        onClick={() =>
+                          setPending((s) => ({
+                            ...s,
+                            totalDisks: clampNum(s.totalDisks - 1, 0),
+                          }))
+                        }
+                        className="px-3 rounded-lg border border-green-300 text-green-700 hover:bg-green-50"
+                      >
+                        <Minus className="w-4 h-4" />
+                      </button>
+                      <input
+                        type="number"
+                        min={0}
+                        className={inputBase}
+                        value={pending.totalDisks}
+                        onChange={(e) =>
+                          setPending((s) => ({
+                            ...s,
+                            totalDisks: clampNum(e.target.value, 0),
+                          }))
+                        }
+                      />
+                      <button
+                        type="button"
+                        onClick={() =>
+                          setPending((s) => ({
+                            ...s,
+                            totalDisks: clampNum(s.totalDisks + 1, 0),
+                          }))
+                        }
+                        className="px-3 rounded-lg border border-green-300 text-green-700 hover:bg-green-50"
+                      >
+                        <Plus className="w-4 h-4" />
+                      </button>
+                    </div>
+                  </div>
+
+                  <div>
+                    <label className="block text-slate-700 font-medium mb-1">
+                      Minimum Spares
+                    </label>
+                    <input
+                      type="number"
+                      min={0}
+                      className={inputBase}
+                      value={pending.minSpares}
+                      onChange={(e) =>
+                        setPending((s) => ({
+                          ...s,
+                          minSpares: clampNum(e.target.value, 0),
+                        }))
+                      }
+                    />
+                  </div>
+
+                  <div>
+                    <label className="block text-slate-700 font-medium mb-1">
+                      New Disk Size
+                    </label>
+                    <div className="flex gap-2">
+                      <input
+                        type="number"
+                        min={0}
+                        step="0.01"
+                        className={inputBase}
+                        value={pending.diskSize}
+                        onChange={(e) =>
+                          setPending((s) => ({
+                            ...s,
+                            diskSize: clampNum(e.target.value, 0),
+                          }))
+                        }
+                      />
+                      <select
+                        className={`${inputBase} w-28`}
+                        value={pending.unit}
+                        onChange={(e) =>
+                          setPending((s) => ({ ...s, unit: e.target.value }))
+                        }
+                      >
+                        <option value="TB">TB/GB</option>
+                        <option value="TiB">TiB/GiB</option>
+                      </select>
+                    </div>
+                  </div>
+
+                  {/* VDEV */}
+                  <div>
+                    <label className="block text-slate-700 font-medium mb-1">
+                      New vdev Type
+                    </label>
+                    <select
+                      className={inputBase}
+                      value={pending.vdevType}
+                      onChange={(e) =>
+                        setPending((s) => ({ ...s, vdevType: e.target.value }))
+                      }
+                    >
+                      <option value="mirror">Mirror</option>
+                      <option value="raidz1">RAIDZ1</option>
+                      <option value="raidz2">RAIDZ2</option>
+                      <option value="raidz3">RAIDZ3</option>
+                    </select>
+                  </div>
+
+                  <div>
+                    <label className="block text-slate-700 font-medium mb-1">
+                      New vdev Width
+                    </label>
+                    <input
+                      type="number"
+                      min={1}
+                      className={inputBase}
+                      value={pending.vdevWidth}
+                      onChange={(e) =>
+                        setPending((s) => ({
+                          ...s,
+                          vdevWidth: clampNum(e.target.value, 1),
+                        }))
+                      }
+                    />
+                  </div>
+
+                  {/* OpenZFS slop */}
+                  <div className="flex flex-col">
+                    <label className="block text-slate-700 font-medium mb-1">
+                      OpenZFS 2.0.7 Slop
+                    </label>
+                    <label className="inline-flex items-center gap-2">
+                      <input
+                        type="checkbox"
+                        className="accent-green-600"
+                        checked={pending.useOpenZFSSlop}
+                        onChange={(e) =>
+                          setPending((s) => ({
+                            ...s,
+                            useOpenZFSSlop: e.target.checked,
+                          }))
+                        }
+                      />
+                      <span className="text-sm text-slate-700">Enabled</span>
+                    </label>
+                    {!pending.useOpenZFSSlop && (
+                      <div className="mt-2">
+                        <label className="block text-slate-600 text-sm">
+                          Manual Slop (%)
+                        </label>
+                        <input
+                          type="number"
+                          min={0}
+                          step="0.1"
+                          className={inputBase}
+                          value={pending.manualSlopPct}
+                          onChange={(e) =>
+                            setPending((s) => ({
+                              ...s,
+                              manualSlopPct: clampNum(e.target.value, 0, 50),
+                            }))
+                          }
+                        />
+                      </div>
+                    )}
+                  </div>
+
+                  {/* recordsize / ashift / swap */}
+                  <div>
+                    <label className="block text-slate-700 font-medium mb-1">
+                      ZFS recordsize value
+                    </label>
+                    <div className="flex gap-2">
+                      <input
+                        type="number"
+                        min={4}
+                        step="4"
+                        className={inputBase}
+                        value={pending.recordSizeKiB}
+                        onChange={(e) =>
+                          setPending((s) => ({
+                            ...s,
+                            recordSizeKiB: clampNum(e.target.value, 4, 1024),
+                          }))
+                        }
+                      />
+                      <span className="self-center text-slate-600">KiB</span>
+                    </div>
+                  </div>
+
+                  <div>
+                    <label className="block text-slate-700 font-medium mb-1">
+                      ZFS ashift value
+                    </label>
+                    <input
+                      type="number"
+                      min={9}
+                      max={16}
+                      className={inputBase}
+                      value={pending.ashift}
+                      onChange={(e) =>
+                        setPending((s) => ({
+                          ...s,
+                          ashift: clampNum(e.target.value, 9, 16),
+                        }))
+                      }
+                    />
+                  </div>
+
+                  <div>
+                    <label className="block text-slate-700 font-medium mb-1">
+                      Disk Swap Size
+                    </label>
+                    <div className="flex gap-2">
+                      <input
+                        type="number"
+                        min={0}
+                        className={inputBase}
+                        value={pending.diskSwapGiB}
+                        onChange={(e) =>
+                          setPending((s) => ({
+                            ...s,
+                            diskSwapGiB: clampNum(e.target.value, 0, 1024),
+                          }))
+                        }
+                      />
+                      <span className="self-center text-slate-600">GiB</span>
+                    </div>
+                  </div>
+
+                  {/* decimal places */}
+                  {decimalPlacesControl}
+
+                  {/* table data radio */}
+                  <div>
+                    <label className="block text-slate-700 font-medium mb-1">
+                      Table Data
+                    </label>
+                    <div className="space-y-2">
+                      {[
+                        { key: "usableTiB", label: "Usable Capacity (TiB)" },
+                        { key: "usableTB", label: "Usable Capacity (TB)" },
+                        { key: "efficiency", label: "Capacity Efficiency" },
+                        { key: "overhead", label: "ZFS Overhead" },
+                        { key: "capReservation", label: "Cap. w/ Reservation" },
+                      ].map((r) => (
+                        <label key={r.key} className="flex items-center gap-2">
+                          <input
+                            type="radio"
+                            name="tableData"
+                            className="accent-green-600"
+                            checked={pending.tableData === r.key}
+                            onChange={() =>
+                              setPending((s) => ({ ...s, tableData: r.key }))
+                            }
+                          />
+                          <span className="text-sm text-slate-700">{r.label}</span>
+                        </label>
+                      ))}
+                    </div>
+                  </div>
+
+                  {/* deflate ratio */}
+                  <div className="flex items-center gap-3">
+                    <label className="inline-flex items-center gap-2">
+                      <input
+                        type="checkbox"
+                        className="accent-green-600"
+                        checked={cfg.showDeflate}
+                        onChange={(e) => patch({ showDeflate: e.target.checked })}
+                      />
+                      <span className="text-sm text-slate-700">Show Deflate Ratio</span>
+                    </label>
+                  </div>
+
+                  {/* fast dRAID */}
+                  <div className="flex items-center gap-3">
+                    <label className="inline-flex items-center gap-2">
+                      <input
+                        type="checkbox"
+                        className="accent-green-600"
+                        checked={pending.fastDraid}
+                        onChange={(e) =>
+                          setPending((s) => ({ ...s, fastDraid: e.target.checked }))
+                        }
+                      />
+                      <span className="text-sm text-slate-700">
+                        Fast dRAID Calculation
+                      </span>
+                    </label>
+                  </div>
+
+                  {/* AFR toggle */}
+                  <div className="flex flex-col">
+                    <label className="inline-flex items-center gap-2">
+                      <input
+                        type="checkbox"
+                        className="accent-green-600"
+                        checked={pending.showAFR}
+                        onChange={(e) =>
+                          setPending((s) => ({ ...s, showAFR: e.target.checked }))
+                        }
+                      />
+                      <span className="text-sm text-slate-700">
+                        Show Annual Failure Rate (AFR)
+                      </span>
+                    </label>
+                    {pending.showAFR && (
+                      <div className="mt-2">
+                        <label className="block text-slate-600 text-sm">
+                          AFR (%)
+                        </label>
+                        <input
+                          type="number"
+                          min={0}
+                          step="0.1"
+                          className={inputBase}
+                          value={pending.afrPct}
+                          onChange={(e) =>
+                            setPending((s) => ({
+                              ...s,
+                              afrPct: clampNum(e.target.value, 0, 100),
+                            }))
+                          }
+                        />
+                      </div>
+                    )}
+                  </div>
+
+                  {/* Reservation */}
+                  <div>
+                    <label className="block text-slate-700 font-medium mb-1">
+                      Capacity Reservation (%)
+                    </label>
+                    <input
+                      type="number"
+                      min={0}
+                      step="0.1"
+                      className={inputBase}
+                      value={pending.reservePct}
+                      onChange={(e) =>
+                        setPending((s) => ({
+                          ...s,
+                          reservePct: clampNum(e.target.value, 0, 80),
+                        }))
+                      }
+                    />
+                  </div>
+                </div>
+
+                {/* Update / Reset */}
+                <div className="mt-6 flex flex-wrap gap-3">
+                  <button
+                    type="button"
+                    onClick={onUpdate}
+                    className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-green-600 text-white font-semibold hover:bg-green-700 transition"
+                  >
+                    <Check className="w-4 h-4" />
+                    Update
+                  </button>
+                  <button
+                    type="button"
+                    onClick={onReset}
+                    className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl border border-green-300 text-green-700 hover:bg-green-50 transition"
+                  >
+                    <RefreshCw className="w-4 h-4" />
+                    Reset
+                  </button>
+                  <div className="text-slate-500 text-sm flex items-center">
+                    <Info className="w-4 h-4 mr-1" />
+                    Click the help icons on the original for deeper background; this
+                    calculator mirrors the inputs with a practical model.
+                  </div>
+                </div>
+              </section>
+            </Reveal>
+
+            {/* Summary */}
+            <Reveal>
+              <section className={liftCard}>
+                <div className="flex items-center gap-3 mb-4">
+                  <Calculator className="w-6 h-6 text-green-700" />
+                  <h2 className="text-2xl font-bold text-slate-900">Summary</h2>
+                </div>
+
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
+                  <Summary
+                    icon={<HardDrive className="w-5 h-5 text-green-700" />}
+                    label={`Raw Capacity (${cfg.unit})`}
+                    value={fmt(res.raw)}
+                  />
+                  <Summary
+                    icon={<Server className="w-5 h-5 text-green-700" />}
+                    label={`Usable (before OH) (${cfg.unit})`}
+                    value={fmt(res.usableBeforeOH)}
+                  />
+                  <Summary
+                    icon={<Table className="w-5 h-5 text-green-700" />}
+                    label={`Usable (after OH) (${cfg.unit})`}
+                    value={fmt(res.usable)}
+                  />
+                </div>
+
+                <div className="grid grid-cols-1 md:grid-cols-4 gap-5 mt-6">
+                  <Summary label="VDEVs" value={res.vdevs} />
+                  <Summary
+                    label="Disks Used"
+                    value={`${res.disksUsed} (+${cfg.minSpares} spares)`}
+                  />
+                  <Summary label="Leftover Disks" value={res.leftover} />
+                  <Summary
+                    label="Efficiency"
+                    value={`${(res.efficiency * 100).toFixed(
+                      Math.max(0, Math.min(6, cfg.decimalPlaces))
+                    )}%`}
+                  />
+                </div>
+
+                <div className="grid grid-cols-1 md:grid-cols-4 gap-5 mt-6">
+                  {cfg.vdevType !== "mirror" && (
+                    <Summary
+                      label={`Total Parity (${cfg.unit})`}
+                      value={fmt(res.parityTotal)}
+                    />
+                  )}
+                  <Summary label={`Slop (${cfg.unit})`} value={fmt(res.slop)} />
+                  <Summary
+                    label={`Reservation (${cfg.unit})`}
+                    value={fmt(res.reserved)}
+                  />
+                  <Summary
+                    label={`Block Overhead (${cfg.unit})`}
+                    value={fmt(res.blockOverheadU)}
+                  />
+                </div>
+
+                {cfg.showAFR && (
+                  <div className="mt-6 rounded-xl border border-green-100 bg-green-50/70 p-4 text-slate-800">
+                    <Percent className="inline w-4 h-4 mr-2 text-green-700" />
+                    Expected failures/year ≈{" "}
+                    <strong>
+                      {expectedAnnualFailures.toFixed(2)} disk
+                      {expectedAnnualFailures >= 1 ? "s" : ""}
+                    </strong>
+                    .
+                  </div>
+                )}
+
+                {cfg.showDeflate && (
+                  <div className="mt-3 text-slate-600 text-sm">
+                    Deflate Ratio (data/(data+parity) approx):{" "}
+                    <strong>{(res.deflateRatio * 100).toFixed(1)}%</strong>
+                  </div>
+                )}
+              </section>
+            </Reveal>
+
+            {/* Common Layouts */}
+            <Reveal>
+              <section className={liftCard}>
+                <div className="flex items-center justify-between mb-4">
+                  <div className="flex items-center gap-3">
+                    <HardDrive className="w-6 h-6 text-green-700" />
+                    <h2 className="text-2xl font-bold text-slate-900">
+                      Common Layouts
+                    </h2>
+                  </div>
+                  <div className="text-sm text-slate-500">
+                    Click a row to apply that layout.
+                  </div>
+                </div>
+
+                <div className="flex flex-wrap gap-2 mb-4">
+                  {tabs.map((t) => (
+                    <button
+                      key={t.key}
+                      onClick={() => setActiveTab(t.key)}
+                      className={[
+                        "px-3 py-2 rounded-full border transition",
+                        activeTab === t.key
+                          ? "border-green-600 bg-green-600 text-white"
+                          : "border-green-300 text-green-700 hover:bg-green-50",
+                      ].join(" ")}
+                    >
+                      {t.label}
+                    </button>
+                  ))}
+                </div>
+
                 <div className="overflow-x-auto">
                   <table className="w-full text-left text-sm">
                     <thead>
                       <tr className="border-b border-slate-200 text-slate-600">
-                        <th className="py-2 pr-4">Shelf Count</th>
-                        {cols.map((c) => (
-                          <th key={c} className="py-2 pr-4">{c}-Bay Head</th>
+                        <th className="py-3 pr-4">Width</th>
+                        <th className="py-3 pr-4">VDEVs</th>
+                        <th className="py-3 pr-4">Disks Used</th>
+                        {cfg.tableData === "usableTB" && (
+                          <th className="py-3 pr-4">Usable (TB)</th>
+                        )}
+                        {cfg.tableData === "usableTiB" && (
+                          <th className="py-3 pr-4">Usable (TiB)</th>
+                        )}
+                        {cfg.tableData === "efficiency" && (
+                          <th className="py-3 pr-4">Efficiency</th>
+                        )}
+                        {cfg.tableData === "overhead" && (
+                          <th className="py-3 pr-4">ZFS Overhead ({cfg.unit})</th>
+                        )}
+                        {cfg.tableData === "capReservation" && (
+                          <th className="py-3 pr-4">
+                            Cap. w/ Reservation ({cfg.unit})
+                          </th>
+                        )}
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {comparisonRows.map((row) => {
+                        const usableTB = fromBytes(
+                          row.c.details.pool_usable_after_overhead_b,
+                          "TB"
+                        );
+                        const usableTiB = fromBytes(
+                          row.c.details.pool_usable_after_overhead_b,
+                          "TiB"
+                        );
+                        const overheadU =
+                          fromBytes(
+                            row.c.details.zfs_block_overhead_b +
+                              row.c.details.slop_b +
+                              row.c.details.reserve_b,
+                            cfg.unit
+                          ) || 0;
+                        const capWithRes =
+                          fromBytes(
+                            row.c.details.pool_usable_before_overhead_b -
+                              row.c.details.reserve_b,
+                            cfg.unit
+                          ) || 0;
+
+                        return (
+                          <tr
+                            key={row.width}
+                            className="border-b last:border-0 border-slate-100 hover:bg-green-50/50 cursor-pointer"
+                            onClick={() =>
+                              setPending((s) => ({
+                                ...s,
+                                vdevType: activeTab,
+                                vdevWidth: row.width,
+                              }))
+                            }
+                          >
+                            <td className="py-3 pr-4 font-medium">{row.width}</td>
+                            <td className="py-3 pr-4">{row.c.vdevs}</td>
+                            <td className="py-3 pr-4">{row.c.disksUsed}</td>
+
+                            {cfg.tableData === "usableTB" && (
+                              <td className="py-3 pr-4">
+                                {usableTB.toLocaleString(undefined, {
+                                  maximumFractionDigits: cfg.decimalPlaces,
+                                })}
+                              </td>
+                            )}
+                            {cfg.tableData === "usableTiB" && (
+                              <td className="py-3 pr-4">
+                                {usableTiB.toLocaleString(undefined, {
+                                  maximumFractionDigits: cfg.decimalPlaces,
+                                })}
+                              </td>
+                            )}
+                            {cfg.tableData === "efficiency" && (
+                              <td className="py-3 pr-4">
+                                {(row.c.efficiency * 100).toFixed(
+                                  cfg.decimalPlaces
+                                )}
+                                %
+                              </td>
+                            )}
+                            {cfg.tableData === "overhead" && (
+                              <td className="py-3 pr-4">
+                                {overheadU.toLocaleString(undefined, {
+                                  maximumFractionDigits: cfg.decimalPlaces,
+                                })}
+                              </td>
+                            )}
+                            {cfg.tableData === "capReservation" && (
+                              <td className="py-3 pr-4">
+                                {capWithRes.toLocaleString(undefined, {
+                                  maximumFractionDigits: cfg.decimalPlaces,
+                                })}
+                              </td>
+                            )}
+                          </tr>
+                        );
+                      })}
+                    </tbody>
+                  </table>
+                </div>
+
+                {/* Apply selected row */}
+                <div className="mt-4">
+                  <button
+                    type="button"
+                    onClick={onUpdate}
+                    className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-green-600 text-white font-semibold hover:bg-green-700 transition"
+                  >
+                    <Check className="w-4 h-4" />
+                    Apply Selection
+                  </button>
+                </div>
+              </section>
+            </Reveal>
+
+            {/* Quick Compare Matrix */}
+            <Reveal>
+              <section className={liftCard}>
+                <div className="flex items-center justify-between mb-3">
+                  <div className="flex items-center gap-3">
+                    <Table className="w-6 h-6 text-green-700" />
+                    <h2 className="text-2xl font-bold text-slate-900">
+                      Quick Compare Matrix
+                    </h2>
+                  </div>
+                  <div className="text-sm text-slate-500">
+                    Click a cell to set disk size & layout, then hit <b>Update</b>.
+                  </div>
+                </div>
+
+                <div className="overflow-x-auto">
+                  <table className="w-full text-left text-sm">
+                    <thead>
+                      <tr className="border-b border-slate-200 text-slate-600">
+                        <th className="py-3 pr-4">Size</th>
+                        {QUICK_COLS.map((c) => (
+                          <th key={c.key} className="py-3 pr-4">{c.label}</th>
                         ))}
                       </tr>
                     </thead>
                     <tbody>
-                      {rows.map((row, rIdx) => (
-                        <tr key={row.name} className="border-b last:border-0 border-slate-100">
-                          <td className="py-2 pr-4 font-medium">{row.name}</td>
-                          {cols.map((c, cIdx) => {
-                            const cell = matrix[rIdx][cIdx];
-                            const label = `${cell.shelves} (${cell.free} free)`;
-                            return (
-                              <td
-                                key={`${rIdx}-${cIdx}`}
-                                className="py-2 pr-4 hover:bg-green-50 cursor-pointer rounded"
-                                onClick={() =>
-                                  setPending((s) => ({ ...s, totalDisks: cell.cap }))
+                      {quickMatrix.map((row) => (
+                        <tr key={row.sizeTB} className="border-b last:border-0 border-slate-100">
+                          <td className="py-2 pr-4 font-medium">
+                            {row.sizeTB.toString().replace(".00","")} {pending.unit === "TB" ? "TB" : "TiB"}
+                          </td>
+                          {row.cells.map((cell, idx) => (
+                            <td
+                              key={QUICK_COLS[idx].key}
+                              className="py-2 pr-4 hover:bg-green-50 cursor-pointer"
+                              onClick={() => {
+                                const col = QUICK_COLS[idx];
+                                if (col.type === "raw") {
+                                  setPending((s) => ({ ...s, diskSize: row.sizeTB }));
+                                } else {
+                                  setPending((s) => ({
+                                    ...s,
+                                    diskSize: row.sizeTB,
+                                    vdevType: col.type,
+                                    vdevWidth: col.width,
+                                  }));
                                 }
-                              >
-                                {label}
-                              </td>
-                            );
-                          })}
+                              }}
+                            >
+                              {Number(cell.text).toLocaleString(undefined, {
+                                maximumFractionDigits: pending.decimalPlaces,
+                              })}
+                            </td>
+                          ))}
                         </tr>
                       ))}
                     </tbody>
                   </table>
                 </div>
-              );
-            })()}
-          </section>
-        </Reveal>
 
-        {/* Main Controls */}
-        <Reveal>
-          <section className={liftCard}>
-            <div className="flex items-center gap-3 mb-4">
-              <Settings2 className="w-6 h-6 text-green-700" />
-              <h2 className="text-2xl font-bold text-slate-900">
-                Configuration
-              </h2>
-            </div>
-
-            {warn && (
-              <div className="mb-4 rounded-xl border border-amber-200 bg-amber-50 p-4 text-amber-800 flex items-start gap-2">
-                <AlertTriangle className="w-5 h-5 mt-0.5" />
-                <p className="text-sm">{warn}</p>
-              </div>
-            )}
-
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
-              {/* Disks */}
-              <div>
-                <label className="block text-slate-700 font-medium mb-1">
-                  Total Disks in Pool
-                </label>
-                <div className="flex gap-2">
+                <div className="mt-4">
                   <button
                     type="button"
-                    onClick={() =>
-                      setPending((s) => ({
-                        ...s,
-                        totalDisks: clampNum(s.totalDisks - 1, 0),
-                      }))
-                    }
-                    className="px-3 rounded-lg border border-green-300 text-green-700 hover:bg-green-50"
+                    onClick={onUpdate}
+                    className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-green-600 text-white font-semibold hover:bg-green-700 transition"
                   >
-                    <Minus className="w-4 h-4" />
-                  </button>
-                  <input
-                    type="number"
-                    min={0}
-                    className={inputBase}
-                    value={pending.totalDisks}
-                    onChange={(e) =>
-                      setPending((s) => ({
-                        ...s,
-                        totalDisks: clampNum(e.target.value, 0),
-                      }))
-                    }
-                  />
-                  <button
-                    type="button"
-                    onClick={() =>
-                      setPending((s) => ({
-                        ...s,
-                        totalDisks: clampNum(s.totalDisks + 1, 0),
-                      }))
-                    }
-                    className="px-3 rounded-lg border border-green-300 text-green-700 hover:bg-green-50"
-                  >
-                    <Plus className="w-4 h-4" />
+                    <Check className="w-4 h-4" />
+                    Apply Selection
                   </button>
                 </div>
-              </div>
+              </section>
+            </Reveal>
 
-              <div>
-                <label className="block text-slate-700 font-medium mb-1">
-                  Minimum Spares
-                </label>
-                <input
-                  type="number"
-                  min={0}
-                  className={inputBase}
-                  value={pending.minSpares}
-                  onChange={(e) =>
-                    setPending((s) => ({
-                      ...s,
-                      minSpares: clampNum(e.target.value, 0),
-                    }))
-                  }
-                />
-              </div>
-
-              <div>
-                <label className="block text-slate-700 font-medium mb-1">
-                  New Disk Size
-                </label>
-                <div className="flex gap-2">
-                  <input
-                    type="number"
-                    min={0}
-                    step="0.01"
-                    className={inputBase}
-                    value={pending.diskSize}
-                    onChange={(e) =>
-                      setPending((s) => ({
-                        ...s,
-                        diskSize: clampNum(e.target.value, 0),
-                      }))
-                    }
-                  />
-                  <select
-                    className={`${inputBase} w-28`}
-                    value={pending.unit}
-                    onChange={(e) =>
-                      setPending((s) => ({ ...s, unit: e.target.value }))
-                    }
-                  >
-                    <option value="TB">TB/GB</option>
-                    <option value="TiB">TiB/GiB</option>
-                  </select>
+            {/* Calculation Values */}
+            <Reveal>
+              <section className={liftCard}>
+                <div className="flex items-center gap-3 mb-4">
+                  <Table className="w-6 h-6 text-green-700" />
+                  <h2 className="text-2xl font-bold text-slate-900">
+                    Calculation Values
+                  </h2>
                 </div>
-              </div>
-
-              {/* VDEV */}
-              <div>
-                <label className="block text-slate-700 font-medium mb-1">
-                  New vdev Type
-                </label>
-                <select
-                  className={inputBase}
-                  value={pending.vdevType}
-                  onChange={(e) =>
-                    setPending((s) => ({ ...s, vdevType: e.target.value }))
-                  }
-                >
-                  <option value="mirror">Mirror</option>
-                  <option value="raidz1">RAIDZ1</option>
-                  <option value="raidz2">RAIDZ2</option>
-                  <option value="raidz3">RAIDZ3</option>
-                </select>
-              </div>
-
-              <div>
-                <label className="block text-slate-700 font-medium mb-1">
-                  New vdev Width
-                </label>
-                <input
-                  type="number"
-                  min={1}
-                  className={inputBase}
-                  value={pending.vdevWidth}
-                  onChange={(e) =>
-                    setPending((s) => ({
-                      ...s,
-                      vdevWidth: clampNum(e.target.value, 1),
-                    }))
-                  }
-                />
-              </div>
-
-              {/* OpenZFS slop */}
-              <div className="flex flex-col">
-                <label className="block text-slate-700 font-medium mb-1">
-                  OpenZFS 2.0.7 Slop
-                </label>
-                <label className="inline-flex items-center gap-2">
-                  <input
-                    type="checkbox"
-                    className="accent-green-600"
-                    checked={pending.useOpenZFSSlop}
-                    onChange={(e) =>
-                      setPending((s) => ({
-                        ...s,
-                        useOpenZFSSlop: e.target.checked,
-                      }))
-                    }
-                  />
-                  <span className="text-sm text-slate-700">Enabled</span>
-                </label>
-                {!pending.useOpenZFSSlop && (
-                  <div className="mt-2">
-                    <label className="block text-slate-600 text-sm">
-                      Manual Slop (%)
-                    </label>
-                    <input
-                      type="number"
-                      min={0}
-                      step="0.1"
-                      className={inputBase}
-                      value={pending.manualSlopPct}
-                      onChange={(e) =>
-                        setPending((s) => ({
-                          ...s,
-                          manualSlopPct: clampNum(e.target.value, 0, 50),
-                        }))
-                      }
-                    />
-                  </div>
-                )}
-              </div>
-
-              {/* recordsize / ashift / swap */}
-              <div>
-                <label className="block text-slate-700 font-medium mb-1">
-                  ZFS recordsize value
-                </label>
-                <div className="flex gap-2">
-                  <input
-                    type="number"
-                    min={4}
-                    step="4"
-                    className={inputBase}
-                    value={pending.recordSizeKiB}
-                    onChange={(e) =>
-                      setPending((s) => ({
-                        ...s,
-                        recordSizeKiB: clampNum(e.target.value, 4, 1024),
-                      }))
-                    }
-                  />
-                  <span className="self-center text-slate-600">KiB</span>
-                </div>
-              </div>
-
-              <div>
-                <label className="block text-slate-700 font-medium mb-1">
-                  ZFS ashift value
-                </label>
-                <input
-                  type="number"
-                  min={9}
-                  max={16}
-                  className={inputBase}
-                  value={pending.ashift}
-                  onChange={(e) =>
-                    setPending((s) => ({
-                      ...s,
-                      ashift: clampNum(e.target.value, 9, 16),
-                    }))
-                  }
-                />
-              </div>
-
-              <div>
-                <label className="block text-slate-700 font-medium mb-1">
-                  Disk Swap Size
-                </label>
-                <div className="flex gap-2">
-                  <input
-                    type="number"
-                    min={0}
-                    className={inputBase}
-                    value={pending.diskSwapGiB}
-                    onChange={(e) =>
-                      setPending((s) => ({
-                        ...s,
-                        diskSwapGiB: clampNum(e.target.value, 0, 1024),
-                      }))
-                    }
-                  />
-                  <span className="self-center text-slate-600">GiB</span>
-                </div>
-              </div>
-
-              {/* decimal places */}
-              {decimalPlacesControl}
-
-              {/* table data radio */}
-              <div>
-                <label className="block text-slate-700 font-medium mb-1">
-                  Table Data
-                </label>
-                <div className="space-y-2">
-                  {[
-                    { key: "usableTiB", label: "Usable Capacity (TiB)" },
-                    { key: "usableTB", label: "Usable Capacity (TB)" },
-                    { key: "efficiency", label: "Capacity Efficiency" },
-                    { key: "overhead", label: "ZFS Overhead" },
-                    { key: "capReservation", label: "Cap. w/ Reservation" },
-                  ].map((r) => (
-                    <label key={r.key} className="flex items-center gap-2">
-                      <input
-                        type="radio"
-                        name="tableData"
-                        className="accent-green-600"
-                        checked={pending.tableData === r.key}
-                        onChange={() =>
-                          setPending((s) => ({ ...s, tableData: r.key }))
-                        }
-                      />
-                      <span className="text-sm text-slate-700">{r.label}</span>
-                    </label>
-                  ))}
-                </div>
-              </div>
-
-              {/* deflate ratio */}
-              <div className="flex items-center gap-3">
-                <label className="inline-flex items-center gap-2">
-                  <input
-                    type="checkbox"
-                    className="accent-green-600"
-                    checked={cfg.showDeflate}
-                    onChange={(e) => patch({ showDeflate: e.target.checked })}
-                  />
-                  <span className="text-sm text-slate-700">Show Deflate Ratio</span>
-                </label>
-              </div>
-
-              {/* fast dRAID */}
-              <div className="flex items-center gap-3">
-                <label className="inline-flex items-center gap-2">
-                  <input
-                    type="checkbox"
-                    className="accent-green-600"
-                    checked={pending.fastDraid}
-                    onChange={(e) =>
-                      setPending((s) => ({ ...s, fastDraid: e.target.checked }))
-                    }
-                  />
-                  <span className="text-sm text-slate-700">
-                    Fast dRAID Calculation
-                  </span>
-                </label>
-              </div>
-
-              {/* AFR toggle */}
-              <div className="flex flex-col">
-                <label className="inline-flex items-center gap-2">
-                  <input
-                    type="checkbox"
-                    className="accent-green-600"
-                    checked={pending.showAFR}
-                    onChange={(e) =>
-                      setPending((s) => ({ ...s, showAFR: e.target.checked }))
-                    }
-                  />
-                  <span className="text-sm text-slate-700">
-                    Show Annual Failure Rate (AFR)
-                  </span>
-                </label>
-                {pending.showAFR && (
-                  <div className="mt-2">
-                    <label className="block text-slate-600 text-sm">
-                      AFR (%)
-                    </label>
-                    <input
-                      type="number"
-                      min={0}
-                      step="0.1"
-                      className={inputBase}
-                      value={pending.afrPct}
-                      onChange={(e) =>
-                        setPending((s) => ({
-                          ...s,
-                          afrPct: clampNum(e.target.value, 0, 100),
-                        }))
-                      }
-                    />
-                  </div>
-                )}
-              </div>
-
-              {/* Reservation */}
-              <div>
-                <label className="block text-slate-700 font-medium mb-1">
-                  Capacity Reservation (%)
-                </label>
-                <input
-                  type="number"
-                  min={0}
-                  step="0.1"
-                  className={inputBase}
-                  value={pending.reservePct}
-                  onChange={(e) =>
-                    setPending((s) => ({
-                      ...s,
-                      reservePct: clampNum(e.target.value, 0, 80),
-                    }))
-                  }
-                />
-              </div>
-            </div>
-
-            {/* Update / Reset */}
-            <div className="mt-6 flex flex-wrap gap-3">
-              <button
-                type="button"
-                onClick={onUpdate}
-                className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-green-600 text-white font-semibold hover:bg-green-700 transition"
-              >
-                <Check className="w-4 h-4" />
-                Update
-              </button>
-              <button
-                type="button"
-                onClick={onReset}
-                className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl border border-green-300 text-green-700 hover:bg-green-50 transition"
-              >
-                <RefreshCw className="w-4 h-4" />
-                Reset
-              </button>
-              <div className="text-slate-500 text-sm flex items-center">
-                <Info className="w-4 h-4 mr-1" />
-                Click the help icons on the original for deeper background; this
-                calculator mirrors the inputs with a practical model.
-              </div>
-            </div>
-          </section>
-        </Reveal>
-
-        {/* Summary */}
-        <Reveal>
-          <section className={liftCard}>
-            <div className="flex items-center gap-3 mb-4">
-              <Calculator className="w-6 h-6 text-green-700" />
-              <h2 className="text-2xl font-bold text-slate-900">Summary</h2>
-            </div>
-
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
-              <Summary
-                icon={<HardDrive className="w-5 h-5 text-green-700" />}
-                label={`Raw Capacity (${cfg.unit})`}
-                value={fmt(res.raw)}
-              />
-              <Summary
-                icon={<Server className="w-5 h-5 text-green-700" />}
-                label={`Usable (before OH) (${cfg.unit})`}
-                value={fmt(res.usableBeforeOH)}
-              />
-              <Summary
-                icon={<Table className="w-5 h-5 text-green-700" />}
-                label={`Usable (after OH) (${cfg.unit})`}
-                value={fmt(res.usable)}
-              />
-            </div>
-
-            <div className="grid grid-cols-1 md:grid-cols-4 gap-5 mt-6">
-              <Summary label="VDEVs" value={res.vdevs} />
-              <Summary
-                label="Disks Used"
-                value={`${res.disksUsed} (+${cfg.minSpares} spares)`}
-              />
-              <Summary label="Leftover Disks" value={res.leftover} />
-              <Summary
-                label="Efficiency"
-                value={`${(res.efficiency * 100).toFixed(
-                  Math.max(0, Math.min(6, cfg.decimalPlaces))
-                )}%`}
-              />
-            </div>
-
-            <div className="grid grid-cols-1 md:grid-cols-4 gap-5 mt-6">
-              {cfg.vdevType !== "mirror" && (
-                <Summary
-                  label={`Total Parity (${cfg.unit})`}
-                  value={fmt(res.parityTotal)}
-                />
-              )}
-              <Summary label={`Slop (${cfg.unit})`} value={fmt(res.slop)} />
-              <Summary
-                label={`Reservation (${cfg.unit})`}
-                value={fmt(res.reserved)}
-              />
-              <Summary
-                label={`Block Overhead (${cfg.unit})`}
-                value={fmt(res.blockOverheadU)}
-              />
-            </div>
-
-            {cfg.showAFR && (
-              <div className="mt-6 rounded-xl border border-green-100 bg-green-50/70 p-4 text-slate-800">
-                <Percent className="inline w-4 h-4 mr-2 text-green-700" />
-                Expected failures/year ≈{" "}
-                <strong>
-                  {expectedAnnualFailures.toFixed(2)} disk
-                  {expectedAnnualFailures >= 1 ? "s" : ""}
-                </strong>
-                .
-              </div>
-            )}
-
-            {cfg.showDeflate && (
-              <div className="mt-3 text-slate-600 text-sm">
-                Deflate Ratio (data/(data+parity) approx):{" "}
-                <strong>{(res.deflateRatio * 100).toFixed(1)}%</strong>
-              </div>
-            )}
-          </section>
-        </Reveal>
-
-        {/* Common Layouts */}
-        <Reveal>
-          <section className={liftCard}>
-            <div className="flex items-center justify-between mb-4">
-              <div className="flex items-center gap-3">
-                <HardDrive className="w-6 h-6 text-green-700" />
-                <h2 className="text-2xl font-bold text-slate-900">
-                  Common Layouts
-                </h2>
-              </div>
-              <div className="text-sm text-slate-500">
-                Click a row to apply that layout.
-              </div>
-            </div>
-
-            <div className="flex flex-wrap gap-2 mb-4">
-              {tabs.map((t) => (
-                <button
-                  key={t.key}
-                  onClick={() => setActiveTab(t.key)}
-                  className={[
-                    "px-3 py-2 rounded-full border transition",
-                    activeTab === t.key
-                      ? "border-green-600 bg-green-600 text-white"
-                      : "border-green-300 text-green-700 hover:bg-green-50",
-                  ].join(" ")}
-                >
-                  {t.label}
-                </button>
-              ))}
-            </div>
-
-            <div className="overflow-x-auto">
-              <table className="w-full text-left text-sm">
-                <thead>
-                  <tr className="border-b border-slate-200 text-slate-600">
-                    <th className="py-3 pr-4">Width</th>
-                    <th className="py-3 pr-4">VDEVs</th>
-                    <th className="py-3 pr-4">Disks Used</th>
-                    {cfg.tableData === "usableTB" && (
-                      <th className="py-3 pr-4">Usable (TB)</th>
-                    )}
-                    {cfg.tableData === "usableTiB" && (
-                      <th className="py-3 pr-4">Usable (TiB)</th>
-                    )}
-                    {cfg.tableData === "efficiency" && (
-                      <th className="py-3 pr-4">Efficiency</th>
-                    )}
-                    {cfg.tableData === "overhead" && (
-                      <th className="py-3 pr-4">ZFS Overhead ({cfg.unit})</th>
-                    )}
-                    {cfg.tableData === "capReservation" && (
-                      <th className="py-3 pr-4">
-                        Cap. w/ Reservation ({cfg.unit})
-                      </th>
-                    )}
-                  </tr>
-                </thead>
-                <tbody>
-                  {comparisonRows.map((row) => {
-                    const usableTB = fromBytes(
-                      row.c.details.pool_usable_after_overhead_b,
-                      "TB"
-                    );
-                    const usableTiB = fromBytes(
-                      row.c.details.pool_usable_after_overhead_b,
-                      "TiB"
-                    );
-                    const overheadU =
-                      fromBytes(
-                        row.c.details.zfs_block_overhead_b +
-                          row.c.details.slop_b +
-                          row.c.details.reserve_b,
-                        cfg.unit
-                      ) || 0;
-                    const capWithRes =
-                      fromBytes(
-                        row.c.details.pool_usable_before_overhead_b -
-                          row.c.details.reserve_b,
-                        cfg.unit
-                      ) || 0;
-
-                    return (
-                      <tr
-                        key={row.width}
-                        className="border-b last:border-0 border-slate-100 hover:bg-green-50/50 cursor-pointer"
-                        onClick={() =>
-                          setPending((s) => ({
-                            ...s,
-                            vdevType: activeTab,
-                            vdevWidth: row.width,
-                          }))
-                        }
-                      >
-                        <td className="py-3 pr-4 font-medium">{row.width}</td>
-                        <td className="py-3 pr-4">{row.c.vdevs}</td>
-                        <td className="py-3 pr-4">{row.c.disksUsed}</td>
-
-                        {cfg.tableData === "usableTB" && (
-                          <td className="py-3 pr-4">
-                            {usableTB.toLocaleString(undefined, {
-                              maximumFractionDigits: cfg.decimalPlaces,
-                            })}
-                          </td>
-                        )}
-                        {cfg.tableData === "usableTiB" && (
-                          <td className="py-3 pr-4">
-                            {usableTiB.toLocaleString(undefined, {
-                              maximumFractionDigits: cfg.decimalPlaces,
-                            })}
-                          </td>
-                        )}
-                        {cfg.tableData === "efficiency" && (
-                          <td className="py-3 pr-4">
-                            {(row.c.efficiency * 100).toFixed(
-                              cfg.decimalPlaces
-                            )}
-                            %
-                          </td>
-                        )}
-                        {cfg.tableData === "overhead" && (
-                          <td className="py-3 pr-4">
-                            {overheadU.toLocaleString(undefined, {
-                              maximumFractionDigits: cfg.decimalPlaces,
-                            })}
-                          </td>
-                        )}
-                        {cfg.tableData === "capReservation" && (
-                          <td className="py-3 pr-4">
-                            {capWithRes.toLocaleString(undefined, {
-                              maximumFractionDigits: cfg.decimalPlaces,
-                            })}
-                          </td>
-                        )}
+                <div className="overflow-x-auto">
+                  <table className="w-full text-left text-sm">
+                    <thead>
+                      <tr className="border-b border-slate-200 text-slate-600">
+                        <th className="py-2 pr-4">Key</th>
+                        <th className="py-2">Value</th>
                       </tr>
-                    );
-                  })}
-                </tbody>
-              </table>
-            </div>
-
-            {/* Apply selected row */}
-            <div className="mt-4">
-              <button
-                type="button"
-                onClick={onUpdate}
-                className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-green-600 text-white font-semibold hover:bg-green-700 transition"
-              >
-                <Check className="w-4 h-4" />
-                Apply Selection
-              </button>
-            </div>
-          </section>
-        </Reveal>
-
-        {/* ---------- NEW: Quick Compare Matrix (like the big grid in screenshot) ---------- */}
-        <Reveal>
-          <section className={liftCard}>
-            <div className="flex items-center justify-between mb-3">
-              <div className="flex items-center gap-3">
-                <Table className="w-6 h-6 text-green-700" />
-                <h2 className="text-2xl font-bold text-slate-900">
-                  Quick Compare Matrix
-                </h2>
-              </div>
-              <div className="text-sm text-slate-500">
-                Click a cell to set disk size & layout, then hit <b>Update</b>.
-              </div>
-            </div>
-
-            <div className="overflow-x-auto">
-              <table className="w-full text-left text-sm">
-                <thead>
-                  <tr className="border-b border-slate-200 text-slate-600">
-                    <th className="py-3 pr-4">Size</th>
-                    {QUICK_COLS.map((c) => (
-                      <th key={c.key} className="py-3 pr-4">{c.label}</th>
-                    ))}
-                  </tr>
-                </thead>
-                <tbody>
-                  {quickMatrix.map((row) => (
-                    <tr key={row.sizeTB} className="border-b last:border-0 border-slate-100">
-                      <td className="py-2 pr-4 font-medium">
-                        {row.sizeTB.toString().replace(".00","")} {pending.unit === "TB" ? "TB" : "TiB"}
-                      </td>
-                      {row.cells.map((cell, idx) => (
-                        <td
-                          key={QUICK_COLS[idx].key}
-                          className="py-2 pr-4 hover:bg-green-50 cursor-pointer"
-                          onClick={() => {
-                            const col = QUICK_COLS[idx];
-                            if (col.type === "raw") {
-                              // only change disk size
-                              setPending((s) => ({ ...s, diskSize: row.sizeTB }));
-                            } else {
-                              setPending((s) => ({
-                                ...s,
-                                diskSize: row.sizeTB,
-                                vdevType: col.type,
-                                vdevWidth: col.width,
-                              }));
-                            }
-                          }}
+                    </thead>
+                    <tbody>
+                      {Object.entries(res.details).map(([k, v]) => (
+                        <tr
+                          key={k}
+                          className="border-b last:border-0 border-slate-100"
                         >
-                          {Number(cell.text).toLocaleString(undefined, {
-                            maximumFractionDigits: pending.decimalPlaces,
-                          })}
-                        </td>
+                          <td className="py-2 pr-4 font-mono text-slate-700">
+                            {k}
+                          </td>
+                          <td className="py-2 font-mono text-slate-900">
+                            {typeof v === "number"
+                              ? Math.floor(v).toLocaleString()
+                              : String(v)}
+                          </td>
+                        </tr>
                       ))}
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
-
-            <div className="mt-4">
-              <button
-                type="button"
-                onClick={onUpdate}
-                className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-green-600 text-white font-semibold hover:bg-green-700 transition"
-              >
-                <Check className="w-4 h-4" />
-                Apply Selection
-              </button>
-            </div>
-          </section>
-        </Reveal>
-
-        {/* Calculation Values */}
-        <Reveal>
-          <section className={liftCard}>
-            <div className="flex items-center gap-3 mb-4">
-              <Table className="w-6 h-6 text-green-700" />
-              <h2 className="text-2xl font-bold text-slate-900">
-                Calculation Values
-              </h2>
-            </div>
-            <div className="overflow-x-auto">
-              <table className="w-full text-left text-sm">
-                <thead>
-                  <tr className="border-b border-slate-200 text-slate-600">
-                    <th className="py-2 pr-4">Key</th>
-                    <th className="py-2">Value</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {Object.entries(res.details).map(([k, v]) => (
-                    <tr
-                      key={k}
-                      className="border-b last:border-0 border-slate-100"
-                    >
-                      <td className="py-2 pr-4 font-mono text-slate-700">
-                        {k}
-                      </td>
-                      <td className="py-2 font-mono text-slate-900">
-                        {typeof v === "number"
-                          ? Math.floor(v).toLocaleString()
-                          : String(v)}
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
-          </section>
-        </Reveal>
-      </main>
+                    </tbody>
+                  </table>
+                </div>
+              </section>
+            </Reveal>
+          </main>
+        </div>
+      </div>
 
       <Footer />
     </div>
@@ -1236,6 +1251,3 @@ const Summary = ({ icon, label, value }) => (
 );
 
 export default NetworkStorageCalculator;
-
-
-

@@ -2,9 +2,7 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 import Navbar from "../../Components/Navbar";
 import Footer from "../../Components/Footer";
-import bg from '../../assets/bg.jpg'
-
-
+import bg from "../../assets/bg.jpg";
 
 const WhistleBlowerButton = () => {
   const navigate = useNavigate();
@@ -13,112 +11,127 @@ const WhistleBlowerButton = () => {
     <>
       <Navbar />
 
-      <div className="min-h-screen bg-gray-50 pt-32 pb-20">
-        <div className="max-w-4xl mx-auto bg-white shadow-xl rounded-2xl p-10">
-          {/* Header */}
-          <div className="flex items-center justify-between border-b pb-5 mb-8">
-            <h2 className="text-3xl font-semibold text-green-800">Whistle Blower Form</h2>
-            <button
-              onClick={() => navigate(-1)}
-              className="text-gray-500 hover:text-green-600 transition"
-            >
-              ← Back
-            </button>
+      {/* Full-page CSR-style background */}
+      <div
+        className="min-h-screen bg-cover bg-center"
+        style={{
+          backgroundImage: `url(${bg})`,
+          backgroundRepeat: "no-repeat",
+          backgroundSize: "cover",
+          backgroundPosition: "center",
+        }}
+      >
+        {/* Hero Section (CSR style) */}
+        <div className="bg-gradient-to-r from-green-700 to-green-900 pt-32 pb-16">
+          <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <h1 className="text-4xl md:text-6xl font-extrabold text-white">
+              Whistle Blower
+            </h1>
+            <p className="mt-3 text-green-100 text-lg md:text-xl max-w-3xl mx-auto">
+              Report issues confidentially — provide details and upload evidence (optional).
+            </p>
+          </div>
+        </div>
+
+        {/* Content wrapper (no large white card) */}
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12 -mt-8">
+          {/* subtle helper box for context */}
+          <div className="mb-6 bg-white/60 rounded-xl p-4 border border-white/30">
+            <div className="flex items-center justify-between">
+              <h2 className="text-2xl font-semibold text-teal-900">Whistle Blower Form</h2>
+              <button
+                onClick={() => navigate(-1)}
+                className="text-gray-600 hover:text-green-700 transition"
+              >
+                ← Back
+              </button>
+            </div>
+            <p className="mt-2 text-slate-700">
+              If you have confidential information about a policy or compliance issue, please
+              share details here. Upload files (PDF/JPG/PNG) as supporting evidence (optional).
+            </p>
           </div>
 
-          {/* Form */}
-          <form className="space-y-6">
-            {/* Product Details */}
+          {/* Form — placed on page (inputs kept white for legibility) */}
+          <form
+            onSubmit={(e) => {
+              e.preventDefault();
+              alert("Demo: whistle blower form submitted (no backend hooked)");
+            }}
+            className="space-y-6"
+          >
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-1">
-                Enter Details Of Your Product
+                Enter Details Of Your Product / Issue
               </label>
               <input
                 type="text"
-                placeholder="Enter product details"
-                className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-green-500 focus:border-green-500"
+                placeholder="Describe the issue briefly"
+                className="w-full px-4 py-3 border border-gray-300 rounded-xl bg-white focus:ring-2 focus:ring-green-300 focus:border-green-500"
               />
             </div>
 
-            {/* Serial Number */}
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-1">
-                Enter Serial Number
+                Serial Number (if applicable)
               </label>
               <input
                 type="text"
                 placeholder="Enter serial number"
-                className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-green-500 focus:border-green-500"
+                className="w-full px-4 py-3 border border-gray-300 rounded-xl bg-white focus:ring-2 focus:ring-green-300 focus:border-green-500"
               />
             </div>
 
-            {/* Numbers */}
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-1">
-                Enter Numbers
+                Relevant Numbers / References
               </label>
               <input
                 type="text"
-                placeholder="Enter relevant numbers"
-                className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-green-500 focus:border-green-500"
+                placeholder="Order ID, invoice no., ticket no., etc."
+                className="w-full px-4 py-3 border border-gray-300 rounded-xl bg-white focus:ring-2 focus:ring-green-300 focus:border-green-500"
               />
             </div>
 
-            {/* Invoice Upload */}
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">
-                Upload Invoice
-              </label>
-              <div className="mt-1 flex justify-center px-6 pt-5 pb-6 border-2 border-gray-300 border-dashed rounded-md hover:border-green-500">
-                <div className="space-y-1 text-center">
+              <label className="block text-sm font-medium text-gray-700 mb-2">Upload Evidence</label>
+              <div className="flex items-center justify-center px-4 py-6 border-2 border-dashed rounded-xl hover:border-green-500 bg-white/80">
+                <div className="text-center">
                   <svg
-                    className="mx-auto h-12 w-12 text-gray-400"
+                    className="mx-auto h-10 w-10 text-gray-400"
                     stroke="currentColor"
                     fill="none"
-                    viewBox="0 0 48 48"
+                    viewBox="0 0 24 24"
                   >
-                    <path
-                      d="M28 8H12a4 4 0 00-4 4v20m32-12v8m0 0v8a4 4 0 01-4 4H12a4 4 0 01-4-4v-4m32-4l-3.172-3.172a4 4 0 00-5.656 0L28 28M8 32l9.172-9.172a4 4 0 015.656 0L28 28m0 0l4 4m4-24h8m-4-4v8m-12 4h.02"
-                      strokeWidth={2}
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                    />
+                    <path strokeWidth={1.5} strokeLinecap="round" strokeLinejoin="round" d="M7 16l-4-4m0 0l4-4m-4 4h18" />
                   </svg>
-                  <div className="flex text-sm text-gray-600">
-                    <label className="relative cursor-pointer rounded-md font-medium text-green-600 hover:text-green-500 focus-within:outline-none">
-                      <span>Upload a file</span>
-                      <input
-                        type="file"
-                        className="sr-only"
-                        accept=".pdf,.jpg,.jpeg,.png"
-                      />
-                    </label>
-                    <p className="pl-1">or drag and drop</p>
-                  </div>
-                  <p className="text-xs text-gray-500">
-                    Upload supported file (Max 15MB)
-                  </p>
+
+                  <label className="mt-2 inline-flex items-center gap-2 cursor-pointer text-green-700 font-medium">
+                    <span>Upload a file</span>
+                    <input
+                      type="file"
+                      className="sr-only"
+                      accept=".pdf,.jpg,.jpeg,.png"
+                    />
+                  </label>
+                  <p className="text-xs text-gray-500 mt-1">PDF / JPG / PNG — max 15MB</p>
                 </div>
               </div>
             </div>
 
-            {/* Email */}
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">
-                Email
-              </label>
+              <label className="block text-sm font-medium text-gray-700 mb-1">Email (optional)</label>
               <input
                 type="email"
-                placeholder="Enter your email"
-                className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-green-500 focus:border-green-500"
+                placeholder="Enter your email (we will keep it confidential)"
+                className="w-full px-4 py-3 border border-gray-300 rounded-xl bg-white focus:ring-2 focus:ring-green-300 focus:border-green-500"
               />
             </div>
 
-            {/* Submit */}
-            <div className="text-center">
+            <div className="flex justify-center">
               <button
                 type="submit"
-                className="inline-flex justify-center px-6 py-3 border border-transparent text-base font-medium rounded-md text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500"
+                className="inline-flex items-center gap-2 rounded-full bg-green-600 text-white px-8 py-3 font-semibold shadow hover:bg-green-700 transition"
               >
                 Submit Application
               </button>

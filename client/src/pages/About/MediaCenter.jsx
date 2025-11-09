@@ -3,7 +3,7 @@ import Navbar from '../../Components/Navbar';
 import Footer from '../../Components/Footer';
 import bg from '../../assets/bg.jpg';
 
-// Import images
+// Import images (Vite dynamic import)
 const imageModules = import.meta.glob(
   '../../assets/Media-Center/Media-Center/**/*.{png,jpg,jpeg}',
   { eager: true }
@@ -35,7 +35,7 @@ const categories = buildCategoryData(imageModules);
 export default function MediaCenter() {
   const [selectedImage, setSelectedImage] = useState(null);
 
-  // safe hook: single ref storage for all scroll containers
+  // single ref storage for horizontal scroll containers
   const scrollRefs = useRef({});
 
   const downloadImage = (url) => {
@@ -53,119 +53,129 @@ export default function MediaCenter() {
     <>
       <Navbar />
 
-      {/* Banner */}
-      <div className="bg-green-400/10 pt-12 pb-12 shadow-inner mt-20">
-        <h1 className="text-5xl font-bold text-green-900 text-center">Media Center</h1>
-      </div>
-
-      {/* Background */}
+      {/* Hero Section - matched to CSR header */}
       <div
-        className="min-h-screen w-full py-16"
-        style={{
-          backgroundImage: `url(${bg})`,
-          backgroundSize: 'cover',
-          backgroundPosition: 'center'
-        }}
+        className="min-h-screen bg-cover bg-center"
+        style={{ backgroundImage: `url(${bg})` }}
       >
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 backdrop-blur-sm bg-white/40 py-10 rounded-2xl shadow-lg space-y-24">
+        <div className="bg-gradient-to-r from-green-700 to-green-900 pt-32 pb-16">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <h1 className="text-4xl font-bold text-white sm:text-5xl md:text-6xl">
+              Media Center
+            </h1>
+            <p className="mt-6 text-xl text-green-100 max-w-3xl mx-auto">
+              Explore AADONA's latest events, photos & resources
+            </p>
+          </div>
+        </div>
 
-          {categories.map((cat, i) => {
-            // create scroll ref for this category if not exists
-            if (!scrollRefs.current[cat.title]) {
-              scrollRefs.current[cat.title] = React.createRef();
-            }
+        {/* Content container (blurred white overlay) */}
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 -mt-10">
+          <div className="backdrop-blur-sm bg-white/40 py-10 rounded-2xl shadow-lg space-y-24">
+            {categories.length === 0 && (
+              <div className="text-center py-16">
+                <p className="text-gray-700">No media available.</p>
+              </div>
+            )}
 
-            return (
-              <section key={i}>
-                <h2 className="text-4xl font-bold text-green-800 text-center mb-10">
-                  {cat.title}
-                </h2>
+            {categories.map((cat, i) => {
+              // create scroll ref for this category if not exists
+              if (!scrollRefs.current[cat.title]) {
+                scrollRefs.current[cat.title] = React.createRef();
+              }
 
-                {/* Horizontal scroll with transparent arrows */}
-                <div className="relative group">
+              return (
+                <section key={i} className="px-4">
+                  <h2 className="text-4xl font-bold text-green-800 text-center mb-10">
+                    {cat.title}
+                  </h2>
 
-                  {/* LEFT ARROW */}
-                  <button
-                    onClick={() =>
-                      scrollRefs.current[cat.title].current.scrollBy({
-                        left: -350,
-                        behavior: "smooth"
-                      })
-                    }
-                    className="
-                      hidden md:flex absolute left-0 top-1/2 -translate-y-1/2 
-                      text-white text-6xl font-bold
-                      px-2 py-6
-                      opacity-0 group-hover:opacity-100 
-                      hover:text-green-200 
-                      transition-all z-20
-                    "
-                  >
-                    ‹
-                  </button>
+                  {/* Horizontal scroll with arrows */}
+                  <div className="relative group">
+                    {/* LEFT ARROW */}
+                    <button
+                      onClick={() =>
+                        scrollRefs.current[cat.title].current.scrollBy({
+                          left: -350,
+                          behavior: 'smooth'
+                        })
+                      }
+                      className="
+                        hidden md:flex absolute left-0 top-1/2 -translate-y-1/2 
+                        text-white text-6xl font-bold
+                        px-2 py-6
+                        opacity-0 group-hover:opacity-100 
+                        hover:text-green-200 
+                        transition-all z-20
+                      "
+                      aria-label={`Scroll ${cat.title} left`}
+                    >
+                      ‹
+                    </button>
 
-                  {/* Scroll container */}
-                  <div
-                    ref={scrollRefs.current[cat.title]}
-                    className="overflow-x-auto hide-scrollbar scroll-smooth snap-x snap-mandatory px-2 pb-4"
-                  >
-                    <div className="flex gap-8">
-
-                      {cat.images.map((img, idx) => (
-                        <div
-                          key={idx}
-                          className="
-                            min-w-[250px] bg-white/80 backdrop-blur rounded-xl shadow-md
-                            transition-all duration-300 cursor-pointer p-4 snap-start
-                            hover:scale-110 hover:z-20 hover:shadow-2xl hover:brightness-110
-                          "
-                          onClick={() => setSelectedImage(img)}
-                        >
-                          <img
-                            src={img}
-                            className="w-full h-48 object-cover rounded-lg"
-                          />
-
-                          <button
-                            onClick={(e) => {
-                              e.stopPropagation();
-                              downloadImage(img);
-                            }}
-                            className="mt-3 w-full bg-green-600 text-white py-2 rounded-lg hover:bg-green-700"
+                    {/* Scroll container */}
+                    <div
+                      ref={scrollRefs.current[cat.title]}
+                      className="overflow-x-auto hide-scrollbar scroll-smooth snap-x snap-mandatory px-2 pb-4"
+                    >
+                      <div className="flex gap-8">
+                        {cat.images.map((img, idx) => (
+                          <div
+                            key={idx}
+                            className="
+                              min-w-[250px] bg-white/80 backdrop-blur rounded-xl shadow-md
+                              transition-all duration-300 cursor-pointer p-4 snap-start
+                              hover:scale-110 hover:z-20 hover:shadow-2xl hover:brightness-110
+                            "
+                            onClick={() => setSelectedImage(img)}
                           >
-                            Download
-                          </button>
-                        </div>
-                      ))}
+                            <img
+                              src={img}
+                              className="w-full h-48 object-cover rounded-lg"
+                              alt={`${cat.title}-${idx}`}
+                              loading="lazy"
+                            />
 
+                            <button
+                              onClick={(e) => {
+                                e.stopPropagation();
+                                downloadImage(img);
+                              }}
+                              className="mt-3 w-full bg-green-600 text-white py-2 rounded-lg hover:bg-green-700"
+                              aria-label="Download image"
+                            >
+                              Download
+                            </button>
+                          </div>
+                        ))}
+                      </div>
                     </div>
+
+                    {/* RIGHT ARROW */}
+                    <button
+                      onClick={() =>
+                        scrollRefs.current[cat.title].current.scrollBy({
+                          left: 350,
+                          behavior: 'smooth'
+                        })
+                      }
+                      className="
+                        hidden md:flex absolute right-0 top-1/2 -translate-y-1/2 
+                        text-white text-6xl font-bold
+                        px-2 py-6
+                        opacity-0 group-hover:opacity-100 
+                        hover:text-green-200 
+                        transition-all z-20
+                      "
+                      aria-label={`Scroll ${cat.title} right`}
+                    >
+                      ›
+                    </button>
                   </div>
-
-                  {/* RIGHT ARROW */}
-                  <button
-                    onClick={() =>
-                      scrollRefs.current[cat.title].current.scrollBy({
-                        left: 350,
-                        behavior: "smooth"
-                      })
-                    }
-                    className="
-                      hidden md:flex absolute right-0 top-1/2 -translate-y-1/2 
-                      text-white text-6xl font-bold
-                      px-2 py-6
-                      opacity-0 group-hover:opacity-100 
-                      hover:text-green-200 
-                      transition-all z-20
-                    "
-                  >
-                    ›
-                  </button>
-
-                </div>
-              </section>
-            );
-          })}
-
+                </section>
+              );
+            })}
+          </div>
         </div>
 
         {/* Fullscreen preview modal */}
@@ -178,16 +188,17 @@ export default function MediaCenter() {
               src={selectedImage}
               className="max-w-[90vw] max-h-[90vh] rounded-lg"
               onClick={(e) => e.stopPropagation()}
+              alt="Preview"
             />
             <button
               className="absolute top-6 right-6 text-white text-3xl"
               onClick={() => setSelectedImage(null)}
+              aria-label="Close preview"
             >
               ✕
             </button>
           </div>
         )}
-
       </div>
 
       <Footer />
@@ -199,14 +210,3 @@ export default function MediaCenter() {
     </>
   );
 }
-
-
-
-
-
-
-
-
-
-
-

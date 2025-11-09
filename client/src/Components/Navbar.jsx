@@ -106,7 +106,7 @@ const Navbar = () => {
               <ul className="absolute left-0 top-full hidden group-hover:block bg-white shadow-lg rounded-md pt-2 w-56 text-gray-700 border border-gray-100">
                 <li><Link to="/warranty" className="block px-4 py-2 hover:bg-green-100 hover:text-green-600">Warranty</Link></li>
                 <li><Link to="/techSquad" className="block px-4 py-2 hover:bg-green-100 hover:text-green-600">Tech Squad</Link></li>
-                <li><Link to="/requestDda" className="block px-4 py-2 hover:bg-green-100 hover:text-green-600">Request DDA</Link></li>
+                <li><Link to="/requestDda" className="block px-4 py-2 hover:bg-green-100 hover:text-green-600">Request DOA</Link></li>
                 <li><Link to="/supportTools" className="block px-4 py-2 hover:bg-green-100 hover:text-green-600">Support Tools</Link></li>
                 <li><Link to="/productSupport" className="block px-4 py-2 hover:bg-green-100 hover:text-green-600">Product Support</Link></li>
                 <li><Link to="/productRegistration" className="block px-4 py-2 hover:bg-green-100 hover:text-green-600">Product Registration</Link></li>

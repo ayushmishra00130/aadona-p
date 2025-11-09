@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import Navbar from "../../Components/Navbar";
 import Footer from "../../Components/Footer";
+import bg from "../../assets/bg.jpg";
 
 const MODEL_NAMES = [
   "DMS-8GP-2F",
@@ -82,254 +83,270 @@ export default function ProjectLocking() {
     setForm(emptyForm);
   };
 
-  const inputClasses = "p-3 border border-gray-300 rounded-lg text-sm w-full transition-all font-light bg-white focus:border-emerald-500 focus:shadow-[0_0_0_3px_rgba(142,182,155,0.1)] focus:outline-none placeholder:text-gray-400 placeholder:font-light";
+  const inputClasses =
+    "p-3 border border-gray-300 rounded-lg text-sm w-full transition-all font-light bg-white focus:border-emerald-500 focus:shadow-[0_0_0_3px_rgba(142,182,155,0.08)] focus:outline-none placeholder:text-gray-400";
 
   return (
     <>
-    <Navbar/>
-    <div className="min-h-screen bg-white pb-16 mt-20">
-      {/* Hero Section */}
-   <div className="bg-green-400/10 pt-12 pb-12 shadow-inner mt-20">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-            <h1 className="text-5xl font-bold tracking-tight text-green-900 sm:text-6xl">
-                Project Locking
+      <Navbar />
+
+      {/* Full background (CSR style) */}
+      <div
+        className="min-h-screen bg-cover bg-center"
+        style={{
+          backgroundImage: `url(${bg})`,
+          backgroundRepeat: "no-repeat",
+          backgroundSize: "cover",
+          backgroundPosition: "center",
+        }}
+      >
+        {/* HERO SECTION (CSR-style gradient header) */}
+        <div className="bg-gradient-to-r from-green-700 to-green-900 pt-32 pb-16">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <h1 className="text-5xl font-bold text-white sm:text-6xl">
+              Project Locking
             </h1>
+            <p className="mt-3 text-green-100 text-lg md:text-xl max-w-3xl mx-auto">
+              Submit project details to lock inventory / create quotations — our team will contact you.
+            </p>
+          </div>
         </div>
-    </div>
 
-      {/* Form Section */}
-      <section className="flex justify-center mt-10 max-w-6xl mx-auto my-0 px-5">
-        <div className="relative bg-white rounded-3xl shadow-[0_8px_30px_rgba(0,0,0,0.08)] w-full max-w-6xl p-12">
-          <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-emerald-400 to-emerald-600 rounded-t-3xl"></div>
-          
-          <h2 className="text-3xl mb-5 text-center text-emerald-700 font-normal">Project Locking Form</h2>
-          
-          <form className="flex flex-col gap-6" onSubmit={handleSubmit}>
-            {/* Row 1: First Name, Last Name */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              <input 
-                name="firstName" 
-                value={form.firstName} 
-                onChange={handleChange} 
-                placeholder="First Name *" 
-                required 
-                className={inputClasses}
-              />
-              <input 
-                name="lastName" 
-                value={form.lastName} 
-                onChange={handleChange} 
-                placeholder="Last Name *" 
-                required 
-                className={inputClasses}
-              />
+        {/* Page content directly on background (NO big white wrapper) */}
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 -mt-8">
+          <div className="max-w-6xl mx-auto">
+            {/* Short intro box (kept subtle) */}
+            <div className="mb-8 bg-white/60 p-4 rounded-xl border border-white/30">
+              <p className="text-slate-700">
+                Fill the form below with accurate project details. Fields marked * are required. We kept form inputs white for readability against the background.
+              </p>
             </div>
 
-            {/* Row 2: Email, Phone */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              <input 
-                name="email" 
-                type="email" 
-                value={form.email} 
-                onChange={handleChange} 
-                placeholder="Email *" 
-                required 
-                className={inputClasses}
-              />
-              <input 
-                name="phone" 
-                type="tel" 
-                value={form.phone} 
-                onChange={handleChange} 
-                placeholder="Phone *" 
-                required 
-                className={inputClasses}
-              />
-            </div>
-
-            {/* Street Address */}
-            <input 
-              name="streetAddress" 
-              value={form.streetAddress} 
-              onChange={handleChange} 
-              placeholder="Street Address *" 
-              required 
-              className={inputClasses}
-            />
-            
-            {/* Street Address 2 */}
-            <input 
-              name="streetAddress2" 
-              value={form.streetAddress2} 
-              onChange={handleChange} 
-              placeholder="Street Address 2" 
-              className={inputClasses}
-            />
-
-            {/* Row 3: City, Region/State, Postal Code */}
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              <input 
-                name="city" 
-                value={form.city} 
-                onChange={handleChange} 
-                placeholder="City *" 
-                required 
-                className={inputClasses}
-              />
-              <input 
-                name="regionState" 
-                value={form.regionState} 
-                onChange={handleChange} 
-                placeholder="State / Region *" 
-                required 
-                className={inputClasses}
-              />
-              <input 
-                name="postalZip" 
-                value={form.postalZip} 
-                onChange={handleChange} 
-                placeholder="Postal Code *" 
-                required 
-                className={inputClasses}
-              />
-            </div>
-
-            {/* Country */}
-            <select 
-              name="country" 
-              value={form.country} 
-              onChange={handleChange} 
-              required 
-              className={inputClasses + " cursor-pointer"}
-            >
-              <option value="">Select Country *</option>
-              {COUNTRIES.map(c => (
-                <option key={c} value={c}>{c}</option>
-              ))}
-            </select>
-
-            {/* Company */}
-            <input 
-              name="company" 
-              value={form.company} 
-              onChange={handleChange} 
-              placeholder="Company" 
-              className={inputClasses}
-            />
-
-            {/* Row 4: Model Name, Quantity */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              <select 
-                name="modelName" 
-                value={form.modelName} 
-                onChange={handleChange} 
-                required 
-                className={inputClasses + " cursor-pointer"}
-              >
-                <option value="">Select Model *</option>
-                {MODEL_NAMES.map(m => <option key={m} value={m}>{m}</option>)}
-              </select>
-              <input 
-                name="quantity" 
-                type="number" 
-                min="1" 
-                value={form.quantity} 
-                onChange={handleChange} 
-                placeholder="Quantity *" 
-                required 
-                className={inputClasses}
-              />
-            </div>
-
-            {/* Aadona Sales */}
-            <select 
-              name="aadonaSales" 
-              value={form.aadonaSales} 
-              onChange={handleChange} 
-              required 
-              className={inputClasses + " cursor-pointer"}
-            >
-              <option value="">Select Aadona Sales *</option>
-              {AADONA_SALES_REPS.map(rep => <option key={rep} value={rep}>{rep}</option>)}
-            </select>
-
-            {/* Row 5: Project Name, Project/Tender Name */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              <input 
-                name="projectName" 
-                value={form.projectName} 
-                onChange={handleChange} 
-                placeholder="Project Name *" 
-                required 
-                className={inputClasses}
-              />
-              <input 
-                name="projectTenderName" 
-                value={form.projectTenderName} 
-                onChange={handleChange} 
-                placeholder="Project / Tender Name *" 
-                required 
-                className={inputClasses}
-              />
-            </div>
-
-            {/* Row 6: End Customer Name, End Customer Contact */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              <input 
-                name="endCustomerName" 
-                value={form.endCustomerName} 
-                onChange={handleChange} 
-                placeholder="End Customer Name *" 
-                required 
-                className={inputClasses}
-              />
-              <input 
-                name="endCustomerContact" 
-                value={form.endCustomerContact} 
-                onChange={handleChange} 
-                placeholder="End Customer Contact *" 
-                required 
-                className={inputClasses}
-              />
-            </div>
-
-            {/* Row 7: Expected Closure Date, SI Partner Checkbox */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              <input 
-                name="expectedClosure" 
-                type="date" 
-                value={form.expectedClosure} 
-                onChange={handleChange} 
-                required 
-                className={inputClasses}
-              />
-              <label className="flex items-start justify-start gap-2.5 font-light text-gray-600 text-sm w-fit">
-                <input 
-                  type="checkbox" 
-                  name="siPartner" 
-                  checked={form.siPartner} 
-                  onChange={handleChange} 
-                  className="accent-emerald-500 w-4.5 h-4.5 cursor-pointer mt-0.5"
+            {/* FORM — placed on background, no large card */}
+            <form className="space-y-6" onSubmit={handleSubmit}>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <input
+                  name="firstName"
+                  value={form.firstName}
+                  onChange={handleChange}
+                  placeholder="First Name *"
+                  required
+                  className={inputClasses}
                 />
-                SI Partner Involved
-              </label>
-            </div>
+                <input
+                  name="lastName"
+                  value={form.lastName}
+                  onChange={handleChange}
+                  placeholder="Last Name *"
+                  required
+                  className={inputClasses}
+                />
+              </div>
 
-            {/* Submit Button */}
-            <button 
-              type="submit" 
-              className="bg-green-700 text-white text-sm font-normal py-3 px-8 border-none rounded-lg cursor-pointer transition-all shadow-[0_2px_8px_rgba(142,182,155,0.25)] tracking-wide self-center mt-5 hover:-translate-y-px hover:shadow-[0_4px_12px_rgba(142,182,155,0.35)] hover:bg-gradient-to-br hover:from-emerald-500 hover:to-emerald-700 active:translate-y-0"
-            >
-              Submit Application
-            </button>
-          </form>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <input
+                  name="email"
+                  type="email"
+                  value={form.email}
+                  onChange={handleChange}
+                  placeholder="Email *"
+                  required
+                  className={inputClasses}
+                />
+                <input
+                  name="phone"
+                  type="tel"
+                  value={form.phone}
+                  onChange={handleChange}
+                  placeholder="Phone *"
+                  required
+                  className={inputClasses}
+                />
+              </div>
+
+              <input
+                name="streetAddress"
+                value={form.streetAddress}
+                onChange={handleChange}
+                placeholder="Street Address *"
+                required
+                className={inputClasses}
+              />
+
+              <input
+                name="streetAddress2"
+                value={form.streetAddress2}
+                onChange={handleChange}
+                placeholder="Street Address 2"
+                className={inputClasses}
+              />
+
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <input
+                  name="city"
+                  value={form.city}
+                  onChange={handleChange}
+                  placeholder="City *"
+                  required
+                  className={inputClasses}
+                />
+                <input
+                  name="regionState"
+                  value={form.regionState}
+                  onChange={handleChange}
+                  placeholder="State / Region *"
+                  required
+                  className={inputClasses}
+                />
+                <input
+                  name="postalZip"
+                  value={form.postalZip}
+                  onChange={handleChange}
+                  placeholder="Postal Code *"
+                  required
+                  className={inputClasses}
+                />
+              </div>
+
+              <select
+                name="country"
+                value={form.country}
+                onChange={handleChange}
+                required
+                className={inputClasses + " cursor-pointer bg-white"}
+              >
+                <option value="">Select Country *</option>
+                {COUNTRIES.map(c => (
+                  <option key={c} value={c}>
+                    {c}
+                  </option>
+                ))}
+              </select>
+
+              <input
+                name="company"
+                value={form.company}
+                onChange={handleChange}
+                placeholder="Company"
+                className={inputClasses}
+              />
+
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <select
+                  name="modelName"
+                  value={form.modelName}
+                  onChange={handleChange}
+                  required
+                  className={inputClasses + " cursor-pointer bg-white"}
+                >
+                  <option value="">Select Model *</option>
+                  {MODEL_NAMES.map(m => (
+                    <option key={m} value={m}>
+                      {m}
+                    </option>
+                  ))}
+                </select>
+
+                <input
+                  name="quantity"
+                  type="number"
+                  min="1"
+                  value={form.quantity}
+                  onChange={handleChange}
+                  placeholder="Quantity *"
+                  required
+                  className={inputClasses}
+                />
+              </div>
+
+              <select
+                name="aadonaSales"
+                value={form.aadonaSales}
+                onChange={handleChange}
+                required
+                className={inputClasses + " cursor-pointer bg-white"}
+              >
+                <option value="">Select AADONA Sales *</option>
+                {AADONA_SALES_REPS.map(rep => (
+                  <option key={rep} value={rep}>
+                    {rep}
+                  </option>
+                ))}
+              </select>
+
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <input
+                  name="projectName"
+                  value={form.projectName}
+                  onChange={handleChange}
+                  placeholder="Project Name *"
+                  required
+                  className={inputClasses}
+                />
+                <input
+                  name="projectTenderName"
+                  value={form.projectTenderName}
+                  onChange={handleChange}
+                  placeholder="Project / Tender Name *"
+                  required
+                  className={inputClasses}
+                />
+              </div>
+
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <input
+                  name="endCustomerName"
+                  value={form.endCustomerName}
+                  onChange={handleChange}
+                  placeholder="End Customer Name *"
+                  required
+                  className={inputClasses}
+                />
+                <input
+                  name="endCustomerContact"
+                  value={form.endCustomerContact}
+                  onChange={handleChange}
+                  placeholder="End Customer Contact *"
+                  required
+                  className={inputClasses}
+                />
+              </div>
+
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6 items-center">
+                <input
+                  name="expectedClosure"
+                  type="date"
+                  value={form.expectedClosure}
+                  onChange={handleChange}
+                  required
+                  className={inputClasses}
+                />
+                <label className="flex items-center gap-3 text-sm text-gray-700">
+                  <input
+                    type="checkbox"
+                    name="siPartner"
+                    checked={form.siPartner}
+                    onChange={handleChange}
+                    className="accent-emerald-500"
+                  />
+                  SI Partner Involved
+                </label>
+              </div>
+
+              <div className="flex justify-center">
+                <button
+                  type="submit"
+                  className="bg-green-700 text-white text-sm font-normal py-3 px-8 rounded-lg cursor-pointer transition-all shadow-sm hover:shadow-md hover:-translate-y-px"
+                >
+                  Submit Application
+                </button>
+              </div>
+            </form>
+          </div>
         </div>
-      </section>
-    </div>
-    <Footer/>
+      </div>
+
+      <Footer />
     </>
   );
 }
-
-
-

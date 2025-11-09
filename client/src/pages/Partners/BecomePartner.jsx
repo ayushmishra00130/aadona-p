@@ -1,8 +1,7 @@
 import React, { useState } from "react";
-import Footer from "../../Components/Footer";
 import Navbar from "../../Components/Navbar";
+import Footer from "../../Components/Footer";
 import bg from "../../assets/bg.jpg";
-
 
 const COUNTRIES = [
   "Afghanistan","Aland Islands","Albania","Algeria","American Samoa","Andorra","Angola","Anguilla",
@@ -122,282 +121,271 @@ export default function BecomePartner() {
     alert("Partner application submitted. Check console for data.");
   };
 
-  const inputClasses = "p-4 rounded-lg border border-blue-200 bg-white text-base transition-all shadow-[6px_6px_0_rgba(81,131,204,0.08)] focus:outline-none focus:border-emerald-500 focus:shadow-[0_6px_0_rgba(138,182,150,0.12),0_0_0_3px_rgba(142,182,155,0.06)] text-gray-800 w-full placeholder:text-gray-400 placeholder:font-light";
+  const inputClasses = "p-4 rounded-lg border border-blue-200 bg-white text-base transition-all focus:outline-none focus:border-emerald-500 text-gray-800 w-full placeholder:text-gray-400";
 
   return (
     <>
- <Navbar/>
-<div
-  className="min-h-screen bg-cover bg-center bg-fixed text-gray-800 pb-16 mt-20 mb-20"
-  style={{
-    backgroundImage: `url(${bg})`,
-    backgroundSize: "cover",
-    backgroundRepeat: "no-repeat",
-  }}
->
+      <Navbar />
 
-
-
-
-      {/* Hero Section */}
-    
-       <div className="bg-green-400/10 pt-12 pb-12 shadow-inner mt-20">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-            <h1 className="text-5xl font-bold tracking-tight text-green-900 sm:text-6xl">
-                Become a Partner
+      {/* Full background (CSR style) */}
+      <div
+        className="min-h-screen bg-cover bg-center"
+        style={{
+          backgroundImage: `url(${bg})`,
+          backgroundRepeat: "no-repeat",
+          backgroundSize: "cover",
+          backgroundPosition: "center",
+        }}
+      >
+        {/* CSR-style Hero Section */}
+        <div className="bg-gradient-to-r from-green-700 to-green-900 pt-32 pb-16">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <h1 className="text-5xl font-bold text-white sm:text-6xl">
+              Become a Partner
             </h1>
-            <p className="mt-4 text-xl text-green-600">
-           Join our partner ecosystem – distributors, system integrators, consultants and training partners.
-            Fill out the form and our partnership team will contact you with next steps.            </p>
+            <p className="mt-4 text-xl text-green-100 max-w-3xl mx-auto">
+              Join our partner ecosystem — distributors, system integrators, consultants and trainers. Fill the form and our team will contact you.
+            </p>
+          </div>
         </div>
-    </div>
 
-      {/* Info Section */}
-      <section className="py-10 px-5 max-w-6xl mx-auto">
-        <ul className="space-y-7 list-none p-0 m-0">
-          <li className="text-teal-900 mb-7">
-            <h3 className="text-lg text-teal-800 font-semibold flex items-center gap-2 mb-2 mt-0">
-              <span className="text-2xl leading-none mr-1.5">•</span> Distributors
-            </h3>
-            <p className="text-teal-700 font-normal my-1.5 mx-0">Join our success story with a low-risk, rapidly expanding business.</p>
-            <p className="text-teal-800 leading-relaxed font-light m-0 mb-2.5">
-              We plan to operate an exclusive regional distribution model – one exclusive distributor per region. We don't believe in stock-dumping; your risk will be kept low so you can breathe easy working with us. There are additional benefits for registered partners.
-            </p>
-          </li>
+        {/* Page content directly on background (NO big white wrapper) */}
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 -mt-8">
+          {/* Info Section */}
+          <section className="py-6 mb-8">
+            <div className="max-w-4xl mx-auto">
+              <ul className="space-y-6">
+                <li className="text-teal-900">
+                  <h3 className="text-lg text-teal-800 font-semibold mb-2 flex items-center gap-2">
+                    <span className="text-2xl leading-none mr-1.5">•</span> Distributors
+                  </h3>
+                  <p className="text-teal-700">Join our success story with a low-risk, rapidly expanding business. We operate an exclusive regional distribution model — one exclusive distributor per region.</p>
+                </li>
 
-          <li className="text-teal-900 mb-7">
-            <h3 className="text-lg text-teal-800 font-semibold flex items-center gap-2 mb-2 mt-0">
-              <span className="text-2xl leading-none mr-1.5">•</span> System Integrators
-            </h3>
-            <p className="text-teal-700 font-normal my-1.5 mx-0">Join our success story with a low-risk, rapidly expanding business.</p>
-            <p className="text-teal-800 leading-relaxed font-light m-0 mb-2.5">
-              We welcome system integrators who can design and deliver end-to-end solutions. We provide technical support, demo kits, and training so integrators can deploy solutions confidently and quickly.
-            </p>
-          </li>
+                <li className="text-teal-900">
+                  <h3 className="text-lg text-teal-800 font-semibold mb-2 flex items-center gap-2">
+                    <span className="text-2xl leading-none mr-1.5">•</span> System Integrators
+                  </h3>
+                  <p className="text-teal-700">We provide technical support, demo kits, and training so integrators can deploy solutions confidently and quickly.</p>
+                </li>
 
-          <li className="text-teal-900 mb-7">
-            <h3 className="text-lg text-teal-800 font-semibold flex items-center gap-2 mb-2 mt-0">
-              <span className="text-2xl leading-none mr-1.5">•</span> Solutions Consultant
-            </h3>
-            <p className="text-teal-700 font-normal my-1.5 mx-0">Join our success story with a low-risk, rapidly expanding business.</p>
-            <p className="text-teal-800 leading-relaxed font-light m-0 mb-2.5">
-              We value consultants who educate customers with unbiased guidance. We offer special packages to support consultants with product knowledge and resources to help customers choose the right solution.
-            </p>
-          </li>
+                <li className="text-teal-900">
+                  <h3 className="text-lg text-teal-800 font-semibold mb-2 flex items-center gap-2">
+                    <span className="text-2xl leading-none mr-1.5">•</span> Solutions Consultant
+                  </h3>
+                  <p className="text-teal-700">We offer special packages and resources to help consultants guide customers to the right solution.</p>
+                </li>
 
-          <li className="text-teal-900 mb-7">
-            <h3 className="text-lg text-teal-800 font-semibold flex items-center gap-2 mb-2 mt-0">
-              <span className="text-2xl leading-none mr-1.5">•</span> Partner Training
-            </h3>
-            <p className="text-teal-700 font-normal my-1.5 mx-0">Join our success story with a low-risk, rapidly expanding business.</p>
-            <p className="text-teal-800 leading-relaxed font-light m-0 mb-2.5">
-              We share knowledge and take customer feedback seriously. We provide in-depth sales and technical training to partners so they can manage products and deliver solutions independently.
-            </p>
-          </li>
+                <li className="text-teal-900">
+                  <h3 className="text-lg text-teal-800 font-semibold mb-2 flex items-center gap-2">
+                    <span className="text-2xl leading-none mr-1.5">•</span> Partner Training
+                  </h3>
+                  <p className="text-teal-700">In-depth sales & technical training to partners so they can manage products and deliver solutions independently.</p>
+                </li>
 
-          <li className="text-teal-900 mb-7">
-            <h3 className="text-lg text-teal-800 font-semibold flex items-center gap-2 mb-2 mt-0">
-              <span className="text-2xl leading-none mr-1.5">•</span> Product Demonstration
-            </h3>
-            <p className="text-teal-700 font-normal my-1.5 mx-0">Ready when you need it.</p>
-            <p className="text-teal-800 leading-relaxed font-light m-0 mb-2.5">
-              We support partners with demo kits and training to show successful POCs and demos. Registered partners can receive demo kits so they don't waste time convincing customers.
-            </p>
-          </li>
+                <li className="text-teal-900">
+                  <h3 className="text-lg text-teal-800 font-semibold mb-2 flex items-center gap-2">
+                    <span className="text-2xl leading-none mr-1.5">•</span> Product Demonstration
+                  </h3>
+                  <p className="text-teal-700">Registered partners can receive demo kits for POCs and demos.</p>
+                </li>
 
-          <li className="text-teal-900 mb-7">
-            <h3 className="text-lg text-teal-800 font-semibold flex items-center gap-2 mb-2 mt-0">
-              <span className="text-2xl leading-none mr-1.5">•</span> Benefits and Incentives
-            </h3>
-            <p className="text-teal-700 font-normal my-1.5 mx-0">Learn more about what's in it for you.</p>
-            <p className="text-teal-800 leading-relaxed font-light m-0 mb-2.5">
-              We understand pricing sensitivity. As an Indian brand, we care about our customers and partners. Contact us to learn more about tailored benefits and incentive programs available to partners.
-            </p>
-          </li>
-        </ul>
-      </section>
-
-      {/* Form Section */}
-      <main className="flex justify-center -mt-4 px-5 pb-10">
-        <div className="relative bg-white w-full max-w-6xl rounded-3xl p-12 shadow-[0_8px_30px_rgba(0,0,0,0.08)]">
-          <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-emerald-400 to-emerald-600 rounded-t-3xl"></div>
-          
-          <h2 className="text-3xl text-emerald-700 text-center mb-6 font-normal">Partner Application</h2>
-
-          <form className="flex flex-col gap-5" onSubmit={handleSubmit}>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
-              <div className="flex flex-col">
-                <label className="text-sm text-gray-600 mb-2 font-normal">First name</label>
-                <input name="firstName" value={form.firstName} onChange={handleChange} placeholder="Enter your first name" required className={inputClasses} />
-              </div>
-              <div className="flex flex-col">
-                <label className="text-sm text-gray-600 mb-2 font-normal">Last name</label>
-                <input name="lastName" value={form.lastName} onChange={handleChange} placeholder="Enter your last name" required className={inputClasses} />
-              </div>
-              <div className="flex flex-col">
-                <label className="text-sm text-gray-600 mb-2 font-normal">Company Address</label>
-                <input name="companyAddress" value={form.companyAddress} onChange={handleChange} placeholder="Street Address" className={inputClasses} />
-              </div>
+                <li className="text-teal-900">
+                  <h3 className="text-lg text-teal-800 font-semibold mb-2 flex items-center gap-2">
+                    <span className="text-2xl leading-none mr-1.5">•</span> Benefits and Incentives
+                  </h3>
+                  <p className="text-teal-700">Contact us to learn about tailored benefits and incentive programs available to partners.</p>
+                </li>
+              </ul>
             </div>
+          </section>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
-              <div className="flex flex-col">
-                <label className="text-sm text-gray-600 mb-2 font-normal">Email *</label>
-                <input name="email" type="email" value={form.email} onChange={handleChange} placeholder="Enter your email" required className={inputClasses} />
-              </div>
-              <div className="flex flex-col">
-                <label className="text-sm text-gray-600 mb-2 font-normal">Primary area of Interest *</label>
-                <select name="primaryInterest" value={form.primaryInterest} onChange={handleChange} required className={inputClasses}>
-                  <option value="">Select an option</option>
-                  <option value="Distributor">Distributor</option>
-                  <option value="System Integrator">System Integrator</option>
-                  <option value="Solutions Consultant">Solutions Consultant</option>
-                  <option value="Partner Training">Partner Training</option>
-                  <option value="Other">Other</option>
-                </select>
-              </div>
-              <div className="flex flex-col">
-                <label className="text-sm text-gray-600 mb-2 font-normal">Company City</label>
-                <input name="companyCity" value={form.companyCity} onChange={handleChange} placeholder="City" className={inputClasses} />
-              </div>
-            </div>
+          {/* Partner Application Form (no big white background) */}
+          <section className="max-w-6xl mx-auto">
+            <h2 className="text-3xl text-emerald-700 text-center mb-6 font-semibold">Partner Application</h2>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
-              <div className="flex flex-col">
-                <label className="text-sm text-gray-600 mb-2 font-normal">Region/State/Province</label>
-                <input name="regionStateProvince" value={form.regionStateProvince} onChange={handleChange} placeholder="Region/State/Province" className={inputClasses} />
+            <form className="space-y-6" onSubmit={handleSubmit}>
+              {/* Row 1 */}
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+                <div>
+                  <label className="block text-sm text-gray-700 mb-2">First name</label>
+                  <input name="firstName" value={form.firstName} onChange={handleChange} placeholder="Enter your first name" required className={inputClasses} />
+                </div>
+                <div>
+                  <label className="block text-sm text-gray-700 mb-2">Last name</label>
+                  <input name="lastName" value={form.lastName} onChange={handleChange} placeholder="Enter your last name" required className={inputClasses} />
+                </div>
+                <div>
+                  <label className="block text-sm text-gray-700 mb-2">Company Address</label>
+                  <input name="companyAddress" value={form.companyAddress} onChange={handleChange} placeholder="Street Address" className={inputClasses} />
+                </div>
               </div>
-              <div className="flex flex-col">
-                <label className="text-sm text-gray-600 mb-2 font-normal">Phone</label>
-                <input name="phone" value={form.phone} onChange={handleChange} placeholder="Enter your phone number" className={inputClasses} />
-              </div>
-              <div className="flex flex-col">
-                <label className="text-sm text-gray-600 mb-2 font-normal">Geographies served</label>
-                <input name="geographiesServed" value={form.geographiesServed} onChange={handleChange} placeholder="Please mention markets you cover" className={inputClasses} />
-              </div>
-            </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
-              <div className="flex flex-col">
-                <label className="text-sm text-gray-600 mb-2 font-normal">Postal / Zip code</label>
-                <input name="postalZip" value={form.postalZip} onChange={handleChange} placeholder="Postal / Zip code" className={inputClasses} />
+              {/* Row 2 */}
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+                <div>
+                  <label className="block text-sm text-gray-700 mb-2">Email *</label>
+                  <input name="email" type="email" value={form.email} onChange={handleChange} placeholder="Enter your email" required className={inputClasses} />
+                </div>
+                <div>
+                  <label className="block text-sm text-gray-700 mb-2">Primary area of Interest *</label>
+                  <select name="primaryInterest" value={form.primaryInterest} onChange={handleChange} required className={inputClasses}>
+                    <option value="">Select an option</option>
+                    <option value="Distributor">Distributor</option>
+                    <option value="System Integrator">System Integrator</option>
+                    <option value="Solutions Consultant">Solutions Consultant</option>
+                    <option value="Partner Training">Partner Training</option>
+                    <option value="Other">Other</option>
+                  </select>
+                </div>
+                <div>
+                  <label className="block text-sm text-gray-700 mb-2">Company City</label>
+                  <input name="companyCity" value={form.companyCity} onChange={handleChange} placeholder="City" className={inputClasses} />
+                </div>
               </div>
-              <div className="flex flex-col">
-                <label className="text-sm text-gray-600 mb-2 font-normal">Country *</label>
-                <select name="country" value={form.country} onChange={handleChange} required className={inputClasses}>
-                  <option value="">Country</option>
-                  {COUNTRIES.map(c => <option key={c} value={c}>{c}</option>)}
-                </select>
-              </div>
-              <div className="flex flex-col">
-                <label className="text-sm text-gray-600 mb-2 font-normal">Company</label>
-                <input name="companyName" value={form.companyName} onChange={handleChange} placeholder="Company" className={inputClasses} />
-              </div>
-            </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
-              <div className="flex flex-col">
-                <label className="text-sm text-gray-600 mb-2 font-normal">Website Address</label>
-                <input name="websiteAddress" value={form.websiteAddress} onChange={handleChange} placeholder="Leave empty if you don't have" className={inputClasses} />
+              {/* Row 3 */}
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+                <div>
+                  <label className="block text-sm text-gray-700 mb-2">Region/State/Province</label>
+                  <input name="regionStateProvince" value={form.regionStateProvince} onChange={handleChange} placeholder="Region/State/Province" className={inputClasses} />
+                </div>
+                <div>
+                  <label className="block text-sm text-gray-700 mb-2">Phone</label>
+                  <input name="phone" value={form.phone} onChange={handleChange} placeholder="Enter your phone number" className={inputClasses} />
+                </div>
+                <div>
+                  <label className="block text-sm text-gray-700 mb-2">Geographies served</label>
+                  <input name="geographiesServed" value={form.geographiesServed} onChange={handleChange} placeholder="Please mention markets you cover" className={inputClasses} />
+                </div>
               </div>
-              <div className="flex flex-col">
-                <label className="text-sm text-gray-600 mb-2 font-normal">Annual revenue *</label>
-                <select name="revenueAnnual" value={form.revenueAnnual} onChange={handleChange} required className={inputClasses}>
-                  {REVENUE_RANGES.map(r => <option key={r} value={r === "Select an option" ? "" : r}>{r}</option>)}
-                </select>
-              </div>
-              <div className="flex flex-col">
-                <label className="text-sm text-gray-600 mb-2 font-normal">Verticals *</label>
-                <select name="verticals" value={form.verticals} onChange={handleChange} required className={inputClasses}>
-                  {VERTICALS.map(v => <option key={v} value={v === "Select an option" ? "" : v}>{v}</option>)}
-                </select>
-              </div>
-            </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
-              <div className="flex flex-col">
-                <label className="text-sm text-gray-600 mb-2 font-normal">Revenue From Private Projects</label>
-                <select name="revenuePrivateProjects" value={form.revenuePrivateProjects} onChange={handleChange} className={inputClasses}>
-                  {REVENUE_RANGES.map(r => <option key={r} value={r === "Select an option" ? "" : r}>{r}</option>)}
-                </select>
+              {/* Row 4 */}
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+                <div>
+                  <label className="block text-sm text-gray-700 mb-2">Postal / Zip code</label>
+                  <input name="postalZip" value={form.postalZip} onChange={handleChange} placeholder="Postal / Zip code" className={inputClasses} />
+                </div>
+                <div>
+                  <label className="block text-sm text-gray-700 mb-2">Country *</label>
+                  <select name="country" value={form.country} onChange={handleChange} required className={inputClasses}>
+                    <option value="">Country</option>
+                    {COUNTRIES.map(c => <option key={c} value={c}>{c}</option>)}
+                  </select>
+                </div>
+                <div>
+                  <label className="block text-sm text-gray-700 mb-2">Company</label>
+                  <input name="companyName" value={form.companyName} onChange={handleChange} placeholder="Company" className={inputClasses} />
+                </div>
               </div>
-              <div className="flex flex-col">
-                <label className="text-sm text-gray-600 mb-2 font-normal">Revenue from Government *</label>
-                <select name="revenueFromGovt" value={form.revenueFromGovt} onChange={handleChange} required className={inputClasses}>
-                  {REVENUE_RANGES.map(r => <option key={r} value={r === "Select an option" ? "" : r}>{r}</option>)}
-                </select>
-              </div>
-              <div className="flex flex-col">
-                <label className="text-sm text-gray-600 mb-2 font-normal">Revenue From Direct End Customer *</label>
-                <select name="revenueFromDirectEnd" value={form.revenueFromDirectEnd} onChange={handleChange} required className={inputClasses}>
-                  {REVENUE_RANGES.map(r => <option key={r} value={r === "Select an option" ? "" : r}>{r}</option>)}
-                </select>
-              </div>
-            </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
-              <div className="flex flex-col">
-                <label className="text-sm text-gray-600 mb-2 font-normal">Sales team strength *</label>
-                <select name="strengthSalesTeam" value={form.strengthSalesTeam} onChange={handleChange} required className={inputClasses}>
-                  {STRENGTH_OPTIONS.map(s => <option key={s} value={s === "Select an option" ? "" : s}>{s}</option>)}
-                </select>
+              {/* Row 5 */}
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+                <div>
+                  <label className="block text-sm text-gray-700 mb-2">Website Address</label>
+                  <input name="websiteAddress" value={form.websiteAddress} onChange={handleChange} placeholder="Leave empty if you don't have" className={inputClasses} />
+                </div>
+                <div>
+                  <label className="block text-sm text-gray-700 mb-2">Annual revenue *</label>
+                  <select name="revenueAnnual" value={form.revenueAnnual} onChange={handleChange} required className={inputClasses}>
+                    {REVENUE_RANGES.map(r => <option key={r} value={r === "Select an option" ? "" : r}>{r}</option>)}
+                  </select>
+                </div>
+                <div>
+                  <label className="block text-sm text-gray-700 mb-2">Verticals *</label>
+                  <select name="verticals" value={form.verticals} onChange={handleChange} required className={inputClasses}>
+                    {VERTICALS.map(v => <option key={v} value={v === "Select an option" ? "" : v}>{v}</option>)}
+                  </select>
+                </div>
               </div>
-              <div className="flex flex-col">
-                <label className="text-sm text-gray-600 mb-2 font-normal">Technical sales team strength</label>
-                <select name="strengthTechnicalSalesTeam" value={form.strengthTechnicalSalesTeam} onChange={handleChange} className={inputClasses}>
-                  {STRENGTH_OPTIONS.map(s => <option key={s} value={s === "Select an option" ? "" : s}>{s}</option>)}
-                </select>
-              </div>
-              <div className="flex flex-col">
-                <label className="text-sm text-gray-600 mb-2 font-normal">Revenue From Retail / Trading *</label>
-                <select name="revenueRetailTrading" value={form.revenueRetailTrading} onChange={handleChange} required className={inputClasses}>
-                  {REVENUE_RANGES.map(r => <option key={r} value={r === "Select an option" ? "" : r}>{r}</option>)}
-                </select>
-              </div>
-            </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
-              <div className="flex flex-col">
-                <label className="text-sm text-gray-600 mb-2 font-normal">Market segment expertise *</label>
-                <select name="marketSegmentExpertise" value={form.marketSegmentExpertise} onChange={handleChange} required className={inputClasses}>
-                  {MARKET_SEGMENTS.map(m => <option key={m} value={m === "Select an option" ? "" : m}>{m}</option>)}
-                </select>
+              {/* Row 6 */}
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+                <div>
+                  <label className="block text-sm text-gray-700 mb-2">Revenue From Private Projects</label>
+                  <select name="revenuePrivateProjects" value={form.revenuePrivateProjects} onChange={handleChange} className={inputClasses}>
+                    {REVENUE_RANGES.map(r => <option key={r} value={r === "Select an option" ? "" : r}>{r}</option>)}
+                  </select>
+                </div>
+                <div>
+                  <label className="block text-sm text-gray-700 mb-2">Revenue from Government *</label>
+                  <select name="revenueFromGovt" value={form.revenueFromGovt} onChange={handleChange} required className={inputClasses}>
+                    {REVENUE_RANGES.map(r => <option key={r} value={r === "Select an option" ? "" : r}>{r}</option>)}
+                  </select>
+                </div>
+                <div>
+                  <label className="block text-sm text-gray-700 mb-2">Revenue From Direct End Customer *</label>
+                  <select name="revenueFromDirectEnd" value={form.revenueFromDirectEnd} onChange={handleChange} required className={inputClasses}>
+                    {REVENUE_RANGES.map(r => <option key={r} value={r === "Select an option" ? "" : r}>{r}</option>)}
+                  </select>
+                </div>
               </div>
-              <div className="flex flex-col">
-                <label className="text-sm text-gray-600 mb-2 font-normal">WLAN & LAN expertise</label>
-                <select name="wlanLanExpertise" value={form.wlanLanExpertise} onChange={handleChange} className={inputClasses}>
-                  {YES_NO_PARTIAL.map(y => <option key={y} value={y === "Select an option" ? "" : y}>{y}</option>)}
-                </select>
-              </div>
-              <div className="flex flex-col">
-                <label className="text-sm text-gray-600 mb-2 font-normal">Brands you sell</label>
-                <input name="brandsYouSell" value={form.brandsYouSell} onChange={handleChange} placeholder="write which brands do you sell..." className={inputClasses} />
-              </div>
-            </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-              <div className="flex flex-col">
-                <label className="text-sm text-gray-600 mb-2 font-normal">Any other comments</label>
-                <textarea name="otherComments" value={form.otherComments} onChange={handleChange} placeholder="Any other comments" className={inputClasses + " min-h-28 resize-y"}></textarea>
+              {/* Row 7 */}
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+                <div>
+                  <label className="block text-sm text-gray-700 mb-2">Sales team strength *</label>
+                  <select name="strengthSalesTeam" value={form.strengthSalesTeam} onChange={handleChange} required className={inputClasses}>
+                    {STRENGTH_OPTIONS.map(s => <option key={s} value={s === "Select an option" ? "" : s}>{s}</option>)}
+                  </select>
+                </div>
+                <div>
+                  <label className="block text-sm text-gray-700 mb-2">Technical sales team strength</label>
+                  <select name="strengthTechnicalSalesTeam" value={form.strengthTechnicalSalesTeam} onChange={handleChange} className={inputClasses}>
+                    {STRENGTH_OPTIONS.map(s => <option key={s} value={s === "Select an option" ? "" : s}>{s}</option>)}
+                  </select>
+                </div>
+                <div>
+                  <label className="block text-sm text-gray-700 mb-2">Revenue From Retail / Trading *</label>
+                  <select name="revenueRetailTrading" value={form.revenueRetailTrading} onChange={handleChange} required className={inputClasses}>
+                    {REVENUE_RANGES.map(r => <option key={r} value={r === "Select an option" ? "" : r}>{r}</option>)}
+                  </select>
+                </div>
               </div>
-              <div className="flex flex-col">
-                <label className="text-sm text-gray-600 mb-2 font-normal">Additional notes / attachments (URL)</label>
-                <input name="additionalNotes" value={form.additionalNotes} onChange={handleChange} placeholder="paste link to Drive / document (optional)" className={inputClasses} />
-              </div>
-            </div>
 
-            <div className="flex justify-center pt-2">
-              <button type="submit" className="bg-green-700 text-white px-9 py-3.5 rounded-lg text-base cursor-pointer shadow-[0_8px_0_rgba(90,133,105,0.12)] transition-all duration-150 hover:-translate-y-0.5 hover:shadow-[0_12px_0_rgba(90,133,105,0.16)]">
-                Submit Application
-              </button>
-            </div>
-          </form>
+              {/* Row 8 */}
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+                <div>
+                  <label className="block text-sm text-gray-700 mb-2">Market segment expertise *</label>
+                  <select name="marketSegmentExpertise" value={form.marketSegmentExpertise} onChange={handleChange} required className={inputClasses}>
+                    {MARKET_SEGMENTS.map(m => <option key={m} value={m === "Select an option" ? "" : m}>{m}</option>)}
+                  </select>
+                </div>
+                <div>
+                  <label className="block text-sm text-gray-700 mb-2">WLAN & LAN expertise</label>
+                  <select name="wlanLanExpertise" value={form.wlanLanExpertise} onChange={handleChange} className={inputClasses}>
+                    {YES_NO_PARTIAL.map(y => <option key={y} value={y === "Select an option" ? "" : y}>{y}</option>)}
+                  </select>
+                </div>
+                <div>
+                  <label className="block text-sm text-gray-700 mb-2">Brands you sell</label>
+                  <input name="brandsYouSell" value={form.brandsYouSell} onChange={handleChange} placeholder="Which brands do you sell..." className={inputClasses} />
+                </div>
+              </div>
+
+              {/* Final rows */}
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+                <div>
+                  <label className="block text-sm text-gray-700 mb-2">Any other comments</label>
+                  <textarea name="otherComments" value={form.otherComments} onChange={handleChange} placeholder="Any other comments" className={inputClasses + " min-h-28 resize-y"} />
+                </div>
+                <div>
+                  <label className="block text-sm text-gray-700 mb-2">Additional notes / attachments (URL)</label>
+                  <input name="additionalNotes" value={form.additionalNotes} onChange={handleChange} placeholder="Paste Drive / doc link (optional)" className={inputClasses} />
+                </div>
+              </div>
+
+              <div className="flex justify-center">
+                <button type="submit" className="bg-green-700 text-white px-9 py-3.5 rounded-lg text-base shadow-sm hover:shadow-md transition-all">
+                  Submit Application
+                </button>
+              </div>
+            </form>
+          </section>
         </div>
-      </main>
-    </div>
-    <Footer/>
+      </div>
+
+      <Footer />
     </>
   );
 }
-
-

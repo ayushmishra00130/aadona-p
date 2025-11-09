@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import Footer from '../../Components/Footer';
 import Navbar from '../../Components/Navbar';
+import bg from '../../assets/bg.jpg';
 
 const RequestDemo = () => {
   const [formData, setFormData] = useState({
@@ -40,7 +41,7 @@ const RequestDemo = () => {
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
 
-    if (type === 'checkbox') {
+    if (type === 'checkbox' && name === 'customerType') {
       setFormData(prev => ({
         ...prev,
         customerType: checked
@@ -58,105 +59,125 @@ const RequestDemo = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log('Form submitted:', formData);
+    alert('Demo request submitted (demo). Check console for data.');
+    setFormData({
+      firstName: '',
+      lastName: '',
+      email: '',
+      streetAddress: '',
+      streetAddress2: '',
+      phone: '',
+      modelName: '',
+      city: '',
+      regionStateProvince: '',
+      postalZipCode: '',
+      country: '',
+      customerType: [],
+      comment: ''
+    });
   };
 
   const inputClasses = "p-3 text-sm border border-gray-300 rounded-lg transition-all font-light bg-white w-full focus:outline-none focus:border-emerald-500 focus:shadow-[0_0_0_3px_rgba(142,182,155,0.1)] placeholder:text-gray-400 placeholder:font-light";
 
   return (
     <>
-    <Navbar/>
-    <div className="min-h-screen bg-white mt-20">
-       <div className="bg-green-400/10 pt-12 pb-12 shadow-inner mt-20">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-            <h1 className="text-5xl font-bold tracking-tight text-green-900 sm:text-6xl">
-            Request a Demo
+      <Navbar />
+
+      {/* Full background (CSR style) */}
+      <div
+        className="min-h-screen bg-cover bg-center"
+        style={{
+          backgroundImage: `url(${bg})`,
+          backgroundRepeat: 'no-repeat',
+          backgroundSize: 'cover',
+          backgroundPosition: 'center'
+        }}
+      >
+        {/* CSR-style Hero Section */}
+        <div className="bg-gradient-to-r from-green-700 to-green-900 pt-32 pb-16">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <h1 className="text-5xl font-bold text-white sm:text-6xl">
+              Request a Demo
             </h1>
+            <p className="mt-3 text-green-100 text-lg md:text-xl max-w-3xl mx-auto">
+              Fill out the form and our team will contact you to schedule a personalized demonstration.
+            </p>
+          </div>
         </div>
-    </div>
 
-      {/* Content Section */}
-      <div className="max-w-6xl mx-auto mt-10 mb-16 px-5">
-        <div className="relative bg-white rounded-3xl shadow-[0_8px_30px_rgba(0,0,0,0.08)] p-12">
-          <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-emerald-400 to-emerald-600 rounded-t-3xl"></div>
-          
-          <h2 className="text-3xl text-emerald-700 mb-3 font-normal text-center">Request a Demo</h2>
-          <p className="text-center text-gray-600 text-base mb-10 leading-relaxed font-light">
-            Fill out the form below and our team will contact you to schedule a personalized demonstration.
-          </p>
-
-          <form onSubmit={handleSubmit} className="flex flex-col gap-6">
-            {/* Personal Information Section */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              <div className="flex flex-col">
-                <label htmlFor="firstName" className="text-sm font-normal text-gray-600 mb-2 flex items-center">
-                  First name <span className="text-red-500 ml-1">*</span>
-                </label>
-                <input
-                  type="text"
-                  id="firstName"
-                  name="firstName"
-                  placeholder="Enter your first name"
-                  value={formData.firstName}
-                  onChange={handleChange}
-                  required
-                  className={inputClasses}
-                />
-              </div>
-
-              <div className="flex flex-col">
-                <label htmlFor="lastName" className="text-sm font-normal text-gray-600 mb-2">Last name</label>
-                <input
-                  type="text"
-                  id="lastName"
-                  name="lastName"
-                  placeholder="Enter your last name"
-                  value={formData.lastName}
-                  onChange={handleChange}
-                  className={inputClasses}
-                />
-              </div>
+        {/* Page content placed directly on background (NO large white wrapper) */}
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 -mt-8">
+          <div className="max-w-4xl mx-auto">
+            {/* Small subtle white intro box for readability */}
+            <div className="mb-8 bg-white/60 p-4 rounded-xl border border-white/30">
+              <p className="text-slate-700">
+                Provide accurate contact details and preferred model. Inputs stay white for legibility on the background.
+              </p>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              <div className="flex flex-col">
-                <label htmlFor="email" className="text-sm font-normal text-gray-600 mb-2 flex items-center">
-                  Email <span className="text-red-500 ml-1">*</span>
-                </label>
-                <input
-                  type="email"
-                  id="email"
-                  name="email"
-                  placeholder="Enter your email"
-                  value={formData.email}
-                  onChange={handleChange}
-                  required
-                  className={inputClasses}
-                />
+            {/* Form (directly on background) */}
+            <form onSubmit={handleSubmit} className="space-y-6">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div>
+                  <label className="block text-sm text-gray-700 mb-2">First name <span className="text-red-500">*</span></label>
+                  <input
+                    type="text"
+                    id="firstName"
+                    name="firstName"
+                    placeholder="Enter your first name"
+                    value={formData.firstName}
+                    onChange={handleChange}
+                    required
+                    className={inputClasses}
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-sm text-gray-700 mb-2">Last name</label>
+                  <input
+                    type="text"
+                    id="lastName"
+                    name="lastName"
+                    placeholder="Enter your last name"
+                    value={formData.lastName}
+                    onChange={handleChange}
+                    className={inputClasses}
+                  />
+                </div>
               </div>
 
-              <div className="flex flex-col">
-                <label htmlFor="phone" className="text-sm font-normal text-gray-600 mb-2 flex items-center">
-                  Phone <span className="text-red-500 ml-1">*</span>
-                </label>
-                <input
-                  type="tel"
-                  id="phone"
-                  name="phone"
-                  placeholder="Enter your phone number"
-                  value={formData.phone}
-                  onChange={handleChange}
-                  required
-                  className={inputClasses}
-                />
-              </div>
-            </div>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div>
+                  <label className="block text-sm text-gray-700 mb-2">Email <span className="text-red-500">*</span></label>
+                  <input
+                    type="email"
+                    id="email"
+                    name="email"
+                    placeholder="Enter your email"
+                    value={formData.email}
+                    onChange={handleChange}
+                    required
+                    className={inputClasses}
+                  />
+                </div>
 
-            {/* Address Section */}
-            <div className="grid grid-cols-1 gap-6">
-              <div className="flex flex-col">
-                <label htmlFor="streetAddress" className="text-sm font-normal text-gray-600 mb-2 flex items-center">
-                  Street Address <span className="text-red-500 ml-1">*</span>
-                </label>
+                <div>
+                  <label className="block text-sm text-gray-700 mb-2">Phone <span className="text-red-500">*</span></label>
+                  <input
+                    type="tel"
+                    id="phone"
+                    name="phone"
+                    placeholder="Enter your phone number"
+                    value={formData.phone}
+                    onChange={handleChange}
+                    required
+                    className={inputClasses}
+                  />
+                </div>
+              </div>
+
+              <div>
+                <label className="block text-sm text-gray-700 mb-2">Street Address <span className="text-red-500">*</span></label>
                 <input
                   type="text"
                   id="streetAddress"
@@ -168,13 +189,9 @@ const RequestDemo = () => {
                   className={inputClasses}
                 />
               </div>
-            </div>
 
-            <div className="grid grid-cols-1 gap-6">
-              <div className="flex flex-col">
-                <label htmlFor="streetAddress2" className="text-sm font-normal text-gray-600 mb-2">
-                  Street Address Line 2
-                </label>
+              <div>
+                <label className="block text-sm text-gray-700 mb-2">Street Address Line 2</label>
                 <input
                   type="text"
                   id="streetAddress2"
@@ -185,89 +202,76 @@ const RequestDemo = () => {
                   className={inputClasses}
                 />
               </div>
-            </div>
 
-            {/* Company and Location Section */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              <div className="flex flex-col">
-                <label htmlFor="modelName" className="text-sm font-normal text-gray-600 mb-2 flex items-center">
-                  Model Name <span className="text-red-500 ml-1">*</span>
-                </label>
-                <input
-                  type="text"
-                  id="modelName"
-                  name="modelName"
-                  placeholder="Model Name"
-                  value={formData.modelName}
-                  onChange={handleChange}
-                  required
-                  className={inputClasses}
-                />
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div>
+                  <label className="block text-sm text-gray-700 mb-2">Model Name <span className="text-red-500">*</span></label>
+                  <input
+                    type="text"
+                    id="modelName"
+                    name="modelName"
+                    placeholder="Model Name"
+                    value={formData.modelName}
+                    onChange={handleChange}
+                    required
+                    className={inputClasses}
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-sm text-gray-700 mb-2">City <span className="text-red-500">*</span></label>
+                  <input
+                    type="text"
+                    id="city"
+                    name="city"
+                    placeholder="City"
+                    value={formData.city}
+                    onChange={handleChange}
+                    required
+                    className={inputClasses}
+                  />
+                </div>
               </div>
 
-              <div className="flex flex-col">
-                <label htmlFor="city" className="text-sm font-normal text-gray-600 mb-2 flex items-center">
-                  City <span className="text-red-500 ml-1">*</span>
-                </label>
-                <input
-                  type="text"
-                  id="city"
-                  name="city"
-                  placeholder="City"
-                  value={formData.city}
-                  onChange={handleChange}
-                  required
-                  className={inputClasses}
-                />
-              </div>
-            </div>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div>
+                  <label className="block text-sm text-gray-700 mb-2">Region/State/Province <span className="text-red-500">*</span></label>
+                  <input
+                    type="text"
+                    id="regionStateProvince"
+                    name="regionStateProvince"
+                    placeholder="Region/State/Province"
+                    value={formData.regionStateProvince}
+                    onChange={handleChange}
+                    required
+                    className={inputClasses}
+                  />
+                </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              <div className="flex flex-col">
-                <label htmlFor="regionStateProvince" className="text-sm font-normal text-gray-600 mb-2 flex items-center">
-                  Region/State/Province <span className="text-red-500 ml-1">*</span>
-                </label>
-                <input
-                  type="text"
-                  id="regionStateProvince"
-                  name="regionStateProvince"
-                  placeholder="Region/State/Province"
-                  value={formData.regionStateProvince}
-                  onChange={handleChange}
-                  required
-                  className={inputClasses}
-                />
+                <div>
+                  <label className="block text-sm text-gray-700 mb-2">Postal / Zip code <span className="text-red-500">*</span></label>
+                  <input
+                    type="text"
+                    id="postalZipCode"
+                    name="postalZipCode"
+                    placeholder="Postal / Zip code"
+                    value={formData.postalZipCode}
+                    onChange={handleChange}
+                    required
+                    className={inputClasses}
+                  />
+                </div>
               </div>
 
-              <div className="flex flex-col">
-                <label htmlFor="postalZipCode" className="text-sm font-normal text-gray-600 mb-2 flex items-center">
-                  Postal / Zip code <span className="text-red-500 ml-1">*</span>
-                </label>
-                <input
-                  type="text"
-                  id="postalZipCode"
-                  name="postalZipCode"
-                  placeholder="Postal / Zip code"
-                  value={formData.postalZipCode}
-                  onChange={handleChange}
-                  required
-                  className={inputClasses}
-                />
-              </div>
-            </div>
-
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              <div className="flex flex-col">
-                <label htmlFor="country" className="text-sm font-normal text-gray-600 mb-2 flex items-center">
-                  Country <span className="text-red-500 ml-1">*</span>
-                </label>
+              <div>
+                <label className="block text-sm text-gray-700 mb-2">Country <span className="text-red-500">*</span></label>
                 <select
                   id="country"
                   name="country"
                   value={formData.country}
                   onChange={handleChange}
                   required
-                  className={inputClasses + " cursor-pointer text-gray-400"}
+                  className={inputClasses + " cursor-pointer bg-white"}
                 >
                   <option value="">Select Country *</option>
                   {COUNTRIES.map(c => (
@@ -275,77 +279,74 @@ const RequestDemo = () => {
                   ))}
                 </select>
               </div>
-            </div>
 
-            {/* Customer Type Section */}
-            <div className="flex flex-col">
-              <div className="flex gap-6 flex-wrap py-4">
-                <label className="flex items-center text-sm text-gray-600 cursor-pointer transition-colors hover:text-emerald-500 font-light">
-                  <input
-                    type="checkbox"
-                    name="customerType"
-                    value="endCustomer"
-                    checked={formData.customerType.includes('endCustomer')}
-                    onChange={handleChange}
-                    className="w-4.5 h-4.5 mr-2.5 cursor-pointer accent-emerald-500"
-                  />
-                  <span className="select-none">End Customer</span>
-                </label>
+              <div>
+                <label className="block text-sm text-gray-700 mb-2">Customer Type</label>
+                <div className="flex gap-6 flex-wrap">
+                  <label className="flex items-center gap-2 text-sm text-gray-700 cursor-pointer">
+                    <input
+                      type="checkbox"
+                      name="customerType"
+                      value="endCustomer"
+                      checked={formData.customerType.includes('endCustomer')}
+                      onChange={handleChange}
+                      className="accent-emerald-500"
+                    />
+                    End Customer
+                  </label>
 
-                <label className="flex items-center text-sm text-gray-600 cursor-pointer transition-colors hover:text-emerald-500 font-light">
-                  <input
-                    type="checkbox"
-                    name="customerType"
-                    value="siPartner"
-                    checked={formData.customerType.includes('siPartner')}
-                    onChange={handleChange}
-                    className="w-4.5 h-4.5 mr-2.5 cursor-pointer accent-emerald-500"
-                  />
-                  <span className="select-none">SI Partner</span>
-                </label>
+                  <label className="flex items-center gap-2 text-sm text-gray-700 cursor-pointer">
+                    <input
+                      type="checkbox"
+                      name="customerType"
+                      value="siPartner"
+                      checked={formData.customerType.includes('siPartner')}
+                      onChange={handleChange}
+                      className="accent-emerald-500"
+                    />
+                    SI Partner
+                  </label>
 
-                <label className="flex items-center text-sm text-gray-600 cursor-pointer transition-colors hover:text-emerald-500 font-light">
-                  <input
-                    type="checkbox"
-                    name="customerType"
-                    value="distributor"
-                    checked={formData.customerType.includes('distributor')}
-                    onChange={handleChange}
-                    className="w-4.5 h-4.5 mr-2.5 cursor-pointer accent-emerald-500"
-                  />
-                  <span className="select-none">Distributor</span>
-                </label>
+                  <label className="flex items-center gap-2 text-sm text-gray-700 cursor-pointer">
+                    <input
+                      type="checkbox"
+                      name="customerType"
+                      value="distributor"
+                      checked={formData.customerType.includes('distributor')}
+                      onChange={handleChange}
+                      className="accent-emerald-500"
+                    />
+                    Distributor
+                  </label>
+                </div>
               </div>
-            </div>
 
-            {/* Comment Section */}
-            <div className="flex flex-col">
-              <label htmlFor="comment" className="text-sm font-normal text-gray-600 mb-2">Comment Field</label>
-              <textarea
-                id="comment"
-                name="comment"
-                placeholder="Comment Field"
-                rows="5"
-                value={formData.comment}
-                onChange={handleChange}
-                className={inputClasses + " resize-y min-h-32"}
-              ></textarea>
-            </div>
+              <div>
+                <label className="block text-sm text-gray-700 mb-2">Comment Field</label>
+                <textarea
+                  id="comment"
+                  name="comment"
+                  placeholder="Comment Field"
+                  rows="5"
+                  value={formData.comment}
+                  onChange={handleChange}
+                  className={inputClasses + " resize-y min-h-32"}
+                />
+              </div>
 
-            {/* Submit Button */}
-            <div className="mt-5 flex justify-center">
-              <button type="submit" className="bg-green-700 text-white text-base font-normal py-3.5 px-12 border-none rounded-lg cursor-pointer transition-all shadow-[0_4px_12px_rgba(142,182,155,0.3)] tracking-wide hover:-translate-y-0.5 hover:shadow-[0_6px_16px_rgba(142,182,155,0.4)] hover:bg-gradient-to-br hover:from-emerald-500 hover:to-emerald-700 active:translate-y-0">
-                Submit Application
-              </button>
-            </div>
-          </form>
+              <div className="flex justify-center">
+                <button type="submit" className="bg-green-700 text-white text-base font-normal py-3.5 px-12 rounded-lg transition-all shadow-sm hover:shadow-md hover:-translate-y-px">
+                  Submit Application
+                </button>
+              </div>
+            </form>
+          </div>
         </div>
       </div>
-    </div>
-    <Footer/>
+
+      <Footer />
     </>
   );
 };
 
 export default RequestDemo;
-

@@ -6,13 +6,13 @@ import Pinakii from "../../assets/Pinaki_Chatterjee.avif";
 import Senthil from "../../assets/Senthil_VP_Kumar.avif";
 import Govind from "../../assets/Govind_Madhav.avif";
 import Chandan from "../../assets/Chandan_Sharma.avif";
-import bg from '../../assets/bg.jpg'
+import bg from "../../assets/bg.jpg"; // ✅ same as CSR background
 
 const leaders = [
   {
     name: "Pinakii Chatterjje",
     title: "CEO and Founder",
-    bio: `Pinakii Chatterjje has a long track record of establishing as well as expanding new brands in India. Holding a dual MBA degree and numerous technical certifications, he comes as a veteran in IT network technology space and has successfully played sales leadership roles with leading organisations. Prior to setting up his own venture AADONA COMMUNCIATION he had played key roles in setting up new brands across India in his stint spanning over 20 years and created multiple new opportunities for IT channel partners. Pinakii in his spare time loves to cook, drive and read books.`,
+    bio: `Pinakii Chatterjje has a long track record of establishing as well as expanding new brands in India. Holding a dual MBA degree and numerous technical certifications, he comes as a veteran in IT network technology space and has successfully played sales leadership roles with leading organisations. Prior to setting up his own venture AADONA COMMUNICATION he had played key roles in setting up new brands across India in his stint spanning over 20 years and created multiple new opportunities for IT channel partners. Pinakii in his spare time loves to cook, drive and read books.`,
     linkedin: "https://in.linkedin.com/in/pinakiichatterjje",
     photo: Pinakii,
   },
@@ -43,49 +43,65 @@ const LeadershipTeam = () => {
   return (
     <>
       <Navbar />
+
+      {/* ✅ Background same as CSR */}
       <div
-        className="min-h-screen bg-cover bg-center "
-        style={{ backgroundImage: `url(${bg})` }}
-      >         
-        {/* Hero Section */}
+        className="min-h-screen bg-cover bg-center"
+        style={{
+          backgroundImage: `url(${bg})`,
+          backgroundSize: "cover",
+          backgroundRepeat: "no-repeat",
+          backgroundPosition: "center",
+        }}
+      >
+        {/* ✅ CSR-style Header */}
         <div className="bg-gradient-to-r from-green-700 to-green-900 pt-32 pb-16">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
             <h1 className="text-4xl font-bold text-white sm:text-5xl md:text-6xl">
               Leadership Team
             </h1>
+            <p className="mt-6 text-xl text-green-100 max-w-3xl mx-auto">
+              Guiding AADONA’s Vision & Strategy
+            </p>
           </div>
         </div>
 
-        {/* Leadership Cards */}
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-12 flex flex-col gap-10">
-          {leaders.map((leader, index) => (
-            <div
-              key={index}
-              className="flex flex-col md:flex-row items-start md:items-center gap-6 bg-gray-50 p-6 rounded-xl shadow hover:shadow-lg transition-transform transform hover:-translate-y-1"
-            >
-              <img
-                src={leader.photo}
-                alt={leader.name}
-                className="w-36 h-36 rounded-full object-contain flex-shrink-0 border-2 border-gray-200 p-1"
-              />
-              <div className="flex-1">
-                <a
-                  href={leader.linkedin}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-2xl font-bold text-gray-800 hover:text-blue-600 transition-colors"
-                >
-                  {leader.name}
-                </a>
-                <h4 className="text-gray-600 mt-1 text-lg font-medium">
-                  {leader.title}
-                </h4>
-                <p className="mt-3 text-gray-700 leading-relaxed">{leader.bio}</p>
+        {/* ✅ Individual Cards Only (no frosted overlay) */}
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+          <div className="flex flex-col gap-10">
+            {leaders.map((leader, index) => (
+              <div
+                key={index}
+                className="flex flex-col md:flex-row items-start md:items-center gap-6 bg-white p-6 rounded-xl shadow-md hover:shadow-lg transition-transform transform hover:-translate-y-1"
+              >
+                {/* ✅ Smaller image with full visibility */}
+                <img
+                  src={leader.photo}
+                  alt={leader.name}
+                  className="w-28 h-28 rounded-full object-contain flex-shrink-0 border-2 border-gray-200 p-1 bg-white"
+                />
+                <div className="flex-1">
+                  <a
+                    href={leader.linkedin}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-2xl font-bold text-gray-800 hover:text-blue-600 transition-colors"
+                  >
+                    {leader.name}
+                  </a>
+                  <h4 className="text-gray-600 mt-1 text-lg font-medium">
+                    {leader.title}
+                  </h4>
+                  <p className="mt-3 text-gray-700 leading-relaxed">
+                    {leader.bio}
+                  </p>
+                </div>
               </div>
-            </div>
-          ))}
+            ))}
+          </div>
         </div>
       </div>
+
       <Footer />
     </>
   );
