@@ -133,31 +133,33 @@ const BlogPage = () => {
       <Navbar />
 
       {/* ✅ CLEAN HERO (NO BG IMAGE) */}
-      <div className="bg-green-50 py-20 px-4 mt-16 shadow-inner">
-        <div className="max-w-7xl mx-auto text-center">
-          <h1 className="text-5xl md:text-6xl font-extrabold text-green-800 mb-4">
-            Our Blog
-          </h1>
+<div className="bg-gradient-to-r from-green-700 to-green-900 pt-32 pb-24">
+  <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+    <h1 className="text-4xl font-bold text-white sm:text-5xl md:text-6xl">
+      Our Blog
+    </h1>
 
-          <p className="text-lg md:text-xl text-green-600 mb-10">
-            Insights, stories, and expertise from the world of networking.
-          </p>
+    <p className="mt-6 text-xl text-green-100 max-w-3xl mx-auto">
+      Insights, stories, and expertise from the world of networking.
+    </p>
 
-          <div className="max-w-2xl mx-auto">
-            <div className="relative">
-              <input
-                type="text"
-                placeholder="Search articles..."
-                className="w-full px-6 py-4 rounded-full bg-white border border-green-200 text-gray-700 shadow-md focus:outline-none focus:ring-4 focus:ring-green-300 transition-all duration-300 placeholder-gray-400"
-                aria-label="Search articles"
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-              />
-              <SearchIcon className="absolute right-6 top-1/2 -translate-y-1/2 w-6 h-6 text-green-500" />
-            </div>
-          </div>
-        </div>
+    {/* ✅ Search bar moved DOWN */}
+    <div className="max-w-2xl mx-auto mt-12">
+      <div className="relative">
+        <input
+          type="text"
+          placeholder="Search articles..."
+          className="w-full px-6 py-4 rounded-full bg-white border border-green-200 text-gray-700 shadow-md focus:outline-none focus:ring-4 focus:ring-green-300 transition-all duration-300 placeholder-gray-400"
+          aria-label="Search articles"
+          value={searchQuery}
+          onChange={(e) => setSearchQuery(e.target.value)}
+        />
+        <SearchIcon className="absolute right-6 top-1/2 -translate-y-1/2 w-6 h-6 text-green-500" />
       </div>
+    </div>
+  </div>
+</div>
+
 
       {/* ✅ CSR BACKGROUND SECTION */}
       <div
