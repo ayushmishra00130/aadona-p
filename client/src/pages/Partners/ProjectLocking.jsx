@@ -100,14 +100,15 @@ export default function ProjectLocking() {
           backgroundPosition: "center",
         }}
       >
-        {/* HERO SECTION (CSR-style gradient header) */}
+
+        {/* ✅ Header Section (exactly like CSR/WhistleBlower/Leadership) */}
         <div className="bg-gradient-to-r from-green-700 to-green-900 pt-32 pb-16">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-            <h1 className="text-5xl font-bold text-white sm:text-6xl">
+            <h1 className="text-4xl font-bold text-white sm:text-5xl md:text-6xl">
               Project Locking
             </h1>
-            <p className="mt-3 text-green-100 text-lg md:text-xl max-w-3xl mx-auto">
-              Submit project details to lock inventory / create quotations — our team will contact you.
+            <p className="mt-6 text-xl text-green-100 max-w-3xl mx-auto">
+              Submit project details to lock inventory / create quotations — our team will contact you
             </p>
           </div>
         </div>

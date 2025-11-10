@@ -95,14 +95,15 @@ const RequestTraining = () => {
           backgroundPosition: 'center'
         }}
       >
-        {/* Hero Section (same style as CSR) */}
+
+        {/* ✅ Header Section (exactly like CSR/WhistleBlower/Leadership) */}
         <div className="bg-gradient-to-r from-green-700 to-green-900 pt-32 pb-16">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-            <h1 className="text-5xl font-bold text-white sm:text-6xl">
+            <h1 className="text-4xl font-bold text-white sm:text-5xl md:text-6xl">
               Request Training
             </h1>
-            <p className="mt-3 text-green-100 text-lg md:text-xl max-w-3xl mx-auto">
-              Fill out the form below and our training team will contact you to schedule a comprehensive session.
+            <p className="mt-6 text-xl text-green-100 max-w-3xl mx-auto">
+              Fill out the form below and our training team will contact you to schedule a comprehensive session
             </p>
           </div>
         </div>
