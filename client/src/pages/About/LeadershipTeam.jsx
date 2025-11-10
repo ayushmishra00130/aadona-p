@@ -6,7 +6,12 @@ import Pinakii from "../../assets/Pinaki_Chatterjee.avif";
 import Senthil from "../../assets/Senthil_VP_Kumar.avif";
 import Govind from "../../assets/Govind_Madhav.avif";
 import Chandan from "../../assets/Chandan_Sharma.avif";
-import bg from "../../assets/bg.jpg"; // ✅ same as CSR background
+import bg from "../../assets/bg.jpg";
+
+/* ✅ Hover-Lift Card Style */
+const liftCard =
+  "rounded-2xl bg-white p-8 shadow-md hover:shadow-2xl hover:shadow-green-200/60 " +
+  "border border-green-300 hover:border-green-500 transition-all duration-500 ease-out hover:-translate-y-1";
 
 const leaders = [
   {
@@ -19,21 +24,21 @@ const leaders = [
   {
     name: "Senthil VP Kumar",
     title: "Regional Sales Director and Co-Founder",
-    bio: `VP Senthil Kumar has a great track record of working from the ground up and creating successful brands in India, right from his first assignment in 1997 he has always played a key strategic role in creating and nurturing brands. Senthil has a BSc degree in Physics and other various technical certifications. He is an award winning veteran in IT network technology space and has successfully played key roles with leading SI, distributors and brands. He is known in the Industry for his outstanding attention to detail, business ethics and integrity. At AADONA he provides strategic sales direction with use of his sound technical understanding and sales acumen. With over twenty years of experience selling IT technology products he is an invaluable asset to AADONA. Senthil in his spare time loves yoga, reading books, travelling and trying exotic food.`,
+    bio: `VP Senthil Kumar has a great track record of working from the ground up and creating successful brands in India, right from his first assignment in 1997 he has always played a key strategic role in creating and nurturing brands. Senthil has a BSc degree in Physics and various technical certifications. Known for attention to detail, ethics and integrity, he plays a key strategic role at AADONA. In his spare time he enjoys yoga, reading, travelling and trying exotic food.`,
     linkedin: "https://www.linkedin.com/in/senthil-kumar-a5283275/",
     photo: Senthil,
   },
   {
     name: "Govind Madhav",
     title: "Vice President Product Management and Founder",
-    bio: `Govind is a technology enthusiast and brings with him a vast pool of experience in the field sales for technology vendors. He holds a B.Tech from the Department of Computer Science and is acquainted with technology forefront. He has served Presales role for global technology brands in Indian subcontinent, penetrating the industry for business expansion by working extensively with channel partners. Govind also played an instrumental role in product management and helped the organizations he was associated with, to maximize their sales revenues via offering best in class product related services including after sales services. Govind’s key expertise centers around Wireless, Networking, Security and Storage solutions. Govind enjoys reading, listening to music and exploring new destinations.`,
+    bio: `Govind is a technology enthusiast bringing a vast pool of experience in field sales and product management. A B.Tech in Computer Science, he has worked extensively in presales roles for global technology brands. His expertise spans Wireless, Networking, Security and Storage solutions. Govind enjoys reading, music and travelling.`,
     linkedin: "https://www.linkedin.com/in/govind-madhav-426a0957/",
     photo: Govind,
   },
   {
     name: "Chandan Sharma",
     title: "Chief Legal Officer",
-    bio: `Our Chief Legal Advisor Dr Chandan Sharma comes with a multidisciplinary background having strong hold on corporate, Intellectual property, regulatory compliance, consumer, company law, Technology and Business Operations. A Masters in Law with a specialization in Corporate and Security Laws, Chandan also holds a Doctorate from Tilka Manjhi Bhagalpur University. An avid supporter of Right to Information Act (RTI), Chandan has been using this tool as a medium to bring a change. Regulatory issues related to Cloud Computing is also one of his interest areas, and he has contributed his views on this topics at multiple forums including many Government bodies. In his spare time Chandan loves to help people through an NGO with whom he is associated and he is passionate about latest technologies.`,
+    bio: `Dr Chandan Sharma holds a multidisciplinary background with expertise in corporate, IP, compliance, technology and company law. A Masters in Law and a Doctorate holder, he actively supports RTI initiatives and contributes views on cloud regulatory issues across government bodies. In spare time he supports NGO work and follows new-age technologies.`,
     linkedin: "https://in.linkedin.com/in/chandan-sharma-a26b1a10",
     photo: Chandan,
   },
@@ -44,7 +49,7 @@ const LeadershipTeam = () => {
     <>
       <Navbar />
 
-      {/* ✅ Background same as CSR */}
+      {/* Background */}
       <div
         className="min-h-screen bg-cover bg-center"
         style={{
@@ -54,9 +59,9 @@ const LeadershipTeam = () => {
           backgroundPosition: "center",
         }}
       >
-        {/* ✅ CSR-style Header */}
+        {/* Header */}
         <div className="bg-gradient-to-r from-green-700 to-green-900 pt-32 pb-16">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+          <div className="max-w-7xl mx-auto px-4 text-center">
             <h1 className="text-4xl font-bold text-white sm:text-5xl md:text-6xl">
               Leadership Team
             </h1>
@@ -66,20 +71,20 @@ const LeadershipTeam = () => {
           </div>
         </div>
 
-        {/* ✅ Individual Cards Only (no frosted overlay) */}
+        {/* Cards */}
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
           <div className="flex flex-col gap-10">
             {leaders.map((leader, index) => (
-              <div
-                key={index}
-                className="flex flex-col md:flex-row items-start md:items-center gap-6 bg-white p-6 rounded-xl shadow-md hover:shadow-lg transition-transform transform hover:-translate-y-1"
-              >
-                {/* ✅ Smaller image with full visibility */}
+              <div key={index} className={liftCard + " flex flex-col md:flex-row gap-6"}>
+                
+                {/* Image */}
                 <img
                   src={leader.photo}
                   alt={leader.name}
-                  className="w-28 h-28 rounded-full object-contain flex-shrink-0 border-2 border-gray-200 p-1 bg-white"
+                  className="w-32 h-32 rounded-full object-cover flex-shrink-0 border-2 border-gray-200 p-1 bg-white"
                 />
+
+                {/* Text */}
                 <div className="flex-1">
                   <a
                     href={leader.linkedin}
@@ -89,12 +94,9 @@ const LeadershipTeam = () => {
                   >
                     {leader.name}
                   </a>
-                  <h4 className="text-gray-600 mt-1 text-lg font-medium">
-                    {leader.title}
-                  </h4>
-                  <p className="mt-3 text-gray-700 leading-relaxed">
-                    {leader.bio}
-                  </p>
+                  <h4 className="text-gray-600 mt-1 text-lg font-medium">{leader.title}</h4>
+
+                  <p className="mt-3 text-gray-700 leading-relaxed">{leader.bio}</p>
                 </div>
               </div>
             ))}

@@ -53,13 +53,14 @@ export default function MediaCenter() {
     <>
       <Navbar />
 
-      {/* Hero Section - matched to CSR header */}
+      {/* Full-page background */}
       <div
         className="min-h-screen bg-cover bg-center"
         style={{ backgroundImage: `url(${bg})` }}
       >
+        {/* Header */}
         <div className="bg-gradient-to-r from-green-700 to-green-900 pt-32 pb-16">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+          <div className="max-w-7xl mx-auto px-4 text-center">
             <h1 className="text-4xl font-bold text-white sm:text-5xl md:text-6xl">
               Media Center
             </h1>
@@ -69,9 +70,10 @@ export default function MediaCenter() {
           </div>
         </div>
 
-        {/* Content container (blurred white overlay) */}
+        {/* Content blurred panel */}
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 -mt-10">
           <div className="backdrop-blur-sm bg-white/40 py-10 rounded-2xl shadow-lg space-y-24">
+
             {categories.length === 0 && (
               <div className="text-center py-16">
                 <p className="text-gray-700">No media available.</p>
@@ -79,7 +81,7 @@ export default function MediaCenter() {
             )}
 
             {categories.map((cat, i) => {
-              // create scroll ref for this category if not exists
+              // create scroll ref for each category
               if (!scrollRefs.current[cat.title]) {
                 scrollRefs.current[cat.title] = React.createRef();
               }
@@ -90,9 +92,10 @@ export default function MediaCenter() {
                     {cat.title}
                   </h2>
 
-                  {/* Horizontal scroll with arrows */}
+                  {/* Horizontal scroll section */}
                   <div className="relative group">
-                    {/* LEFT ARROW */}
+
+                    {/* Left arrow */}
                     <button
                       onClick={() =>
                         scrollRefs.current[cat.title].current.scrollBy({
@@ -102,30 +105,29 @@ export default function MediaCenter() {
                       }
                       className="
                         hidden md:flex absolute left-0 top-1/2 -translate-y-1/2 
-                        text-white text-6xl font-bold
-                        px-2 py-6
-                        opacity-0 group-hover:opacity-100 
-                        hover:text-green-200 
-                        transition-all z-20
+                        text-white text-6xl font-bold px-2 py-6 opacity-0 
+                        group-hover:opacity-100 hover:text-green-200 transition-all z-20
                       "
                       aria-label={`Scroll ${cat.title} left`}
                     >
                       ‹
                     </button>
 
-                    {/* Scroll container */}
+                    {/* Scrollable container */}
                     <div
                       ref={scrollRefs.current[cat.title]}
                       className="overflow-x-auto hide-scrollbar scroll-smooth snap-x snap-mandatory px-2 pb-4"
                     >
                       <div className="flex gap-8">
+
                         {cat.images.map((img, idx) => (
                           <div
                             key={idx}
                             className="
-                              min-w-[250px] bg-white/80 backdrop-blur rounded-xl shadow-md
-                              transition-all duration-300 cursor-pointer p-4 snap-start
-                              hover:scale-110 hover:z-20 hover:shadow-2xl hover:brightness-110
+                              min-w-[260px] bg-white p-4 rounded-2xl shadow-md snap-start
+                              border border-green-300 transition-all duration-500 cursor-pointer
+                              hover:-translate-y-1 hover:shadow-2xl hover:shadow-green-200/60
+                              hover:border-green-500 hover:scale-105 hover:z-20
                             "
                             onClick={() => setSelectedImage(img)}
                           >
@@ -148,10 +150,11 @@ export default function MediaCenter() {
                             </button>
                           </div>
                         ))}
+
                       </div>
                     </div>
 
-                    {/* RIGHT ARROW */}
+                    {/* Right arrow */}
                     <button
                       onClick={() =>
                         scrollRefs.current[cat.title].current.scrollBy({
@@ -161,24 +164,23 @@ export default function MediaCenter() {
                       }
                       className="
                         hidden md:flex absolute right-0 top-1/2 -translate-y-1/2 
-                        text-white text-6xl font-bold
-                        px-2 py-6
-                        opacity-0 group-hover:opacity-100 
-                        hover:text-green-200 
-                        transition-all z-20
+                        text-white text-6xl font-bold px-2 py-6 opacity-0 
+                        group-hover:opacity-100 hover:text-green-200 transition-all z-20
                       "
                       aria-label={`Scroll ${cat.title} right`}
                     >
                       ›
                     </button>
+
                   </div>
                 </section>
               );
             })}
+
           </div>
         </div>
 
-        {/* Fullscreen preview modal */}
+        {/* Fullscreen Preview Modal */}
         {selectedImage && (
           <div
             className="fixed inset-0 bg-black/90 flex items-center justify-center z-50"
@@ -188,8 +190,9 @@ export default function MediaCenter() {
               src={selectedImage}
               className="max-w-[90vw] max-h-[90vh] rounded-lg"
               onClick={(e) => e.stopPropagation()}
-              alt="Preview"
+              alt="Fullscreen Preview"
             />
+
             <button
               className="absolute top-6 right-6 text-white text-3xl"
               onClick={() => setSelectedImage(null)}
@@ -199,6 +202,7 @@ export default function MediaCenter() {
             </button>
           </div>
         )}
+
       </div>
 
       <Footer />
