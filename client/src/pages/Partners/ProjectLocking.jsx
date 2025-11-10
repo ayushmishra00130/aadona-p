@@ -116,12 +116,7 @@ export default function ProjectLocking() {
         {/* Page content directly on background (NO big white wrapper) */}
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 -mt-8">
           <div className="max-w-6xl mx-auto">
-            {/* Short intro box (kept subtle) */}
-            <div className="mb-8 bg-white/60 p-4 rounded-xl border border-white/30">
-              <p className="text-slate-700">
-                Fill the form below with accurate project details. Fields marked * are required. We kept form inputs white for readability against the background.
-              </p>
-            </div>
+
 
             {/* FORM — placed on background, no large card */}
             <form className="space-y-6" onSubmit={handleSubmit}>
