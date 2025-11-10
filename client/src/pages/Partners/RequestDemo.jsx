@@ -93,14 +93,15 @@ const RequestDemo = () => {
           backgroundPosition: 'center'
         }}
       >
-        {/* CSR-style Hero Section */}
+
+      {/* ✅ Header Section (exactly like CSR/WhistleBlower/Leadership) */}
         <div className="bg-gradient-to-r from-green-700 to-green-900 pt-32 pb-16">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-            <h1 className="text-5xl font-bold text-white sm:text-6xl">
+            <h1 className="text-4xl font-bold text-white sm:text-5xl md:text-6xl">
               Request a Demo
             </h1>
-            <p className="mt-3 text-green-100 text-lg md:text-xl max-w-3xl mx-auto">
-              Fill out the form and our team will contact you to schedule a personalized demonstration.
+            <p className="mt-6 text-xl text-green-100 max-w-3xl mx-auto">
+              Fill out the form and our team will contact you to schedule a personalized demonstration
             </p>
           </div>
         </div>

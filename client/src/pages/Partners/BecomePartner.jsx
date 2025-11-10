@@ -174,12 +174,16 @@ export default function BecomePartner() {
           backgroundRepeat: "no-repeat",
         }}
       >
-        {/* HERO */}
-        <div className="bg-gradient-to-r from-green-700 to-green-900 pt-32 pb-16 text-center">
-          <h1 className="text-5xl font-bold text-white">Become a Partner</h1>
-          <p className="mt-4 text-xl text-green-100">
-            Join our success story with a low risk and strong partnership
-          </p>
+        {/* ✅ Header Section (exactly like CSR/WhistleBlower/Leadership) */}
+        <div className="bg-gradient-to-r from-green-700 to-green-900 pt-32 pb-16">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <h1 className="text-4xl font-bold text-white sm:text-5xl md:text-6xl">
+              Become a Partner
+            </h1>
+            <p className="mt-6 text-xl text-green-100 max-w-3xl mx-auto">
+              Join our success story with a low risk, rapidly expanding business
+            </p>
+          </div>
         </div>
 
         {/* CONTENT */}
