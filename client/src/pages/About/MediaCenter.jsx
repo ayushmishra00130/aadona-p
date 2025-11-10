@@ -55,9 +55,9 @@ export default function MediaCenter() {
 
       {/* Full-page background */}
       <div
-        className="min-h-screen bg-cover bg-center"
-        style={{ backgroundImage: `url(${bg})` }}
-      >
+              className="min-h-screen bg-cover bg-center"
+              style={{ backgroundImage: `url(${bg})` }}
+            >    
         {/* Header */}
         <div className="bg-gradient-to-r from-green-700 to-green-900 pt-32 pb-16">
           <div className="max-w-7xl mx-auto px-4 text-center">

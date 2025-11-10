@@ -2,6 +2,7 @@ import React, { useEffect } from 'react'; // 1. Import useEffect
 import hero from '../assets/hero6.jpg'
 import Navbar from './Navbar';
 import Footer from './Footer';
+import bg from '../assets/bg.jpg'
 
 // Array 1: 20 images for Government Companies
 const governmentImages = [
@@ -39,7 +40,6 @@ const CustomerPage = () => {
   return (
     <>
     <Navbar/>
-    <div className="min-h-screen bg-white">
 
       {/* Main Heading Section */}
       <div className="bg-green-400/10 pt-12 pb-12 shadow-inner mt-20">
@@ -50,12 +50,16 @@ const CustomerPage = () => {
         </div>
       </div>
 
+     <div
+        className="min-h-screen bg-cover bg-center"
+        style={{ backgroundImage: `url(${bg})` }}
+      >    <div className="min-h-screen">
       {/* --- */}
 
       {/* Government Companies Section */}
       <section className="max-w-7xl mx-auto py-12 px-4 sm:px-6 lg:px-8">
-        <h2 className="text-3xl font-bold text-center text-white p-4 mb-10 bg-green-600 rounded-lg shadow-lg">
-          🏛️ Government Companies
+        <h2 className="text-3xl font-bold text-center  p-4 mb-10  bg-white text-green-600  rounded-lg shadow-lg">
+          Government Companies
         </h2>
         {/* Responsive Grid Layout */}
         <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6 justify-items-center">
@@ -66,12 +70,11 @@ const CustomerPage = () => {
       </section>
 
       {/* Separator */}
-      <hr className="border-t-4 border-green-600 max-w-7xl mx-auto my-12" />
 
       {/* Private Companies Section */}
       <section className="max-w-7xl mx-auto py-12 px-4 sm:px-6 lg:px-8">
-        <h2 className="text-3xl font-bold text-center text-white p-4 mb-10 bg-green-600 rounded-lg shadow-lg">
-          🏢 Private Companies
+        <h2 className="text-3xl font-bold text-center bg-white p-4 mb-10 text-green-600 rounded-lg  shadow-lg">
+           Private Companies
         </h2>
         {/* Responsive Grid Layout */}
         <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6 justify-items-center">
@@ -80,6 +83,7 @@ const CustomerPage = () => {
           ))}
         </div>
       </section>
+    </div>
     </div>
     <Footer/>
      </>
