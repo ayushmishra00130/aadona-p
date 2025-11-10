@@ -49,7 +49,7 @@ const LeadershipTeam = () => {
     <>
       <Navbar />
 
-      {/* Background */}
+      {/* ✅ Background Section */}
       <div
         className="min-h-screen bg-cover bg-center"
         style={{
@@ -59,7 +59,7 @@ const LeadershipTeam = () => {
           backgroundPosition: "center",
         }}
       >
-        {/* Header */}
+        {/* ✅ Header Section */}
         <div className="bg-gradient-to-r from-green-700 to-green-900 pt-32 pb-16">
           <div className="max-w-7xl mx-auto px-4 text-center">
             <h1 className="text-4xl font-bold text-white sm:text-5xl md:text-6xl">
@@ -71,20 +71,24 @@ const LeadershipTeam = () => {
           </div>
         </div>
 
-        {/* Cards */}
+        {/* ✅ Leader Cards Section */}
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
           <div className="flex flex-col gap-10">
             {leaders.map((leader, index) => (
-              <div key={index} className={liftCard + " flex flex-col md:flex-row gap-6"}>
-                
-                {/* Image */}
-                <img
-                  src={leader.photo}
-                  alt={leader.name}
-                  className="w-32 h-32 rounded-full object-cover flex-shrink-0 border-2 border-gray-200 p-1 bg-white"
-                />
+              <div
+                key={index}
+                className={liftCard + " flex flex-col md:flex-row gap-8 items-center"}
+              >
+                {/* ✅ Image Section (Larger & Face-Focused) */}
+                <div className="flex items-center justify-center w-48 h-48">
+                  <img
+                    src={leader.photo}
+                    alt={leader.name}
+                    className="w-full h-full rounded-full object-cover object-top border-2 border-gray-200 p-1 bg-white"
+                  />
+                </div>
 
-                {/* Text */}
+                {/* ✅ Text Section */}
                 <div className="flex-1">
                   <a
                     href={leader.linkedin}
@@ -94,9 +98,12 @@ const LeadershipTeam = () => {
                   >
                     {leader.name}
                   </a>
-                  <h4 className="text-gray-600 mt-1 text-lg font-medium">{leader.title}</h4>
-
-                  <p className="mt-3 text-gray-700 leading-relaxed">{leader.bio}</p>
+                  <h4 className="text-gray-600 mt-1 text-lg font-medium">
+                    {leader.title}
+                  </h4>
+                  <p className="mt-3 text-gray-700 leading-relaxed">
+                    {leader.bio}
+                  </p>
                 </div>
               </div>
             ))}
