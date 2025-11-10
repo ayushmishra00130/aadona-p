@@ -115,7 +115,7 @@ export default function App() {
       <Navbar />
 
       {/* ✅ Clean banner - no BG image */}
-      <div className="bg-green-400/10 pt-12 pb-12 shadow-inner mt-20">
+      {/* <div className="bg-green-400/10 pt-12 pb-12 shadow-inner mt-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <h1 className="text-5xl font-extrabold tracking-tight text-green-900 sm:text-6xl">
             Contact Us
@@ -124,7 +124,18 @@ export default function App() {
             We're here to help! Get in touch with our team.
           </p>
         </div>
-      </div>
+      </div> */}
+        <div className="bg-gradient-to-r from-green-700 to-green-900 pt-32 pb-16">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <h1 className="text-4xl font-bold text-white sm:text-5xl md:text-6xl">
+            Contact Us
+            </h1>
+            <p className="mt-6 text-xl text-green-100 max-w-3xl mx-auto">
+            We're here to help! Get in touch with our team.
+            </p>
+          </div>
+        </div>
+      
 
       {/* ✅ ONLY this section has CSR background */}
       <div
