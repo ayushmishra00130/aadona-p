@@ -1,4 +1,4 @@
-import { useState, useCallback, useMemo } from 'react';
+import { useState, useCallback, useMemo , useEffect} from 'react';
 import Footer from '../Components/Footer';
 import Navbar from '../Components/Navbar';
 import bg from "../assets/bg.jpg";   // ✅ CSR BG imported
@@ -106,6 +106,9 @@ export default function App() {
       </p>
     </div>
   );
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
 
   return (
     <>
@@ -295,7 +298,7 @@ export default function App() {
             </div>
 
             {/* Contact Sidebar */}
-            <div className="md:col-span-1 border-green-100/50 pt-12 md:pt-0 md:border-l-4">
+            <div className="md:col-span-1 border-green-200/50 pt-12 md:pt-0 md:border-l-4">
               <ContactDetails />
             </div>
 
