@@ -1,93 +1,101 @@
-import React, { useEffect } from 'react'; // 1. Import useEffect
-import hero from '../assets/hero6.jpg'
-import Navbar from './Navbar';
-import Footer from './Footer';
-import bg from '../assets/bg.jpg'
+import React, { useEffect } from "react";
+import Navbar from "./Navbar";
+import Footer from "./Footer";
+import bg from "../assets/bg.jpg";
 
-// Array 1: 20 images for Government Companies
-const governmentImages = [
-  hero,hero,hero,hero,hero,hero,hero,hero,hero,hero,hero,hero,hero,hero,hero,hero,hero,hero,hero,hero,
-];
+/* ✅ Dynamic Import With Correct CASE-SENSITIVE PATH */
+const imageModules = import.meta.glob(
+  "../assets/Companies/**/*.{png,jpg,jpeg,avif}",
+  { eager: true }
+);
 
-// Array 2: 20 images for Private Companies
-const privateImages = [
-    hero,hero,hero,hero,hero,hero,hero,hero,hero,hero,hero,hero,hero,hero,hero,hero,hero,hero,hero,hero,
+/* ✅ Combine Famous + Less_Famous into Govt & Private */
+const sortImages = (modules) => {
+  const govt = [];
+  const privateCo = [];
 
-];
+  for (const path in modules) {
+    const img = modules[path].default;
 
-// CustomerPage Component
-const CustomerPage = () => {
-  
-  // 2. Add useEffect to scroll to the top when the component mounts
-  useEffect(() => {
-    window.scrollTo(0, 0); 
-  }, []); // The empty array [] ensures this runs only once after the initial render
+    const parts = path.split("/");
 
-  // Sub-component for a single logo item
-  const LogoGridItem = ({ imageSrc }) => (
-    // Only hover:shadow-xl and hover:scale-[1.05] are left for visual feedback
-    <div className="flex items-center justify-center h-32 w-32 p-2 bg-white border border-green-600 rounded-lg shadow-md transition duration-300 hover:shadow-xl hover:scale-[1.05]">
-      <img
-        src={imageSrc}
-        alt="Customer Logo"
-        // Initial opacity is NOT set here. The image starts at full opacity, 
-        // as the class name has been changed to remove the default opacity.
-        className="max-h-full max-w-full object-contain hover:opacity-100 transition duration-300"
-      />
-    </div>
-  );
+    const idx = parts.indexOf("Companies");
+
+    const category = parts[idx + 1]; // Government / Private
+
+    if (category === "Government") govt.push(img);
+    if (category === "Private") privateCo.push(img);
+  }
+
+  return { govt, privateCo };
+};
+
+const images = sortImages(imageModules);
+
+/* ✅ Card Component */
+const LogoCard = ({ src }) => (
+  <div className="flex items-center justify-center h-32 w-32 p-2 bg-white border border-green-600 rounded-lg shadow-md transition duration-300 hover:shadow-xl hover:scale-[1.05]">
+    <img
+      src={src}
+      alt="Customer Logo"
+      className="max-h-full max-w-full object-contain transition duration-300"
+    />
+  </div>
+);
+
+export default function CustomerPage() {
+  useEffect(() => window.scrollTo(0, 0), []);
 
   return (
     <>
-    <Navbar/>
+      <Navbar />
 
-      {/* Main Heading Section */}
+      {/* Heading */}
       <div className="bg-green-400/10 pt-12 pb-12 shadow-inner mt-20">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-            <h1 className="text-5xl font-bold tracking-tight text-green-900 sm:text-6xl">
-              Our Customers
-            </h1>
+        <div className="max-w-7xl mx-auto px-4 text-center">
+          <h1 className="text-5xl font-bold tracking-tight text-green-900 sm:text-6xl">
+            Our Customers
+          </h1>
         </div>
       </div>
 
-     <div
+      {/* Background */}
+      <div
         className="min-h-screen bg-cover bg-center"
         style={{ backgroundImage: `url(${bg})` }}
-      >    <div className="min-h-screen">
-      {/* --- */}
+      >
+        <div className="min-h-screen">
 
-      {/* Government Companies Section */}
-      <section className="max-w-7xl mx-auto py-12 px-4 sm:px-6 lg:px-8">
-        <h2 className="text-3xl font-bold text-center  p-4 mb-10  bg-white text-green-600  rounded-lg shadow-lg">
-          Government Companies
-        </h2>
-        {/* Responsive Grid Layout */}
-        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6 justify-items-center">
-          {governmentImages.map((img, index) => (
-            <LogoGridItem key={`gov-${index}`} imageSrc={img} />
-          ))}
+          {/* ✅ GOVERNMENT COMPANIES */}
+          <section className="max-w-7xl mx-auto py-12 px-4">
+            <h2 className="text-3xl font-bold text-center bg-white p-4 mb-10 text-green-600 rounded-lg shadow-lg">
+              Government Companies
+            </h2>
+
+            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6 justify-items-center">
+              {images.govt.map((img, i) => (
+                <LogoCard src={img} key={`gov-${i}`} />
+              ))}
+            </div>
+          </section>
+
+          {/* ✅ PRIVATE COMPANIES */}
+          <section className="max-w-7xl mx-auto py-12 px-4">
+            <h2 className="text-3xl font-bold text-center bg-white p-4 mb-10 text-green-600 rounded-lg shadow-lg">
+              Private Companies
+            </h2>
+
+            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6 justify-items-center">
+              {images.privateCo.map((img, i) => (
+                <LogoCard src={img} key={`private-${i}`} />
+              ))}
+            </div>
+          </section>
+
         </div>
-      </section>
+      </div>
 
-      {/* Separator */}
-
-      {/* Private Companies Section */}
-      <section className="max-w-7xl mx-auto py-12 px-4 sm:px-6 lg:px-8">
-        <h2 className="text-3xl font-bold text-center bg-white p-4 mb-10 text-green-600 rounded-lg  shadow-lg">
-           Private Companies
-        </h2>
-        {/* Responsive Grid Layout */}
-        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6 justify-items-center">
-          {privateImages.map((img, index) => (
-            <LogoGridItem key={`private-${index}`} imageSrc={img} />
-          ))}
-        </div>
-      </section>
-    </div>
-    </div>
-    <Footer/>
-     </>
+      <Footer />
+    </>
   );
-};
-
-export default CustomerPage;
+}
