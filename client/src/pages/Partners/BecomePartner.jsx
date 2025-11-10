@@ -249,65 +249,182 @@ We help our partners with Demo Kit and train them to show successful POC or Demo
           </section>
 
           {/* ✅ FORM STARTS */}
-          <section>
-            <h2 className="text-3xl text-emerald-700 text-center mb-6 font-semibold">
-              Partner Application
-            </h2>
+         <main className="flex justify-center -mt-4 px-5 pb-10">
+        <div className="relative bg-white w-full max-w-6xl rounded-3xl p-12 shadow-[0_8px_30px_rgba(0,0,0,0.08)]">
+          <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-emerald-400 to-emerald-600 rounded-t-3xl"></div>
+          
+          <h2 className="text-3xl text-emerald-700 text-center mb-6 font-normal">Partner Application</h2>
 
-            <form className="space-y-6" onSubmit={handleSubmit}>
-
-              {/* ROW 1 */}
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
-                <div>
-                  <label>First name</label>
-                  <input name="firstName" value={form.firstName} onChange={handleChange} className={inputClasses} required />
-                </div>
-                <div>
-                  <label>Last name</label>
-                  <input name="lastName" value={form.lastName} onChange={handleChange} className={inputClasses} required />
-                </div>
-                <div>
-                  <label>Company Address</label>
-                  <input name="companyAddress" value={form.companyAddress} onChange={handleChange} className={inputClasses} />
-                </div>
+          <form className="flex flex-col gap-5" onSubmit={handleSubmit}>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+              <div className="flex flex-col">
+                <label className="text-sm text-gray-600 mb-2 font-normal">First name</label>
+                <input name="firstName" value={form.firstName} onChange={handleChange} placeholder="Enter your first name" required className={inputClasses} />
               </div>
-
-              {/* ROW 2 */}
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
-                <div>
-                  <label>Email *</label>
-                  <input name="email" type="email" value={form.email} onChange={handleChange} className={inputClasses} required />
-                </div>
-                <div>
-                  <label>Primary area of Interest *</label>
-                  <select name="primaryInterest" value={form.primaryInterest} onChange={handleChange} className={inputClasses} required>
-                    <option value="">Select an option</option>
-                    <option>Distributor</option>
-                    <option>System Integrator</option>
-                    <option>Solutions Consultant</option>
-                    <option>Partner Training</option>
-                    <option>Other</option>
-                  </select>
-                </div>
-                <div>
-                  <label>Company City</label>
-                  <input name="companyCity" value={form.companyCity} onChange={handleChange} className={inputClasses} />
-                </div>
+              <div className="flex flex-col">
+                <label className="text-sm text-gray-600 mb-2 font-normal">Last name</label>
+                <input name="lastName" value={form.lastName} onChange={handleChange} placeholder="Enter your last name" required className={inputClasses} />
               </div>
-
-              {/* Continue all the remaining rows EXACTLY like your code… */}
-
-              <div className="flex justify-center">
-                <button
-                  type="submit"
-                  className="bg-green-700 text-white px-9 py-3.5 rounded-lg text-base shadow-sm hover:shadow-md transition-all"
-                >
-                  Submit Application
-                </button>
+              <div className="flex flex-col">
+                <label className="text-sm text-gray-600 mb-2 font-normal">Company Address</label>
+                <input name="companyAddress" value={form.companyAddress} onChange={handleChange} placeholder="Street Address" className={inputClasses} />
               </div>
-            </form>
-          </section>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+              <div className="flex flex-col">
+                <label className="text-sm text-gray-600 mb-2 font-normal">Email *</label>
+                <input name="email" type="email" value={form.email} onChange={handleChange} placeholder="Enter your email" required className={inputClasses} />
+              </div>
+              <div className="flex flex-col">
+                <label className="text-sm text-gray-600 mb-2 font-normal">Primary area of Interest *</label>
+                <select name="primaryInterest" value={form.primaryInterest} onChange={handleChange} required className={inputClasses}>
+                  <option value="">Select an option</option>
+                  <option value="Distributor">Distributor</option>
+                  <option value="System Integrator">System Integrator</option>
+                  <option value="Solutions Consultant">Solutions Consultant</option>
+                  <option value="Partner Training">Partner Training</option>
+                  <option value="Other">Other</option>
+                </select>
+              </div>
+              <div className="flex flex-col">
+                <label className="text-sm text-gray-600 mb-2 font-normal">Company City</label>
+                <input name="companyCity" value={form.companyCity} onChange={handleChange} placeholder="City" className={inputClasses} />
+              </div>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+              <div className="flex flex-col">
+                <label className="text-sm text-gray-600 mb-2 font-normal">Region/State/Province</label>
+                <input name="regionStateProvince" value={form.regionStateProvince} onChange={handleChange} placeholder="Region/State/Province" className={inputClasses} />
+              </div>
+              <div className="flex flex-col">
+                <label className="text-sm text-gray-600 mb-2 font-normal">Phone</label>
+                <input name="phone" value={form.phone} onChange={handleChange} placeholder="Enter your phone number" className={inputClasses} />
+              </div>
+              <div className="flex flex-col">
+                <label className="text-sm text-gray-600 mb-2 font-normal">Geographies served</label>
+                <input name="geographiesServed" value={form.geographiesServed} onChange={handleChange} placeholder="Please mention markets you cover" className={inputClasses} />
+              </div>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+              <div className="flex flex-col">
+                <label className="text-sm text-gray-600 mb-2 font-normal">Postal / Zip code</label>
+                <input name="postalZip" value={form.postalZip} onChange={handleChange} placeholder="Postal / Zip code" className={inputClasses} />
+              </div>
+              <div className="flex flex-col">
+                <label className="text-sm text-gray-600 mb-2 font-normal">Country *</label>
+                <select name="country" value={form.country} onChange={handleChange} required className={inputClasses}>
+                  <option value="">Country</option>
+                  {COUNTRIES.map(c => <option key={c} value={c}>{c}</option>)}
+                </select>
+              </div>
+              <div className="flex flex-col">
+                <label className="text-sm text-gray-600 mb-2 font-normal">Company</label>
+                <input name="companyName" value={form.companyName} onChange={handleChange} placeholder="Company" className={inputClasses} />
+              </div>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+              <div className="flex flex-col">
+                <label className="text-sm text-gray-600 mb-2 font-normal">Website Address</label>
+                <input name="websiteAddress" value={form.websiteAddress} onChange={handleChange} placeholder="Leave empty if you don't have" className={inputClasses} />
+              </div>
+              <div className="flex flex-col">
+                <label className="text-sm text-gray-600 mb-2 font-normal">Annual revenue *</label>
+                <select name="revenueAnnual" value={form.revenueAnnual} onChange={handleChange} required className={inputClasses}>
+                  {REVENUE_RANGES.map(r => <option key={r} value={r === "Select an option" ? "" : r}>{r}</option>)}
+                </select>
+              </div>
+              <div className="flex flex-col">
+                <label className="text-sm text-gray-600 mb-2 font-normal">Verticals *</label>
+                <select name="verticals" value={form.verticals} onChange={handleChange} required className={inputClasses}>
+                  {VERTICALS.map(v => <option key={v} value={v === "Select an option" ? "" : v}>{v}</option>)}
+                </select>
+              </div>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+              <div className="flex flex-col">
+                <label className="text-sm text-gray-600 mb-2 font-normal">Revenue From Private Projects</label>
+                <select name="revenuePrivateProjects" value={form.revenuePrivateProjects} onChange={handleChange} className={inputClasses}>
+                  {REVENUE_RANGES.map(r => <option key={r} value={r === "Select an option" ? "" : r}>{r}</option>)}
+                </select>
+              </div>
+              <div className="flex flex-col">
+                <label className="text-sm text-gray-600 mb-2 font-normal">Revenue from Government *</label>
+                <select name="revenueFromGovt" value={form.revenueFromGovt} onChange={handleChange} required className={inputClasses}>
+                  {REVENUE_RANGES.map(r => <option key={r} value={r === "Select an option" ? "" : r}>{r}</option>)}
+                </select>
+              </div>
+              <div className="flex flex-col">
+                <label className="text-sm text-gray-600 mb-2 font-normal">Revenue From Direct End Customer *</label>
+                <select name="revenueFromDirectEnd" value={form.revenueFromDirectEnd} onChange={handleChange} required className={inputClasses}>
+                  {REVENUE_RANGES.map(r => <option key={r} value={r === "Select an option" ? "" : r}>{r}</option>)}
+                </select>
+              </div>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+              <div className="flex flex-col">
+                <label className="text-sm text-gray-600 mb-2 font-normal">Sales team strength *</label>
+                <select name="strengthSalesTeam" value={form.strengthSalesTeam} onChange={handleChange} required className={inputClasses}>
+                  {STRENGTH_OPTIONS.map(s => <option key={s} value={s === "Select an option" ? "" : s}>{s}</option>)}
+                </select>
+              </div>
+              <div className="flex flex-col">
+                <label className="text-sm text-gray-600 mb-2 font-normal">Technical sales team strength</label>
+                <select name="strengthTechnicalSalesTeam" value={form.strengthTechnicalSalesTeam} onChange={handleChange} className={inputClasses}>
+                  {STRENGTH_OPTIONS.map(s => <option key={s} value={s === "Select an option" ? "" : s}>{s}</option>)}
+                </select>
+              </div>
+              <div className="flex flex-col">
+                <label className="text-sm text-gray-600 mb-2 font-normal">Revenue From Retail / Trading *</label>
+                <select name="revenueRetailTrading" value={form.revenueRetailTrading} onChange={handleChange} required className={inputClasses}>
+                  {REVENUE_RANGES.map(r => <option key={r} value={r === "Select an option" ? "" : r}>{r}</option>)}
+                </select>
+              </div>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+              <div className="flex flex-col">
+                <label className="text-sm text-gray-600 mb-2 font-normal">Market segment expertise *</label>
+                <select name="marketSegmentExpertise" value={form.marketSegmentExpertise} onChange={handleChange} required className={inputClasses}>
+                  {MARKET_SEGMENTS.map(m => <option key={m} value={m === "Select an option" ? "" : m}>{m}</option>)}
+                </select>
+              </div>
+              <div className="flex flex-col">
+                <label className="text-sm text-gray-600 mb-2 font-normal">WLAN & LAN expertise</label>
+                <select name="wlanLanExpertise" value={form.wlanLanExpertise} onChange={handleChange} className={inputClasses}>
+                  {YES_NO_PARTIAL.map(y => <option key={y} value={y === "Select an option" ? "" : y}>{y}</option>)}
+                </select>
+              </div>
+              <div className="flex flex-col">
+                <label className="text-sm text-gray-600 mb-2 font-normal">Brands you sell</label>
+                <input name="brandsYouSell" value={form.brandsYouSell} onChange={handleChange} placeholder="write which brands do you sell..." className={inputClasses} />
+              </div>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+              <div className="flex flex-col">
+                <label className="text-sm text-gray-600 mb-2 font-normal">Any other comments</label>
+                <textarea name="otherComments" value={form.otherComments} onChange={handleChange} placeholder="Any other comments" className={inputClasses + " min-h-28 resize-y"}></textarea>
+              </div>
+              <div className="flex flex-col">
+                <label className="text-sm text-gray-600 mb-2 font-normal">Additional notes / attachments (URL)</label>
+                <input name="additionalNotes" value={form.additionalNotes} onChange={handleChange} placeholder="paste link to Drive / document (optional)" className={inputClasses} />
+              </div>
+            </div>
+
+            <div className="flex justify-center pt-2">
+              <button type="submit" className="bg-green-700 text-white px-9 py-3.5 rounded-lg text-base cursor-pointer shadow-[0_8px_0_rgba(90,133,105,0.12)] transition-all duration-150 hover:-translate-y-0.5 hover:shadow-[0_12px_0_rgba(90,133,105,0.16)]">
+                Submit Application
+              </button>
+            </div>
+          </form>
         </div>
+      </main>  </div>
       </div>
 
       <Footer />
