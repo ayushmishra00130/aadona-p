@@ -3,6 +3,12 @@ import Navbar from "../../Components/Navbar";
 import Footer from "../../Components/Footer";
 import bg from "../../assets/bg.jpg";
 
+
+const Home = () => {
+      useEffect(() => {
+        window.scrollTo(0, 0)
+      }, [])}
+      
 /* Reveal Animation */
 const Reveal = ({ children, className = "" }) => {
   const ref = useRef(null);
@@ -162,6 +168,8 @@ export default function BecomePartner() {
     "p-4 rounded-lg border border-blue-200 bg-white text-base transition-all " +
     "focus:outline-none focus:border-emerald-500 text-gray-800 w-full placeholder:text-gray-400";
 
+    
+    
   return (
     <>
       <Navbar />
