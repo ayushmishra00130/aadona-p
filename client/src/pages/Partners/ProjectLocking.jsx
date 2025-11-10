@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
 import Navbar from "../../Components/Navbar";
 import Footer from "../../Components/Footer";
 import bg from "../../assets/bg.jpg";
@@ -86,6 +86,9 @@ export default function ProjectLocking() {
   const inputClasses =
     "p-3 border border-gray-300 rounded-lg text-sm w-full transition-all font-light bg-white focus:border-emerald-500 focus:shadow-[0_0_0_3px_rgba(142,182,155,0.08)] focus:outline-none placeholder:text-gray-400";
 
+    useEffect(() => {
+        window.scrollTo(0, 0);
+      }, []);
   return (
     <>
       <Navbar />

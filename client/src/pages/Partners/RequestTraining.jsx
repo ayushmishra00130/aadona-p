@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState,useEffect } from 'react';
 import Navbar from '../../Components/Navbar';
 import Footer from '../../Components/Footer';
 import bg from '../../assets/bg.jpg';
@@ -83,6 +83,9 @@ const RequestTraining = () => {
   const inputClasses = "py-3 px-4 rounded-lg border border-gray-300 bg-white text-base text-gray-800 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 placeholder:text-gray-400 shadow-sm w-full";
   const labelClasses = "text-sm font-medium text-gray-700 mb-1 block";
 
+  useEffect(() => {
+      window.scrollTo(0, 0);
+    }, []);
   return (
     <>
       <Navbar />
