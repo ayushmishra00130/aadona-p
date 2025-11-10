@@ -18,9 +18,10 @@ const Careers = () => {
           backgroundPosition: 'center',
         }}
       >
-        {/* ✅ Header Section (exactly like CSR/WhistleBlower/Leadership) */}
+
+        {/* Header */}
         <div className="bg-gradient-to-r from-green-700 to-green-900 pt-32 pb-16">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+          <div className="max-w-7xl mx-auto px-4 text-center">
             <h1 className="text-4xl font-bold text-white sm:text-5xl md:text-6xl">
               Our Customers
             </h1>

@@ -50,14 +50,17 @@ export default function CustomerPage() {
     <>
       <Navbar />
 
-      {/* Heading */}
-      <div className="bg-green-400/10 pt-12 pb-12 shadow-inner mt-20">
-        <div className="max-w-7xl mx-auto px-4 text-center">
-          <h1 className="text-5xl font-bold tracking-tight text-green-900 sm:text-6xl">
-            Our Customers
-          </h1>
+      {/* Header */}
+        <div className="bg-gradient-to-r from-green-700 to-green-900 pt-32 pb-16">
+          <div className="max-w-7xl mx-auto px-4 text-center">
+            <h1 className="text-4xl font-bold text-white sm:text-5xl md:text-6xl">
+              Our Customers
+            </h1>
+            <p className="mt-6 text-xl text-green-100 max-w-3xl mx-auto">
+              Building Trust, Delivering Excellence
+            </p>
+          </div>
         </div>
-      </div>
 
       {/* Background */}
       <div
