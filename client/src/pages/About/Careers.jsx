@@ -1,4 +1,4 @@
-import React from "react";
+import {React,useEffect} from "react";
 import { useNavigate, Link } from "react-router-dom";
 import Navbar from "../../Components/Navbar";
 import Footer from "../../Components/Footer";
@@ -19,6 +19,10 @@ const CareerCard = ({ title, description }) => (
 
 const Careers = () => {
   const navigate = useNavigate();
+
+  useEffect(() => {
+        window.scrollTo(0, 0);
+      }, []);
 
   return (
     <>

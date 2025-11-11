@@ -192,17 +192,20 @@ const ProductCategoryPage = () => {
     <>
     <div className="min-h-screen mt-20 bg-gray-50">
       {/* Header & Filters */}
-      <div className="bg-white py-12 shadow-md">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 ">
-          <h1 className="text-5xl font-extrabold text-gray-900 tracking-tight mb-4 border-b-4 border-green-500 inline-block pb-1">
-            📡 Wireless Solutions
-          </h1>
-          <p className="mt-4 text-xl text-gray-600 max-w-3xl">
-            Explore the APOLLO Series — high-performance access points and controllers for scalable, secure wireless infrastructure.
-          </p>
-
-          {/* Filter Buttons */}
-          <div className="mt-8 flex flex-wrap gap-4">
+      <div className="bg-white py-12 shadow-md ">
+          {/* Added text-center here */}
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <h1 className="text-5xl font-extrabold text-gray-900 tracking-tight mb-4 border-b-4 border-green-500 inline-block pb-1">
+              Wireless Solutions
+            </h1>
+            {/* Added mx-auto here to center the p element because it has a max-width */}
+            <p className="mt-4 text-xl text-gray-600 max-w-3xl mx-auto">
+              Explore the APOLLO Series — high-performance access points and controllers for scalable, secure wireless infrastructure.
+                    </p>
+          </div>
+        </div>
+         {/* Filter Buttons */}
+          <div className="mt-8 flex flex-wrap gap-4 justify-center">
             {['All', 'Indoor', 'Outdoor', 'Controller'].map((category) => (
               <button
                 key={category}
@@ -217,14 +220,12 @@ const ProductCategoryPage = () => {
               </button>
             ))}
           </div>
-        </div>
-      </div>
 
       {/* Product Grid */}
       <div className="max-w-7xl mx-auto py-12 px-4 sm:px-6 lg:px-8">
-        <h2 className="text-3xl font-bold text-gray-900 mb-8">
+        {/* <h2 className="text-3xl font-bold text-gray-900 mb-8">
           Featured APOLLO Products
-        </h2>
+        </h2> */}
 
         <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3">
           {filteredProducts.map((product) => (

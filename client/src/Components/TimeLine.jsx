@@ -45,9 +45,9 @@ const Timeline = () => {
   }, []);
 
   return (
-    <div className="relative pt-8 sm:pt-12 md:pt-16 pb-0 bg-white">
+    <div className="relative pt-8 sm:pt-12 md:pt-14 pb-0 bg-white">
       <header className="max-w-7xl mx-auto px-4 sm:px-6 text-center mb-8">
-        <h2 className="text-4xl font-extrabold text-green-700 mb-4">Going Beyond Vision</h2>
+        <h2 className="text-4xl font-extrabold text-green-700 mb-4">Milestones</h2>
         <p className="text-lg sm:text-xl text-gray-500">Milestones that shaped our story</p>
       </header>
 

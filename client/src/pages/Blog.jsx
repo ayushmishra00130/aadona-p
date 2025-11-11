@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
 import Navbar from '../Components/Navbar'
 import Footer from '../Components/Footer'
 import bg from "../assets/bg.jpg";   // ✅ CSR background
@@ -128,6 +128,10 @@ const BlogPage = () => {
     post.excerpt.toLowerCase().includes(searchQuery.toLowerCase()) ||
     post.author.toLowerCase().includes(searchQuery.toLowerCase())
   );
+
+  useEffect(() => {
+        window.scrollTo(0, 0);
+      }, []);
 
   return (
     <div className="min-h-screen font-sans">

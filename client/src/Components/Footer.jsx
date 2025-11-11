@@ -103,7 +103,7 @@ const Footer = () => {
         <div className={`mt-10 pt-6 border-t ${BORDER_COLOR}`}>
           <div className="text-center text-sm">
             <p>&copy; {new Date().getFullYear()} AADONA Communication Pvt Ltd. All rights reserved.</p>
-            <p className={`mt-1 ${ACCENT_GREEN}`}>Designed and developed for a cleaner look.</p>
+            {/* <p className={`mt-1 ${ACCENT_GREEN}`}>Designed and developed for a cleaner look.</p> */}
           </div>
         </div>
 

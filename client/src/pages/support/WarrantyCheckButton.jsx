@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
 import Navbar from "../../Components/Navbar";
 import Footer from "../../Components/Footer";
 import bg from "../../assets/bg.jpg";
@@ -6,6 +6,11 @@ import bg from "../../assets/bg.jpg";
 const WarrantyCheckButton = () => {
   const [fileName, setFileName] = useState("Choose file");
 
+
+  useEffect(() => {
+        window.scrollTo(0, 0);
+      }, []);
+      
   return (
     <div className="min-h-screen">
       <Navbar />

@@ -1,4 +1,4 @@
-import React from 'react';
+import {React,useEffect} from 'react';
 import Navbar from '../../Components/Navbar';
 import Footer from '../../Components/Footer';
 import bg from '../../assets/bg.jpg';
@@ -39,6 +39,10 @@ const MissionVision = () => {
     { title: "A Will to Win", description: "We exhibit a strong will to win in the marketplace and every aspect of business.", image: willToWin },
     { title: "Personal Accountability", description: "We are personally accountable for delivering on our commitments.", image: accountability },
   ];
+
+  useEffect(() => {
+        window.scrollTo(0, 0);
+      }, []);
 
   return (
     <>

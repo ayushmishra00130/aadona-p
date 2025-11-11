@@ -31,6 +31,11 @@ const Reveal = ({ children, className = "" }) => {
     return () => io.disconnect();
   }, []);
 
+
+  useEffect(() => {
+        window.scrollTo(0, 0);
+      }, []);
+      
   return (
     <div
       ref={ref}

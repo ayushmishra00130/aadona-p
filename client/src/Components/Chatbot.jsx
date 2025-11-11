@@ -70,7 +70,7 @@ export default function Chatbot() {
               d="M7 8h10M7 12h6m-6 4h4M21 12c0 4.418-4.03 8-9 8a9.77 9.77 0 01-4.5-1.1L3 20l1.1-4.5A8.97 8.97 0 013 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"
             />
           </svg>
-          <span className="font-semibold">Live Support</span>
+          <span className="font-semibold">Chat With Us</span>
         </button>
       )}
 

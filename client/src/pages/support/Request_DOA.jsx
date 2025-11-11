@@ -61,6 +61,10 @@ const RequestDOA = () => {
   const [fileName, setFileName] = useState("Choose file");
   const [agree, setAgree] = useState(false);
 
+  useEffect(() => {
+        window.scrollTo(0, 0);
+      }, []);
+      
   return (
     <div className="min-h-screen">
       <Navbar />

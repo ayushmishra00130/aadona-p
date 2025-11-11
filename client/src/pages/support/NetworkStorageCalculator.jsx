@@ -366,6 +366,10 @@ const NetworkStorageCalculator = () => {
       return row;
     });
   }, [pending]);
+  
+  useEffect(() => {
+        window.scrollTo(0, 0);
+      }, []);
 
   /* ---------- render ---------- */
   return (

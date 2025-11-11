@@ -83,7 +83,7 @@ const CountUp = ({
 // ----------------------------------------------
 function CounterSection() {
   return (
-    <section className="bg-white flex flex-col justify-start items-center py-12 md:py-16 px-6 md:px-12">
+    <section className="bg-white flex flex-col justify-start items-center py-12 md:pt-20 px-6 md:px-12">
       {/* Heading */}
       <h1 className="text-4xl font-extrabold md:text-4xl text-green-700 mb-8 text-center">
         Our Achievements

@@ -43,7 +43,7 @@ const OurCustomers = () => {
                 : "bg-gray-200 text-gray-700 hover:bg-gray-300"
             }`}
           >
-            Government Companies
+            Government Enterprises
           </button>
           <button
             onClick={() => setActiveTab("private")}
@@ -53,7 +53,7 @@ const OurCustomers = () => {
                 : "bg-gray-200 text-gray-700 hover:bg-gray-300"
             }`}
           >
-            Private Companies
+            Private Enterprises
           </button>
         </div>
 

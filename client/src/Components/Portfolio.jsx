@@ -7,8 +7,8 @@ import cloud from '../assets/cloud.png'
 import firewall from '../assets/firewall.png'
 import fiber from '../assets/fiber.png'
 
-// Product data
-const products = [
+// Product data (original 6 products)
+const originalProducts = [
   {
     id: 1,
     title: "Network Switches",
@@ -47,7 +47,18 @@ const products = [
   },
 ];
 
-// Inline SVG for arrow icon
+// Duplicate and re-ID the products to create a total of 12
+const duplicatedProducts = originalProducts.map(p => ({
+    ...p,
+    id: p.id + 6, // Assign new ID
+    title: `${p.title} (2nd)`, // Optional: Mark as duplicate to distinguish them if needed
+}));
+
+// Combine the original and duplicated products
+const products = [...originalProducts, ...duplicatedProducts];
+
+
+// Inline SVG for arrow icon (kept for completeness, though commented out in usage)
 const RightArrowIcon = () => (
   <svg
     // xmlns="http://www.w3.org/2000/svg"
@@ -71,22 +82,22 @@ const ProductCard = ({ product }) => {
   return (
     
     <div className="bg-white rounded-xl shadow-lg hover:shadow-xl transition duration-300 overflow-hidden flex flex-col">
-      <div className="w-full h-48 overflow-hidden">
+      <div className="w-full h-32 overflow-hidden"> {/* Reduced height for smaller cards in a 6-column layout */}
         <img
           src={imageUrl}
           alt={title}
           className="w-full h-full object-cover transition duration-300 hover:scale-[1.02]"
         />
       </div>
-      <div className="p-6 flex flex-col justify-between grow">
+      <div className="p-4 flex flex-col justify-between grow"> {/* Reduced padding */}
         <div>
-          <h3 className="text-xl font-bold text-gray-900 mb-2">{title}</h3>
-          <p className="text-gray-600 text-sm">{description}</p>
+          <h3 className="text-base font-bold text-gray-900 mb-1">{title}</h3> {/* Reduced font size */}
+          <p className="text-gray-600 text-xs">{description}</p> {/* Reduced font size */}
         </div>
-        <div className="mt-4">
+        <div className="mt-3">
           <a
             href="#"
-            className="text-green-600 hover:text-green-700 transition duration-150 text-sm font-semibold flex items-center group"
+            className="text-green-600 hover:text-green-700 transition duration-150 text-xs font-semibold flex items-center group"
             onClick={(e) => e.preventDefault()}
           >
             {/* Learn Explore Product
@@ -101,14 +112,19 @@ const ProductCard = ({ product }) => {
 // Main app component
 const App = () => {
   return (
-    <div className="min-h-screen  px-4 sm:px-6 lg:px-8 font-sans mb-20">
+    <div className="min-h-screen px-4 sm:px-6 lg:px-8 font-sans mb-20">
       <div className="max-w-7xl mx-auto">
         <div className="text-center mb-12">
           <h2 className="text-3xl font-extrabold text-green-700 sm:text-4xl inline-block pb-1">
-            Our Product Portfolio
+            Our Soultion Portfolio
           </h2>
         </div>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        {/*
+          Modified grid classes:
+          - grid-cols-2 for small screens (sm:grid-cols-3)
+          - lg:grid-cols-6 to display 6 cards per row on large screens
+        */}
+        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-4">
           {products.map((product) => (
             <ProductCard key={product.id} product={product} />
           ))}

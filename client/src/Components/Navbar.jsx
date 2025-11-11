@@ -24,9 +24,13 @@ const Navbar = () => {
     <nav className="bg-white shadow-md fixed top-0 left-0 w-full z-50">
       {/* Navbar Container */}
       <div className="max-w-7xl mx-auto flex items-center justify-between px-6 lg:px-8 py-4">
-        {/* Logo */}
+        {/* Logo - SIZE INCREASED HERE (h-14 -> h-16) */}
         <Link to="/" onClick={() => setOpenMobileSubmenu(null)}>
-          <img src={logo} alt="Logo" className="h-14 w-auto object-contain" />
+          <img 
+            src={logo} 
+            alt="Logo" 
+            className="h-16 w-auto object-contain" // Changed h-14 to h-16
+          />
         </Link>
 
         {/* Desktop Navbar - NO CHANGES HERE */}
@@ -122,7 +126,7 @@ const Navbar = () => {
               <ul className="absolute left-0 top-full hidden group-hover:block bg-white shadow-lg rounded-md pt-2 w-56 text-gray-700 border border-gray-100">
                 <li><Link to="/csr" className="block px-4 py-2 hover:bg-green-100 hover:text-green-600">CSR</Link></li>
                 <li><Link to="/careers" className="block px-4 py-2 hover:bg-green-100 hover:text-green-600">Careers</Link></li>
-                {/* <li><Link to="/contactUs" className="block px-4 py-2 hover:bg-green-100 hover:text-green-600">Contact Us</Link></li> */}
+                <li><Link to="/contactUs" className="block px-4 py-2 hover:bg-green-100 hover:text-green-600">Contact Us</Link></li>
                 <li><Link to="/mediaCenter" className="block px-4 py-2 hover:bg-green-100 hover:text-green-600">Media Center</Link></li>
                 <li><Link to="/whistleBlower" className="block px-4 py-2 hover:bg-green-100 hover:text-green-600">Whistle Blower</Link></li>
                 <li><Link to="/customers" className="block px-4 py-2 hover:bg-green-100 hover:text-green-600">Our Customers</Link></li>
@@ -155,7 +159,7 @@ const Navbar = () => {
         </button>
       </div>
 
-      {/* Mobile Sidebar - UPDATED LINKS */}
+      {/* Mobile Sidebar - UPDATED LINKS (Paths were corrected in the previous turn) */}
       <div
         className={`fixed top-0 right-0 h-full w-72 bg-green-50 shadow-lg z-50 transform transition-transform duration-300 ${
           menuOpen ? "translate-x-0" : "translate-x-full"
@@ -171,7 +175,7 @@ const Navbar = () => {
         {/* Sidebar Content */}
         <ul className="flex flex-col space-y-4 px-6 py-6 text-base font-medium text-gray-800 overflow-y-auto h-[calc(100%-80px)]">
           
-          {/* Products (Mobile) - UPDATED PATHS */}
+          {/* Products (Mobile) */}
           <li>
             <button
               onClick={() => handleSubmenuToggle('products')}
@@ -181,7 +185,6 @@ const Navbar = () => {
             </button>
             <ul className={`${openMobileSubmenu === 'products' ? 'block' : 'hidden'} ml-4 mt-2 space-y-2 text-gray-700`}>
               <li>
-                {/* CHANGED to /active */}
                 <Link to="/active" onClick={handleMobileLinkClick}>
                   Active Product
                 </Link>
@@ -194,7 +197,7 @@ const Navbar = () => {
             </ul>
           </li>
 
-          {/* Partners (Mobile) - UPDATED PATHS */}
+          {/* Partners (Mobile) */}
           <li>
             <button
               onClick={() => handleSubmenuToggle('partners')}
@@ -204,19 +207,16 @@ const Navbar = () => {
             </button>
             <ul className={`${openMobileSubmenu === 'partners' ? 'block' : 'hidden'} ml-4 mt-2 space-y-2 text-gray-700`}>
               <li>
-                {/* CHANGED to /projectLocking */}
                 <Link to="/projectLocking" onClick={handleMobileLinkClick}>
                   Project Locking
                 </Link>
               </li>
               <li>
-                {/* CHANGED to /requestDemo */}
                 <Link to="/requestDemo" onClick={handleMobileLinkClick}>
                   Request a Demo
                 </Link>
               </li>
               <li>
-                {/* CHANGED to /requestTraining */}
                 <Link to="/requestTraining" onClick={handleMobileLinkClick}>
                   Request Training
                 </Link>
@@ -229,7 +229,7 @@ const Navbar = () => {
             </ul>
           </li>
 
-          {/* Support (Mobile) - NO CHANGES TO PATHS, all were absolute */}
+          {/* Support (Mobile) */}
           <li>
             <button
               onClick={() => handleSubmenuToggle('support')}
@@ -248,7 +248,7 @@ const Navbar = () => {
             </ul>
           </li>
 
-          {/* About (Mobile) - ADDED /contactUs, NO CHANGES TO PATHS, all were absolute */}
+          {/* About (Mobile) */}
           <li>
             <button
               onClick={() => handleSubmenuToggle('about')}
@@ -259,8 +259,7 @@ const Navbar = () => {
             <ul className={`${openMobileSubmenu === 'about' ? 'block' : 'hidden'} ml-4 mt-2 space-y-2 text-gray-700`}>
               <li><Link to="/csr" onClick={handleMobileLinkClick}>CSR</Link></li>
               <li><Link to="/careers" onClick={handleMobileLinkClick}>Careers</Link></li>
-              {/* ADDED MISSING CONTACT US LINK */}
-              {/* <li><Link to="/contactUs" onClick={handleMobileLinkClick}>Contact Us</Link></li> */}
+              <li><Link to="/contactUs" onClick={handleMobileLinkClick}>Contact Us</Link></li>
               <li><Link to="/mediaCenter" onClick={handleMobileLinkClick}>Media Center</Link></li>
               <li><Link to="/whistleBlower" onClick={handleMobileLinkClick}>Whistle Blower</Link></li>
               <li><Link to="/customers" onClick={handleMobileLinkClick}>Our Customers</Link></li>
@@ -269,7 +268,7 @@ const Navbar = () => {
             </ul>
           </li>
 
-          {/* Other Links - NO CHANGES TO PATHS, all were absolute */}
+          {/* Other Links */}
           <li>
             <Link to="/blog" onClick={handleMobileLinkClick}>
               Blog

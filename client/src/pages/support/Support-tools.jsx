@@ -1,9 +1,14 @@
-import React from "react";
+import {React,useEffect} from "react";
 import Navbar from "../../Components/Navbar";
 import Footer from "../../Components/Footer";
 import bg from "../../assets/bg.jpg"; // your downloaded bg
 
 const SupportTools = () => {
+
+  useEffect(() => {
+        window.scrollTo(0, 0);
+      }, []);
+      
   return (
     <div className="min-h-screen">
       <Navbar />
