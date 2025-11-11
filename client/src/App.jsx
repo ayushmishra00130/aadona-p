@@ -31,6 +31,7 @@ import RequestDda from './pages/support/Request_DOA'
 import WarrantyCheck from './pages/support/WarrantyCheckButton'
 import WhistleBlowerButton from './pages/About/WhistleBlowerButton'
 import ApplyNow from './pages/About/ApplyNow'
+import ProductDetails from './Components/WirelessProductDetails'
 
 
 const App = () => {
@@ -79,6 +80,8 @@ const App = () => {
 
           {/* Customers */}
           <Route path='/customers' element={<CustomersPage/>}/>
+
+          <Route path='/productDetails' element={<ProductDetails/>}></Route>
         </Routes>
       </Router>
     </>

@@ -17,7 +17,8 @@
     "react": "^19.1.1",
     "react-chatbotify": "^2.4.1",
     "react-dom": "^19.1.1",
-    "react-router-dom": "^7.9.4"
+    "react-router-dom": "^7.9.4",
+    "react-scripts": "^5.0.1"
   },
   "devDependencies": {
     "@eslint/js": "^9.36.0",
@@ -30,7 +31,7 @@
     "globals": "^16.4.0",
     "postcss": "^8.5.6",
     "tailwindcss": "^4.1.16",
-    "vite": "npm:rolldown-vite@7.1.14"
+    "vite": "npm:rolldown-vite@^7.1.14"
   },
   "overrides": {
     "vite": "npm:rolldown-vite@7.1.14"

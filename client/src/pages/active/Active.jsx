@@ -1,4 +1,4 @@
-import React from 'react'
+import {React,useEffect} from 'react'
 import Navbar from '../../Components/Navbar'
 import Footer from '../../Components/Footer'
 import hero from '../../assets/hero6.jpg' 
@@ -22,6 +22,10 @@ const FilterOptions = () => {
     // Base hover effect applied to the parent <a> tag for the "pop up"
     hoverEffect: "group-hover:shadow-2xl group-hover:ring-4 group-hover:ring-green-400 group-hover:-translate-y-2",
   };
+
+  useEffect(() => {
+        window.scrollTo(0, 0);
+      }, []);
 
   return (
     <div className="container mx-auto px-4 py-10">
